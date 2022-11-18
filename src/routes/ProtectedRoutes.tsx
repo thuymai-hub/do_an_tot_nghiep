@@ -1,105 +1,126 @@
-import { AccountPage } from 'features/account';
-import { DetailEvent, EventPage, UpdateEvent } from 'features/event_university';
-import { ForumPage, UpdateForum } from 'features/forum_chat';
-import { HomePage } from 'features/home';
-import { DetailNews, NewsPage, UpdateNews } from 'features/news';
-import { StudyDocumentPage } from 'features/study_document';
-import React from 'react';
-import { Navigate, Outlet, RouteObject } from 'react-router-dom';
-import { CliCookieService, CLI_COOKIE_KEYS } from 'shared/services/cli-cookie';
-import { PROTECTED_ROUTES_PATH } from './RoutesPath';
+import { AccountPage } from "features/account";
+import { DetailEvent, EventPage, UpdateEvent } from "features/event_university";
+import AddEditEventNews from "features/event_university/pages/AddEditEventNews";
+import { ForumPage, UpdateForum } from "features/forum_chat";
+import { HomePage } from "features/home";
+import { DetailNews, NewsPage, UpdateNews } from "features/news";
+import AddEditNews from "features/news/pages/AddEditNews";
+import { StudyDocumentPage } from "features/study_document";
+import AddEditDoc from "features/study_document/pages/AddEditDoc";
+import React from "react";
+import { Navigate, Outlet, RouteObject } from "react-router-dom";
+import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
+import { PROTECTED_ROUTES_PATH } from "./RoutesPath";
 
 export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
-    element: <HomePage />
+    element: <HomePage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_EVENTS,
+    element: <AddEditEventNews />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_NEWS,
+    element: <AddEditNews />,
   },
   {
     path: PROTECTED_ROUTES_PATH.NEWS,
     element: <Outlet />,
     children: [
       {
-        path: '',
-        element: <NewsPage />
+        path: "",
+        element: <NewsPage />,
       },
       {
-        path: 'add',
-        element: <UpdateNews />
+        path: "add",
+        element: <UpdateNews />,
       },
       {
-        path: 'edit/:id',
-        element: <UpdateNews />
+        path: "edit/:id",
+        element: <UpdateNews />,
       },
       {
-        path: 'detail/:id',
-        element: <DetailNews />
-      }
-    ]
+        path: "detail/:id",
+        element: <DetailNews />,
+      },
+    ],
   },
   {
     path: PROTECTED_ROUTES_PATH.EVENTS,
     element: <Outlet />,
     children: [
       {
-        path: '',
-        element: <EventPage />
+        path: "",
+        element: <EventPage />,
       },
       {
-        path: 'add',
-        element: <UpdateEvent />
+        path: "add",
+        element: <UpdateEvent />,
       },
       {
-        path: 'edit/:id',
-        element: <UpdateEvent />
+        path: "edit/:id",
+        element: <UpdateEvent />,
       },
       {
-        path: 'detail/:id',
-        element: <DetailEvent />
-      }
-    ]
+        path: "detail/:id",
+        element: <DetailEvent />,
+      },
+    ],
   },
   {
     path: PROTECTED_ROUTES_PATH.FORUM,
     element: <Outlet />,
     children: [
       {
-        path: '',
-        element: <ForumPage />
+        path: "",
+        element: <ForumPage />,
       },
       {
-        path: 'add',
-        element: <UpdateForum />
+        path: "add",
+        element: <UpdateForum />,
       },
       {
-        path: 'edit',
-        element: <UpdateForum />
-      }
-    ]
+        path: "edit",
+        element: <UpdateForum />,
+      },
+    ],
   },
   {
     path: PROTECTED_ROUTES_PATH.STUDY_DOCUMENT,
     element: <Outlet />,
     children: [
       {
-        path: '',
-        element: <StudyDocumentPage />
-      }
-    ]
+        path: "",
+        element: <StudyDocumentPage />,
+      },
+    ],
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_DOCUMENT,
+    element: <AddEditDoc />,
+    // children: [
+    //   {
+    //     path: "",
+    //     element: <AddEditDoc />,
+    //   },
+    // ],
   },
   {
     path: PROTECTED_ROUTES_PATH.ACCOUNT,
     element: <Outlet />,
     children: [
       {
-        path: '',
-        element: <AccountPage />
-      }
-    ]
+        path: "",
+        element: <AccountPage />,
+      },
+    ],
   },
   {
     path: PROTECTED_ROUTES_PATH.CONFIG,
-    element: <StudyDocumentPage />
-  }
+    element: <StudyDocumentPage />,
+  },
 ];
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
