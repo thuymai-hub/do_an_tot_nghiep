@@ -1,31 +1,13 @@
-import { PageHeader, Popconfirm, Table, Tag } from "antd";
+import { Button, Input, PageHeader, Popconfirm, Tag } from "antd";
 import ButtonAdd from "components/Button/ButtonAdd";
 import IconAntd from "components/IconAntd";
 import Container from "container/Container";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
-import Filter from "../components/Filter";
+import { useTableData } from "shared/hooks/useTableData";
 import { ForumItem } from "../components/ForumItem";
-
-const listNews = [
-  {
-    id: 1,
-    title: "TITLE 1",
-    createdDate: "20/10/2022",
-    type: "Giới thiệu",
-    loveCount: 10,
-    status: 0,
-  },
-  {
-    id: 2,
-    title: "TITLE 1",
-    createdDate: "20/10/2022",
-    type: "Giới thiệu",
-    loveCount: 20,
-    status: 1,
-  },
-];
 
 export const ForumPage: React.FC = () => {
   const columns = [
@@ -35,7 +17,7 @@ export const ForumPage: React.FC = () => {
       dataIndex: "stt",
       render: (text: any, record: any, index: any) => (
         <span id={record.id}>
-          {(paging.current - 1) * paging.pageSize + index + 1}
+          {/* {(paging.current - 1) * paging.pageSize + index + 1} */}index
         </span>
       ),
     },
@@ -107,17 +89,6 @@ export const ForumPage: React.FC = () => {
     },
   ];
   const navigate = useNavigate();
-  const [paging, setPaging] = React.useState<any>({
-    total: 0,
-    current: 1,
-    pageSize: 10,
-  });
-  const [params, setParams] = React.useState<any>({
-    searchKey: "",
-    page: 1,
-    postType: "",
-  });
-  const searchRef: any = useRef();
 
   const tranferPage = (mode = "add", id?: string | number) => {
     if (id) {
@@ -136,55 +107,19 @@ export const ForumPage: React.FC = () => {
       header={
         <PageHeader
           style={{ borderRadius: 8 }}
-          title="Danh sách bài viết diễn đàn"
+          title="Danh sách tài khoản"
           extra={[
-            <ButtonAdd
-              key={1}
-              text="Thêm mới"
-              onClickButton={() => {
-                navigate(PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_FOURM_POSTS);
-              }}
-            />,
+            <ButtonAdd key={1} text="Thêm mới" onClickButton={() => {}} />,
           ]}
         />
       }
-      filterComponent={<Filter />}
+      // filterComponent={<Filter />}
       contentComponent={
-        2 < 1 ? (
-          <div>
-            <p>
-              Kết quả lọc: <b>{10}</b>
-            </p>
-            <Table
-              bordered
-              columns={columns}
-              dataSource={listNews}
-              scroll={{
-                x: 800,
-                y: 320,
-                // scrollToFirstRowOnChange: true,
-              }}
-              locale={{
-                emptyText: "Chưa có bản ghi nào!",
-              }}
-              pagination={{
-                ...paging,
-                showSizeChanger: false,
-                onChange: async (page, pageSize) => {
-                  setParams({ ...params, page });
-                  const element: any = document.getElementById("top-table");
-                  element.scrollIntoView({ block: "start" });
-                },
-              }}
-            />
-          </div>
-        ) : (
-          <div>
-            {[1, 2, 3]?.map((item) => (
-              <ForumItem key={item} />
-            ))}
-          </div>
-        )
+        <div>
+          {[1, 2, 3]?.map((item) => (
+            <ForumItem key={item} />
+          ))}
+        </div>
       }
     />
   );
