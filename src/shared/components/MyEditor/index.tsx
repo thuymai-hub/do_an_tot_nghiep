@@ -11,7 +11,7 @@ interface IProps {
   height?: number | string;
   width?: number | string;
   editorStyle?: CSSProperties;
-  setIsAllSpace: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAllSpace?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditorComponent = (props: IProps) => {

@@ -8,11 +8,11 @@
 .active {
   width: 350px;
 }
-@media only screen and (max-width: 756px) {
+/* @media only screen and (max-width: 756px) {
   .active {
     width: 450px;
   }
-}
+} */
 
 .scrollbar-menu::-webkit-scrollbar {
   width: 6px;
