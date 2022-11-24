@@ -126,10 +126,10 @@ export const AccountPage: React.FC = () => {
     try {
       setIsLoading(true);
       const data = {
-        name: "Defaul",
+        name: "Mai Ánh Thùy",
         phone: "0961638946",
         accountType: 1,
-        email: "a@gmail.com",
+        email: "thuyma@gmail.com",
       };
       setDetailAccount(data);
     } catch (error) {

@@ -1,60 +1,63 @@
-import { Button } from 'antd';
-import R from 'assets';
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { Input, InputPassword } from 'shared/components/Input';
-import { ContainerAuth } from 'shared/container/ContainerAuth';
-import { Head } from 'shared/container/Head';
-import { CliCookieService, CLI_COOKIE_KEYS } from 'shared/services/cli-cookie';
-import * as Yup from 'yup';
+import { Button } from "antd";
+import R from "assets";
+import { useFormik } from "formik";
+import { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
+import { Input, InputPassword } from "shared/components/Input";
+import { ContainerAuth } from "shared/container/ContainerAuth";
+import { Head } from "shared/container/Head";
+import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
+import * as Yup from "yup";
 
 export const Login = () => {
   const navigate: NavigateFunction = useNavigate();
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().max(55, 'Tối đa 55 ký tự').required('Required!'),
-      password: Yup.string().min(6, 'Tối thiểu 6 ký tự').required('Required!')
+      email: Yup.string().max(55, "Tối đa 55 ký tự").required("Required!"),
+      password: Yup.string().min(6, "Tối thiểu 6 ký tự").required("Required!"),
     }),
 
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        // fetch('http://localhost:8000/wp-json/jwt-auth/v1/token', {
-        //   headers: {
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json'
-        //   },
-        //   method: 'POST',
-        //   body: JSON.stringify({
-        //     username: values.email,
-        //     password: values.password
-        //   })
-        // })
-        //   .then((res) => res.json())
-        //   .then(
-        //     (result) => {
-        //       CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, result.token?.replace(/"/g, ''));
-        //       setLoading(false);
-        //       navigate(PROTECTED_ROUTES_PATH.HOME);
-        //     },
-        //     (error) => {
-        //       console.log('error', error);
-        //       setLoading(false);
-        //     }
-        //   );
-        CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, 'token');
-        navigate(PROTECTED_ROUTES_PATH.HOME);
+        fetch("http://localhost:8000/wp-json/jwt-auth/v1/token", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            username: values.email,
+            password: values.password,
+          }),
+        })
+          .then((res) => res.json())
+          .then(
+            (result) => {
+              CliCookieService.set(
+                CLI_COOKIE_KEYS.ACCESS_TOKEN,
+                result.token?.replace(/"/g, "")
+              );
+              setLoading(false);
+              navigate(PROTECTED_ROUTES_PATH.HOME);
+            },
+            (error) => {
+              console.log("error", error);
+              setLoading(false);
+            }
+          );
+        // CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, 'token');
+        // navigate(PROTECTED_ROUTES_PATH.HOME);
       } catch (error) {
-        console.error('Exception ' + error);
+        console.error("Exception " + error);
       }
-    }
+    },
   });
   return (
     <div>
@@ -95,7 +98,9 @@ export const Login = () => {
                       </div>
                     </div>
                     <div className="mt-2 ">
-                      <div className="mb-1 text-medium-grey font-medium">Mật khẩu</div>
+                      <div className="mb-1 text-medium-grey font-medium">
+                        Mật khẩu
+                      </div>
                       <InputPassword
                         placeholder="Enter password"
                         id="password"
@@ -119,8 +124,9 @@ export const Login = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      style={{ width: '100%' }}
-                      loading={loading}>
+                      style={{ width: "100%" }}
+                      loading={loading}
+                    >
                       Đăng nhập
                     </Button>
                   </div>

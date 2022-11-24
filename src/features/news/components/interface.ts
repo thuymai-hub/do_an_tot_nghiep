@@ -1,6 +1,9 @@
 export interface INewsDetail {
-    title: string
-    newsType: number
-    file: any
-    isSentNoti: boolean
+    id?: string
+    title?: string
+    newsType?: number
+    file?: any
+    isSentNoti?: boolean
+    content?: string
+    createdDate?: string
 }
