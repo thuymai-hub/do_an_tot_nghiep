@@ -6,20 +6,19 @@ import styled from "styled-components";
 
 interface IFilter {
   search?: string;
-  categories?: any[];
-  status?: number | undefined;
-  toDate?: string | undefined;
-  fromDate?: string | undefined;
-  categoryId?: number | undefined;
-  setCategoryId?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setSearch?: React.Dispatch<React.SetStateAction<string>>;
-  setStatus?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setToDate?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setFromDate?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  courseType: any;
+  setCourseType: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
+export const typePosts = [
+  { label: "Công nghệ thông tin", value: 1 },
+  { label: "Thiết kế đồ hoạ", value: 2 },
+  { label: "Quản trị kinh doanh", value: 3 },
+];
+
 const Filter = (props: IFilter) => {
-  const {} = props;
+  const { search, setSearch, courseType, setCourseType } = props;
 
   return (
     <CustomRow gutter={[16, 16]}>
@@ -29,11 +28,31 @@ const Filter = (props: IFilter) => {
           style={{ width: "100%" }}
           placeholder="Tiều đề khoá học"
           addonAfter={<Icon type="close-circle-o" />}
-          // value={search}
+          value={search}
           onChange={(e: any) => {
-            // setSearch(e.target.value);
+            setSearch(e.target.value);
           }}
         />
+      </Col>
+      <Col span={6}>
+        <Select
+          style={{ width: "100%" }}
+          placeholder="Chọn khoá học"
+          allowClear
+          onChange={(value: number | undefined) => {
+            if (value === undefined) {
+              setCourseType(undefined);
+            } else {
+              setCourseType(value);
+            }
+          }}
+        >
+          {typePosts.map((item: any, index: number) => (
+            <Select.Option key={index} value={item.value}>
+              {item.label}
+            </Select.Option>
+          ))}
+        </Select>
       </Col>
     </CustomRow>
   );

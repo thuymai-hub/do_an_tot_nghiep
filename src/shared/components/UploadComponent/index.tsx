@@ -1,8 +1,9 @@
-import { Image, Upload } from "antd";
+import { Image, message, Upload } from "antd";
 import type { UploadProps } from "antd/es/upload";
 import { UploadFile, UploadListType } from "antd/lib/upload/interface";
 import IconAntd from "components/IconAntd";
 import React, { ReactNode } from "react";
+import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import { openNotificationWithIcon } from "../Notification";
 
 type uploadType = "single" | "list";
@@ -77,6 +78,7 @@ const UploadComponent: React.FC<IProps> = ({
 
   const uploadImage = async (options: any) => {
     const { onSuccess, onError, file, onProgress } = options;
+    console.log("FILE: ", file);
 
     if (beforeUploadFile(file)) {
       if (files.length > maxLength) {
@@ -113,11 +115,7 @@ const UploadComponent: React.FC<IProps> = ({
             onProgress({ percent: (event.loaded / event.total) * 100 });
           },
         };
-        fmData.append("images", file);
-        console.log(
-          "🚀 ~ file: index.tsx ~ line 104 ~ uploadImage ~ file",
-          file
-        );
+        fmData.append("file", file);
         try {
           // const res: any = await AxiosClient.post('/UploadFile/UploadFile', fmData, config);
           // if (res.status) {
@@ -134,6 +132,25 @@ const UploadComponent: React.FC<IProps> = ({
           //     }
           //     onError({ error });
           // }
+          fetch(`http://localhost:8000/wp-json/wp/v2/media`, {
+            headers: {
+              Authorization: `Bearer ${CliCookieService.get(
+                CLI_COOKIE_KEYS.ACCESS_TOKEN
+              )}`,
+            },
+            body: fmData,
+            method: "POST",
+          })
+            .then((res) => res.json())
+            .then((res: any) => {
+              console.log("RES: ", res.guid.raw);
+              setFiles([file]);
+              onSuccessUpload(res.guid.raw as string);
+              onSuccess("ok");
+            })
+            .catch((err: any) => {
+              message.error(err);
+            });
         } catch (err) {
           file.status = "error";
           const error = new Error("Some error");

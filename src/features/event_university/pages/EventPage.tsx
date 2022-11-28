@@ -1,33 +1,18 @@
-import { Button, Input, PageHeader, Popconfirm, Spin, Table } from "antd";
-import R from "assets";
+import { message, PageHeader, Popconfirm, Spin, Table, Tag } from "antd";
 import ButtonAdd from "components/Button/ButtonAdd";
 import IconAntd from "components/IconAntd";
 import Container from "container/Container";
-import { NewsItemComp } from "features/news/components/NewsItemComp";
-import React, { useEffect, useRef, useState } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
-import { useTableData } from "shared/hooks/useTableData";
-import { mookData } from "shared/mookData/news";
+import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import Filter from "../components/Filter";
 
-const listPosts = [
-  {
-    id: 1,
-    title: "TITLE 1",
-    createdDate: "20/10/2022",
-    type: "Giới thiệu",
-    loveCount: 10,
-  },
-  {
-    id: 2,
-    title: "TITLE 1",
-    createdDate: "20/10/2022",
-    type: "Giới thiệu",
-    loveCount: 20,
-  },
-];
+export interface ITypePost {
+  label: string;
+  value: number;
+}
+
 export const EventPage: React.FC = () => {
   const columns = [
     {
@@ -42,34 +27,45 @@ export const EventPage: React.FC = () => {
     },
     {
       title: <b>Tiêu đề</b>,
-      width: "35%",
-      dataIndex: "title",
-    },
-    {
-      title: <b>Loại bài viết</b>,
-      width: "20%",
-      dataIndex: "type",
+      width: "30%",
+      dataIndex: "titlePost",
     },
     {
       title: <b>Lượt yêu thích</b>,
       dataIndex: "loveCount",
+      width: 100,
     },
     {
-      title: <b>Ngày tạo</b>,
-      dataIndex: "createdDate",
+      title: <b>Ngày bắt đầu</b>,
+      dataIndex: "startDate",
+      width: 120,
+    },
+    {
+      title: <b>Ngày kết thúc</b>,
+      dataIndex: "endDate",
+      width: 120,
+    },
+    {
+      title: <b>Trạng thái</b>,
+      dataIndex: "status",
+      width: 100,
+      render: (value: string) => {
+        if (value === "1") {
+          return <Tag color="green">Hoạt động</Tag>;
+        } else return <Tag color="red">Ngừng hoạt động</Tag>;
+      },
     },
     {
       title: <b>Chi tiết</b>,
       dataIndex: "",
-      width: 100,
+      width: 80,
       render: (_: any, record: any) => {
         return (
           <>
             <a
               onClick={() => {
-                console.log("");
                 navigate(PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_EVENTS, {
-                  state: { id: 1 },
+                  state: { id: record?.id },
                 });
               }}
             >
@@ -79,7 +75,7 @@ export const EventPage: React.FC = () => {
               title="Bạn có chắc chắn muốn xoá bài viết này?"
               placement="top"
               onConfirm={() => {
-                console.log("");
+                onDelete(record?.id);
               }}
               okText="Xoá"
               cancelText="Huỷ"
@@ -99,9 +95,12 @@ export const EventPage: React.FC = () => {
     },
   ];
   const navigate = useNavigate();
-  const searchRef: any = useRef();
-  const [dataSource, setDataSource] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [postType, setPostType] = React.useState<number>();
+  const [totalItem, setTotalItems] = React.useState<number>(0);
+  const [dataSource, setDataSource] = React.useState<any>([]);
+  const [fullDataSource, setFullDataSource] = React.useState<any>([]);
+  const [search, setSearch] = React.useState<string>();
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [paging, setPaging] = React.useState<any>({
     total: 0,
     current: 1,
@@ -112,24 +111,73 @@ export const EventPage: React.FC = () => {
     page: 1,
     postType: "",
   });
-  useEffect(() => {
-    getDataSource();
-  }, []);
+
+  const onSearch = () => {
+    if (search && !postType) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter((item: any) =>
+        item?.titlePost?.toLowerCase().includes(search?.toLocaleLowerCase())
+      );
+
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+        setTotalItems(matchedData.length);
+      }, 500);
+    } else if (!search && postType) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter(
+        (item: any) => Number(item.postType) === postType
+      );
+
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+        setTotalItems(matchedData.length);
+      }, 500);
+    } else if (search && postType) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter(
+        (item: any) =>
+          Number(item.postType) === postType &&
+          item.title.toLowerCase().includes(search?.toLocaleLowerCase())
+      );
+
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+        setTotalItems(matchedData.length);
+      }, 500);
+    } else {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(fullDataSource);
+        setTotalItems(fullDataSource.length);
+      }, 500);
+    }
+  };
 
   const getDataSource = () => {
     setLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/event")
+    fetch("http://localhost:8000/wp-json/wp/v2/event_posts")
       .then((res) => res.json())
       .then(
         (result) => {
-          const convertData = result.map((newItem: any) => ({
-            id: newItem.id,
-            title: newItem.title?.rendered,
-            imageUrl: `${R.images.logo_TL}`,
-            contend: newItem.contend?.rendered,
-            createAt: newItem.date,
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            id: item?.id,
+            titlePost: item?.acf?.title,
+            createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
+            loveCount: item?.acf?.love_count,
+            postType: item?.acf?.post_type,
+            startDate: item?.acf?.start_date,
+            endDate: item?.acf?.end_date,
+            status: item?.acf?.status,
           }));
+          setTotalItems(convertData.length);
           setDataSource(convertData);
+          setFullDataSource(convertData);
           setLoading(false);
         },
         (error) => {
@@ -141,81 +189,98 @@ export const EventPage: React.FC = () => {
 
   const tranferPage = (mode = "add", id?: string | number) => {
     if (id) {
-      navigate(`${PROTECTED_ROUTES_PATH.EVENTS}/${mode}/${id}`);
+      navigate(`${PROTECTED_ROUTES_PATH.NEWS}/${mode}/${id}`);
       return;
     } else {
-      navigate(`${PROTECTED_ROUTES_PATH.EVENTS}/add`);
+      navigate(`${PROTECTED_ROUTES_PATH.NEWS}/${mode}`);
     }
   };
 
-  const onSearch = (value: string) => {
-    console.log("value", value);
-  };
-
   const onDelete = (id: string) => {
-    fetch(`http://localhost:8000/wp-json/wp/v2/event/${id}`, {
+    setLoading(true);
+    fetch(`http://localhost:8000/wp-json/wp/v2/event_posts/${id}`, {
       method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
     })
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("run");
-
           getDataSource();
+          message.success("Xoá sự kiện thành công!");
+          setLoading(false);
         },
         (error) => {
           console.log("error", error);
+          setLoading(false);
         }
       );
   };
 
+  React.useEffect(() => {
+    getDataSource();
+  }, []);
+
+  React.useEffect(() => {
+    onSearch();
+  }, [search, postType]);
+
   return (
-    <Container
-      header={
-        <PageHeader
-          style={{ borderRadius: 8 }}
-          title="Bài viết sự kiện"
-          extra={[
-            <ButtonAdd
-              key={1}
-              text="Thêm mới"
-              onClickButton={() => {
-                navigate(PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_EVENTS);
-              }}
-            />,
-          ]}
-        />
-      }
-      filterComponent={<Filter />}
-      contentComponent={
-        <div>
-          <p>
-            Kết quả lọc: <b>{10}</b>
-          </p>
-          <Table
-            bordered
-            columns={columns}
-            dataSource={listPosts}
-            scroll={{
-              // x: 1200,
-              y: 320,
-              // scrollToFirstRowOnChange: true,
-            }}
-            locale={{
-              emptyText: "Chưa có bản ghi nào!",
-            }}
-            pagination={{
-              ...paging,
-              showSizeChanger: false,
-              onChange: async (page, pageSize) => {
-                setParams({ ...params, page });
-                const element: any = document.getElementById("top-table");
-                element.scrollIntoView({ block: "start" });
-              },
-            }}
+    <Spin spinning={loading}>
+      <Container
+        header={
+          <PageHeader
+            style={{ borderRadius: 8 }}
+            title="Bài viết sự kiện"
+            extra={[
+              <ButtonAdd
+                key={1}
+                text="Thêm mới"
+                onClickButton={() => {
+                  navigate(PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_EVENTS);
+                }}
+              />,
+            ]}
           />
-        </div>
-      }
-    />
+        }
+        filterComponent={<Filter search={search} setSearch={setSearch} />}
+        contentComponent={
+          <div>
+            <p>
+              Kết quả lọc: <b>{totalItem}</b>
+            </p>
+            <Table
+              bordered
+              columns={columns}
+              dataSource={dataSource}
+              scroll={
+                {
+                  // x: 1200,
+                  // y: 320,
+                  // scrollToFirstRowOnChange: true,
+                }
+              }
+              locale={{
+                emptyText: "Chưa có bản ghi nào!",
+              }}
+              pagination={{
+                ...paging,
+                showSizeChanger: false,
+                onChange: async (page, pageSize) => {
+                  setParams({ ...params, page });
+                  const element: any = document.getElementById("top-table");
+                  element.scrollIntoView({ block: "start" });
+                },
+              }}
+            />
+          </div>
+        }
+      />
+    </Spin>
   );
 };

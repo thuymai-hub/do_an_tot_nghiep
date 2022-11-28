@@ -1,38 +1,42 @@
-import { Avatar, Popover } from 'antd';
-import R from 'assets';
-import React from 'react';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { Avatar, Popover } from "antd";
+import LocalStorage from "apis/LocalStorage";
+import R from "assets";
+import React from "react";
+import { AiOutlineMenu } from "react-icons/ai";
 import {
   IoAlertCircleOutline,
   IoLogOutOutline,
   IoNotificationsOutline,
-  IoSettingsOutline
-} from 'react-icons/io5';
-import { useLocation } from 'react-router-dom';
-import { Sidebar } from 'shared/container/Sidebar';
-import { handleLogout } from 'shared/utils/functionHelper';
-import { Head } from './Head';
-import './Menu.css';
+  IoSettingsOutline,
+} from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { Sidebar } from "shared/container/Sidebar";
+import { handleLogout } from "shared/utils/functionHelper";
+import { Head } from "./Head";
+import "./Menu.css";
 
 const NAME_FEATURE_INDEX = 1;
 
 export const Container = ({ children }: { children?: React.ReactNode }) => {
   const location = useLocation();
-  const Locations = location.pathname.split('/');
+  const userInfor = LocalStorage.getUserName();
+  const Locations = location.pathname.split("/");
 
   const titleWeb =
     Locations[NAME_FEATURE_INDEX].charAt(0).toUpperCase() +
-      Locations[NAME_FEATURE_INDEX].slice(1) || 'Home';
+      Locations[NAME_FEATURE_INDEX].slice(1) || "Home";
 
   const content = (
     <div>
-      <div className="cursor-pointer py-1 px-2 flex items-center hover:bg-gray-200">
+      {/* <div className="cursor-pointer py-1 px-2 flex items-center hover:bg-gray-200">
         <IoAlertCircleOutline className="mr-2 text-xl" />
         Hồ sơ
-      </div>
+      </div> */}
       <div
         className="cursor-pointer py-1 px-2 flex items-center hover:bg-gray-200"
-        onClick={handleLogout}>
+        onClick={handleLogout}
+      >
         <IoLogOutOutline className="mr-2 text-xl" />
         Đăng xuất
       </div>
@@ -41,7 +45,7 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <div className=" w-screen h-screen flex">
-      <Head title={titleWeb + ' | ĐH Thủy Lợi'} />
+      <Head title={titleWeb + " | ĐH Thủy Lợi"} />
 
       <div className="bg-second-color h-full text-white nav-menu active ">
         <Sidebar />
@@ -52,13 +56,20 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
             <AiOutlineMenu
               className="mr-2 cursor-pointer"
               onClick={() => {
-                document.getElementsByClassName('nav-menu')[0].classList.toggle('active');
+                document
+                  .getElementsByClassName("nav-menu")[0]
+                  .classList.toggle("active");
               }}
             />
           </div>
           <div className="flex">
             <div className="flex items-center">
-              <Popover placement="bottom" title={null} content={content} trigger="click">
+              <Popover
+                placement="bottom"
+                title={null}
+                content={content}
+                trigger="click"
+              >
                 <IoSettingsOutline className="text-xl cursor-pointer mr-4" />
               </Popover>
 
@@ -66,8 +77,13 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
             </div>
             <div className="border border-border-color--1 bg-border-color--1 mx-2"></div>
             <div>
-              <Avatar style={{ width: 36, height: 36 }} src={R.images.avatar_default} />
-              <span className="ml-2 font-semibold">Mai Ánh Thùy</span>
+              <Avatar
+                style={{ width: 36, height: 36 }}
+                src={
+                  "https://images.unsplash.com/photo-1578682442203-bc1e8db133ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGp1c3RpbiUyMGJpZWJlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+                }
+              />
+              <span className="ml-2 font-semibold">{userInfor}</span>
             </div>
           </div>
         </div>

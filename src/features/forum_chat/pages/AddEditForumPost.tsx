@@ -10,6 +10,7 @@ import {
   Spin,
 } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import ButtonSave from "components/Button/ButtonSave";
 import Container from "container/Container";
@@ -21,9 +22,8 @@ import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import MyEditor from "shared/components/MyEditor";
 import UploadComponent from "shared/components/UploadComponent";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
-import { typePosts } from "./NewsPage";
 
-const AddEditNews = () => {
+const AddEditForumPost = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [form] = Form.useForm();
@@ -37,7 +37,7 @@ const AddEditNews = () => {
 
   const getDetailData = () => {
     setIsLoading(true);
-    fetch(`http://localhost:8000/wp-json/wp/v2/posts/${targetId}`, {
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${targetId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CliCookieService.get(
@@ -71,23 +71,22 @@ const AddEditNews = () => {
     setIsLoading(true);
     if (!targetId) {
       const newPost = {
-        title_post: values.titlePost,
         love_count: 0,
         comment_count: "",
-        post_type: values.newsType,
+        people_like: "",
         is_send_noti: values.isSentNoti ? 1 : 0,
         content: description,
         image: listImages[0],
-        is_confirmed: 0,
+        is_confirmed: 1,
         date:
           moment().format().slice(0, 10) +
           " " +
           moment().hour() +
           ":" +
           moment().minutes(),
-        author: userInfor?.user_display_name,
+        author: LocalStorage.getUserName(),
       };
-      fetch(`http://localhost:8000/wp-json/wp/v2/posts`, {
+      fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -98,8 +97,8 @@ const AddEditNews = () => {
         body: JSON.stringify({
           fields: newPost,
           title: {
-            raw: newPost.title_post,
-            rendered: newPost.title_post,
+            raw: Math.ceil(Math.random() * 10000),
+            rendered: Math.ceil(Math.random() * 10000),
           },
           status: "publish",
         }),
@@ -108,8 +107,8 @@ const AddEditNews = () => {
         .then((res: any) => res.json())
         .then((res: any) => {
           setIsLoading(false);
-          message.success("Thêm bài viết mới thành công!");
-          navigate(PROTECTED_ROUTES_PATH.NEWS);
+          message.success("Thêm bài viết diễn đàn mới thành công!");
+          navigate(PROTECTED_ROUTES_PATH.FORUM);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -127,7 +126,7 @@ const AddEditNews = () => {
         content: description,
         image: listImages[0],
       };
-      fetch(`http://localhost:8000/wp-json/wp/v2/posts/${targetId}`, {
+      fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${targetId}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -137,10 +136,6 @@ const AddEditNews = () => {
         },
         body: JSON.stringify({
           fields: newPost,
-          title: {
-            raw: newPost.title_post,
-            rendered: newPost.title_post,
-          },
           status: "publish",
         }),
         method: "PUT",
@@ -148,8 +143,8 @@ const AddEditNews = () => {
         .then((res: any) => res.json())
         .then((res: any) => {
           setIsLoading(false);
-          message.success("Chỉnh sửa bài viết thành công!");
-          navigate(PROTECTED_ROUTES_PATH.NEWS);
+          message.success("Chỉnh sửa bài viết diễn đàn thành công!");
+          navigate(PROTECTED_ROUTES_PATH.FORUM);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -162,7 +157,7 @@ const AddEditNews = () => {
   };
 
   const onConfirmPosts = () => {
-    fetch(`http://localhost:8000/wp-json/wp/v2/posts/${targetId}`, {
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${targetId}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -211,35 +206,28 @@ const AddEditNews = () => {
             onBack={() => navigate(PROTECTED_ROUTES_PATH.NEWS)}
             style={{ borderRadius: 8 }}
             title={targetId ? "Chỉnh sửa bài viết" : "Thêm mới bài viết"}
-            extra={[
-              <ButtonAdd
-                htmlType="submit"
-                text={"Lưu"}
-                onClickButton={() => form.submit()}
-              />,
-            ]}
-            // extra={
-            //   targetId && !isConfirmed
-            //     ? [
-            //         <ButtonAdd
-            //           htmlType="submit"
-            //           text={"Lưu"}
-            //           onClickButton={() => form.submit()}
-            //         />,
-            //         <ButtonSave
-            //           htmlType="submit"
-            //           text={"Phê duyệt"}
-            //           onClickButton={() => onConfirmPosts()}
-            //         />,
-            //       ]
-            //     : [
-            //         <ButtonAdd
-            //           htmlType="submit"
-            //           text={"Lưu"}
-            //           onClickButton={() => form.submit()}
-            //         />,
-            //       ]
-            // }
+            extra={
+              targetId && !isConfirmed
+                ? [
+                    <ButtonAdd
+                      htmlType="submit"
+                      text={"Lưu"}
+                      onClickButton={() => form.submit()}
+                    />,
+                    <ButtonSave
+                      htmlType="submit"
+                      text={"Phê duyệt"}
+                      onClickButton={() => onConfirmPosts()}
+                    />,
+                  ]
+                : [
+                    <ButtonAdd
+                      htmlType="submit"
+                      text={"Lưu"}
+                      onClickButton={() => form.submit()}
+                    />,
+                  ]
+            }
           />
         }
         contentComponent={
@@ -250,38 +238,6 @@ const AddEditNews = () => {
             onFinish={onFinish}
             autoComplete="off"
           >
-            <Row gutter={6}>
-              <Col span={12}>
-                <Form.Item
-                  label="Tiêu đề"
-                  name="titlePost"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Vui lòng nhập tiêu đề tin tức!",
-                    },
-                  ]}
-                >
-                  <Input allowClear placeholder="Nhập tiêu đề tin tức" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Loại bài viết"
-                  name="newsType"
-                  rules={[
-                    { required: true, message: "Vui lòng chọn loại bài viết!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Chọn loại bài viết"
-                    options={typePosts}
-                    disabled={targetId ? true : false}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <br />
             <Row gutter={6}>
               <Col span={13}>
                 <Form.Item
@@ -325,7 +281,7 @@ const AddEditNews = () => {
             <Row gutter={6}>
               <Col span={24}>
                 <p>
-                  <span style={{ color: "red" }}>* </span>Nội dung tin tức
+                  <span style={{ color: "red" }}>* </span>Nội dung bài viết
                 </p>
                 <MyEditor
                   defaultValue={targetId ? description : ""}
@@ -350,4 +306,4 @@ const AddEditNews = () => {
   );
 };
 
-export default AddEditNews;
+export default AddEditForumPost;

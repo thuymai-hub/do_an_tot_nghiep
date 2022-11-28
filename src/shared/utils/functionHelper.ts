@@ -1,3 +1,4 @@
+import LocalStorage from 'apis/LocalStorage';
 import { CliCookieService, CLI_COOKIE_KEYS } from 'shared/services/cli-cookie';
 
 export const formatPrice = (value: string | number) => {
@@ -22,6 +23,6 @@ export const strongPassword = (value: string | undefined | null) => {
 export const handleLogout = async () => {
   CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, '');
   CliCookieService.set(CLI_COOKIE_KEYS.REFRESH_TOKEN, '');
-
-  window.location.pathname = '/login';
+  LocalStorage.removeUsername()
+  window.location.pathname = '/web-view';
 };

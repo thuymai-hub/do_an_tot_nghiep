@@ -12,6 +12,7 @@ interface IProps {
   width?: number | string;
   editorStyle?: CSSProperties;
   setIsAllSpace: React.Dispatch<React.SetStateAction<boolean>>;
+  placeholder?: string;
 }
 
 const EditorComponent = (props: IProps) => {
@@ -63,7 +64,7 @@ const EditorComponent = (props: IProps) => {
   return (
     <div style={{ width: "100%", marginBottom: 20 }}>
       <Editor
-        placeholder="Thêm nội dung bài viết"
+        placeholder={props.placeholder || "Thêm nội dung bài viết"}
         editorState={editorState}
         onEditorStateChange={(value) => onEditorStateChange(value)}
         toolbar={{

@@ -1,8 +1,8 @@
-import { message, PageHeader, Popconfirm, Spin, Table } from "antd";
+import { message, PageHeader, Popconfirm, Spin, Table, Tag } from "antd";
 import ButtonAdd from "components/Button/ButtonAdd";
 import IconAntd from "components/IconAntd";
 import Container from "container/Container";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
@@ -20,6 +20,21 @@ export const typePosts = [
   { label: "Nghiên cứu", value: 4 },
 ];
 
+export const renderPostType = (id: string) => {
+  switch (id) {
+    case "1":
+      return "Giới thiệu";
+    case "2":
+      return "Tuyển sinh";
+    case "3":
+      return "Đào tạo";
+    case "4":
+      return "Nghiên cứu";
+    default:
+      break;
+  }
+};
+
 export const NewsPage: React.FC = () => {
   const columns = [
     {
@@ -34,22 +49,32 @@ export const NewsPage: React.FC = () => {
     },
     {
       title: <b>Tiêu đề</b>,
-      width: "35%",
-      dataIndex: "title",
+      width: "30%",
+      dataIndex: "titlePost",
     },
     {
       title: <b>Loại bài viết</b>,
-      width: "20%",
+      width: "12%",
       dataIndex: "postType",
       render: (value: string) => renderPostType(value),
     },
-    {
-      title: <b>Lượt yêu thích</b>,
-      dataIndex: "loveCount",
-    },
+    // {
+    //   title: <b>Lượt yêu thích</b>,
+    //   dataIndex: "loveCount",
+    // },
+    // {
+    //   title: <b>Trạng thái</b>,
+    //   dataIndex: "status",
+    //   render: (value: string) => {
+    //     if (value === "1") {
+    //       return <Tag color="green">Phê duyệt</Tag>;
+    //     } else return <Tag color="red">Chờ phê duyệt</Tag>;
+    //   },
+    // },
     {
       title: <b>Ngày tạo</b>,
       dataIndex: "createdDate",
+      width: 150,
     },
     {
       title: <b>Chi tiết</b>,
@@ -112,7 +137,7 @@ export const NewsPage: React.FC = () => {
     if (search && !postType) {
       setLoading(true);
       const matchedData = fullDataSource.filter((item: any) =>
-        item.title.toLowerCase().includes(search?.toLocaleLowerCase())
+        item?.titlePost?.toLowerCase().includes(search?.toLocaleLowerCase())
       );
 
       setTimeout(() => {
@@ -154,21 +179,6 @@ export const NewsPage: React.FC = () => {
     }
   };
 
-  const renderPostType = (id: string) => {
-    switch (id) {
-      case "1":
-        return "Giới thiệu";
-      case "2":
-        return "Tuyển sinh";
-      case "3":
-        return "Đào tạo";
-      case "4":
-        return "Nghiên cứu";
-      default:
-        break;
-    }
-  };
-
   const getDataSource = () => {
     setLoading(true);
     fetch("http://localhost:8000/wp-json/wp/v2/posts?post_status=any")
@@ -178,10 +188,11 @@ export const NewsPage: React.FC = () => {
           console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
-            title: item?.acf?.title,
+            titlePost: item?.acf?.title_post,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
             loveCount: item?.acf?.love_count,
             postType: item?.acf?.post_type,
+            status: item?.acf?.is_confirmed,
           }));
           setTotalItems(convertData.length);
           setDataSource(convertData);
@@ -273,11 +284,13 @@ export const NewsPage: React.FC = () => {
               bordered
               columns={columns}
               dataSource={dataSource}
-              scroll={{
-                // x: 1200,
-                y: 320,
-                // scrollToFirstRowOnChange: true,
-              }}
+              scroll={
+                {
+                  // x: 1200,
+                  // y: 320,
+                  // scrollToFirstRowOnChange: true,
+                }
+              }
               locale={{
                 emptyText: "Chưa có bản ghi nào!",
               }}

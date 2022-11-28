@@ -1,61 +1,276 @@
-import { Button, Input, PageHeader } from "antd";
+import { message, PageHeader, Spin } from "antd";
+import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import Container from "container/Container";
-import React, { useRef, useState } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { typePosts } from "features/news/pages/NewsPage";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
-import { useTableData } from "shared/hooks/useTableData";
+import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
+import Filter from "../components/Filter";
 import { ForumItem } from "../components/ForumItem";
 
-const { Search } = Input;
-interface TFilter {
-  page?: number;
-  search?: string;
-}
 export const ForumPage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<TFilter>({
-    search: "",
-    page: 1,
-  });
-  const searchRef: any = useRef();
-  const { dataSource, loading, paging, setPaging } = useTableData({
-    expandFilter,
-    fetchList: null,
-  });
+  const userInfor = useSelector((state: any) => state?.user?.user);
+  const [search, setSearch] = React.useState<string>();
+  const [status, setStatus] = React.useState<number>();
+  const [dataSource, setDataSource] = React.useState<any[]>();
+  const [fullDataSource, setFullDataSource] = React.useState<any>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const tranferPage = (mode = "add", id?: string | number) => {
-    if (id) {
-      navigate(`${PROTECTED_ROUTES_PATH.FORUM}/${mode}/${id}`);
-      return;
+  const onSearch = () => {
+    if (search && !status) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter((item: any) =>
+        item?.content?.toLowerCase().includes(search?.toLocaleLowerCase())
+      );
+
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+      }, 500);
+    } else if (!search && status) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter(
+        (item: any) => Number(item.status) === status
+      );
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+      }, 500);
+    } else if (search && status) {
+      setLoading(true);
+      const matchedData = fullDataSource.filter(
+        (item: any) =>
+          Number(item.status) === status &&
+          item?.content?.toLowerCase().includes(search?.toLocaleLowerCase())
+      );
+
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(matchedData);
+      }, 500);
     } else {
-      navigate(`${PROTECTED_ROUTES_PATH.FORUM}/add`);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setDataSource(fullDataSource);
+      }, 500);
     }
   };
-  const onSearch = (value: string) => {
-    console.log("value", value);
+
+  const getDataSource = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/forum_posts")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          const convertData = result.map((item: any) => ({
+            id: item?.id,
+            createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
+            loveCount: Number(item?.acf?.love_count),
+            postType: item?.acf?.post_type,
+            author: item?.acf?.author,
+            commentCount:
+              item?.acf.comment_count === ""
+                ? []
+                : JSON.parse(item?.acf.comment_count),
+            content: item?.acf?.content,
+            image: item?.acf?.image,
+            status: item?.acf?.is_confirmed,
+            peopleList:
+              item?.acf.people_like === "" || item?.acf?.people_like
+                ? []
+                : JSON.parse(item?.acf.people_like),
+          }));
+          // .filter((item: any) => item.status === "1");
+          setDataSource(convertData);
+          console.log("current data", convertData);
+          setFullDataSource(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
   };
 
+  const addNewComment = (idPost: number, commentContent: string) => {
+    const newComment = {
+      id: Math.ceil(Math.random() * 1000000),
+      content: commentContent,
+      author: LocalStorage.getUserName(),
+    };
+
+    const targetPost = fullDataSource?.filter(
+      (item: any) => item.id === idPost
+    );
+
+    const targetListComment = targetPost[0]?.commentCount;
+
+    targetListComment.unshift(newComment);
+
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
+      body: JSON.stringify({
+        fields: {
+          comment_count: `${JSON.stringify(targetListComment)}`,
+        },
+        status: "publish",
+      }),
+      method: "PUT",
+    })
+      .then((res: any) => res.json())
+      .then((res: any) => {
+        setLoading(false);
+        message.success("Thêm bình luận mới thành công!");
+        getDataSource();
+      })
+      .catch((err) => {
+        message.error("Đã có lỗi xảy ra!");
+        console.log("error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const onConfirmPosts = (id: number) => {
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
+      body: JSON.stringify({
+        fields: {
+          is_confirmed: 2,
+        },
+        status: "publish",
+      }),
+      method: "PUT",
+    })
+      .then((res: any) => res.json())
+      .then((res: any) => {
+        setLoading(false);
+        message.success("Phê duyệt bài viết mới thành công!");
+        getDataSource();
+        setStatus(undefined);
+        setSearch(undefined);
+      })
+      .catch((err) => {
+        message.error("Đã có lỗi xảy ra!");
+        console.log("error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const likePost = (idPost: number, authorName?: string | null) => {
+    const newPerson = {
+      author: authorName,
+    };
+
+    const targetPost = fullDataSource?.filter(
+      (item: any) => item.id === idPost
+    );
+
+    const targetListComment = targetPost[0]?.peopleList;
+
+    targetListComment.unshift(newPerson);
+
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
+      body: JSON.stringify({
+        fields: {
+          people_like: `${JSON.stringify(targetListComment)}`,
+          love_count: targetPost[0].loveCount + 1,
+        },
+        status: "publish",
+      }),
+      method: "PUT",
+    })
+      .then((res: any) => res.json())
+      .then((res: any) => {
+        setLoading(false);
+        message.success("Yêu thích thành công!");
+        getDataSource();
+      })
+      .catch((err) => {
+        message.error("Đã có lỗi xảy ra!");
+        console.log("error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    getDataSource();
+  }, []);
+
+  React.useEffect(() => {
+    onSearch();
+  }, [search, status]);
+
   return (
-    <Container
-      header={
-        <PageHeader
-          style={{ borderRadius: 8 }}
-          title="Danh sách tài khoản"
-          extra={[
-            <ButtonAdd key={1} text="Thêm mới" onClickButton={() => {}} />,
-          ]}
-        />
-      }
-      // filterComponent={<Filter />}
-      contentComponent={
-        <div>
-          {[1, 2, 3]?.map((item) => (
-            <ForumItem key={item} />
-          ))}
-        </div>
-      }
-    />
+    <Spin spinning={loading}>
+      <Container
+        header={
+          <PageHeader
+            style={{ borderRadius: 8 }}
+            title="Diễn đàn"
+            extra={[
+              <ButtonAdd
+                key={1}
+                text="Thêm mới"
+                onClickButton={() =>
+                  navigate(PROTECTED_ROUTES_PATH.ADD_EDIT_FORUM_POST)
+                }
+              />,
+            ]}
+          />
+        }
+        filterComponent={
+          <Filter
+            search={search}
+            status={status}
+            setSearch={setSearch}
+            setPostType={setStatus}
+          />
+        }
+        contentComponent={
+          <div>
+            {dataSource?.map((item: any, index: number) => (
+              <ForumItem
+                addNewComment={addNewComment}
+                key={index}
+                item={item}
+                onConfirmPosts={onConfirmPosts}
+                likePost={likePost}
+              />
+            ))}
+          </div>
+        }
+      />
+    </Spin>
   );
 };

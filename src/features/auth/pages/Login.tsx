@@ -1,8 +1,11 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
+import LocalStorage from "apis/LocalStorage";
 import R from "assets";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { setUser } from "redux/slice/user.slice";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import { Input, InputPassword } from "shared/components/Input";
 import { ContainerAuth } from "shared/container/ContainerAuth";
@@ -11,6 +14,8 @@ import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import * as Yup from "yup";
 
 export const Login = () => {
+  const dispatch = useDispatch();
+
   const navigate: NavigateFunction = useNavigate();
   const [loading, setLoading] = useState(false);
   const formik = useFormik({
@@ -25,38 +30,48 @@ export const Login = () => {
 
     onSubmit: async (values) => {
       setLoading(true);
-      try {
-        fetch("http://localhost:8000/wp-json/jwt-auth/v1/token", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            username: values.email,
-            password: values.password,
-          }),
-        })
-          .then((res) => res.json())
-          .then(
-            (result) => {
+      fetch("http://localhost:8000/wp-json/jwt-auth/v1/token", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          username: values.email,
+          password: values.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log(
+              "🚀 ~ file: Login.tsx ~ line 47 ~ onSubmit: ~ result",
+              result
+            );
+            if (result?.data?.status === 403) {
+              message.error("Tên đăng nhập hoặc mật khẩu không chính xác!");
+              setLoading(false);
+            } else {
               CliCookieService.set(
                 CLI_COOKIE_KEYS.ACCESS_TOKEN,
                 result.token?.replace(/"/g, "")
               );
+              dispatch(setUser(result));
+              LocalStorage.setUsername(result.user_display_name);
               setLoading(false);
               navigate(PROTECTED_ROUTES_PATH.HOME);
-            },
-            (error) => {
-              console.log("error", error);
-              setLoading(false);
             }
-          );
-        // CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, 'token');
-        // navigate(PROTECTED_ROUTES_PATH.HOME);
-      } catch (error) {
-        console.error("Exception " + error);
-      }
+          },
+          (error) => {
+            console.log("error", error);
+            setLoading(false);
+          }
+        )
+        .catch((err) => {
+          setLoading(false);
+        });
+      // CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, 'token');
+      // navigate(PROTECTED_ROUTES_PATH.HOME);
     },
   });
   return (

@@ -17,23 +17,20 @@ interface IAddEditAccountModal {
 
 const accountTypes = [
   {
-    id: 1,
     value: 1,
     label: "Quản trị viên",
   },
   {
-    id: 2,
     value: 2,
     label: "Giảng viên",
   },
   {
-    id: 3,
     value: 3,
     label: "Sinh viên",
   },
 ];
 
-const AddEditAccountModal = (props: IAddEditAccountModal) => {
+const AddEditAccountModal = (props: any) => {
   const { isModalOpen, setIsModalOpen, onFinish, detailAccount } = props;
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -46,7 +43,7 @@ const AddEditAccountModal = (props: IAddEditAccountModal) => {
       name: detailAccount?.name,
       email: detailAccount?.email,
       phone: detailAccount?.phone,
-      accountType: detailAccount?.accountType,
+      type: detailAccount?.type,
     });
   }, [detailAccount]);
   return (
@@ -115,13 +112,14 @@ const AddEditAccountModal = (props: IAddEditAccountModal) => {
         </Form.Item>
         <Form.Item
           label="Loại tài khoản"
-          name="accountType"
+          name="type"
           rules={[{ required: true, message: "Vui lòng chọn loại tài khoản!" }]}
         >
           <Select
             placeholder="Chọn loại tài khoản"
             onChange={handleChange}
             options={accountTypes}
+            disabled={detailAccount ? true : false}
           />
         </Form.Item>
         <Form.Item

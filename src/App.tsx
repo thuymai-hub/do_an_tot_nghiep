@@ -1,11 +1,12 @@
-import './App.css';
-import 'antd/dist/antd.min.css';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { AppRoutes } from 'routes';
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { ToastContainer } from 'react-toastify';
+import "./App.css";
+import "antd/dist/antd.min.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import { AppRoutes } from "routes";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 function App() {
   return (

@@ -1,24 +1,29 @@
 import Icon from "@ant-design/icons";
-import { Col, DatePicker, Input, Row, Select } from "antd";
-import { Item } from "rc-menu";
+import { Col, Input, Row, Select } from "antd";
+import { ITypePost } from "features/event_university/pages/EventPage";
 import React from "react";
 import styled from "styled-components";
 
 interface IFilter {
   search?: string;
-  accountType: number | undefined;
+  status?: number;
   setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setAccountType: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setPostType: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-const accountTypes = [
-  { label: "Quản trị viên", value: 1 },
-  { label: "Giảng viên", value: 2 },
-  { label: "Sinh viên", value: 3 },
+export const postStatus = [
+  {
+    label: "Chờ phê duyệt",
+    value: 1,
+  },
+  {
+    label: "Phê duyệt",
+    value: 2,
+  },
 ];
 
 const Filter = (props: IFilter) => {
-  const { search, setSearch, setAccountType } = props;
+  const { search, status, setSearch, setPostType } = props;
 
   return (
     <CustomRow gutter={[16, 16]}>
@@ -26,28 +31,33 @@ const Filter = (props: IFilter) => {
         <Input.Search
           allowClear
           style={{ width: "100%" }}
-          placeholder="Nhập tên tài khoản"
+          placeholder="Tiều đề bài viết"
           addonAfter={<Icon type="close-circle-o" />}
           value={search}
           onChange={(e: any) => {
-            setSearch(e.target.value);
+            setSearch(e?.target?.value);
           }}
         />
       </Col>
       <Col span={6}>
         <Select
           style={{ width: "100%" }}
-          placeholder="Chọn loại tài khoản"
+          placeholder="Chọn trạng thái"
           allowClear
+          value={status}
           onChange={(value: number | undefined) => {
+            console.log(
+              "🚀 ~ file: Filter.tsx ~ line 47 ~ Filter ~ value",
+              value
+            );
             if (value === undefined) {
-              setAccountType(undefined);
+              setPostType(undefined);
             } else {
-              setAccountType(value);
+              setPostType(value);
             }
           }}
         >
-          {accountTypes.map((item: any, index: number) => (
+          {postStatus.map((item: any, index: number) => (
             <Select.Option key={index} value={item.value}>
               {item.label}
             </Select.Option>

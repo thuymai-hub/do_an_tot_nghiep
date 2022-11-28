@@ -645,7 +645,7 @@ video {
 }
 
 .justify-center {
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .rounded-2xl {
