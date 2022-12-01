@@ -3,6 +3,7 @@ import { DetailEvent, EventPage, UpdateEvent } from "features/event_university";
 import AddEditEventNews from "features/event_university/pages/AddEditEventNews";
 import { ForumPage, UpdateForum } from "features/forum_chat";
 import AddEditForumPost from "features/forum_chat/pages/AddEditForumPost";
+import AddEditForum from "features/forum_chat/pages/AddEditForum";
 import { HomePage } from "features/home";
 import { DetailNews, NewsPage, UpdateNews } from "features/news";
 import AddEditNews from "features/news/pages/AddEditNews";
@@ -41,6 +42,10 @@ export const ProtectedRoutes: RouteObject[] = [
     path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_EVENTS,
     element: <AddEditEventNews />,
   },
+  // {
+  //   path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_FOURM_POSTS,
+  //   element: <AddEditForum />,
+  // },
   {
     path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_NEWS,
     element: <AddEditNews />,
