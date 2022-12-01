@@ -9,6 +9,7 @@ import {
   Spin,
   Table,
 } from "antd";
+import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import Container from "container/Container";
 import moment from "moment";
@@ -97,7 +98,7 @@ const AddEditDoc = () => {
           moment().hour() +
           ":" +
           moment().minutes(),
-        author: userInfor?.user_display_name || "Jaden Smith",
+        author: LocalStorage.getUserName() || "Jaden Smith",
       };
       fetch(`http://localhost:8000/wp-json/wp/v2/subjects`, {
         headers: {

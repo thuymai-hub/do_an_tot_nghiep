@@ -7,8 +7,17 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
+import LocalStorage from "apis/LocalStorage";
+import { getMe } from "redux/slice/user.slice";
 
 function App() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (LocalStorage.getToken()) {
+      dispatch(getMe());
+    }
+  }, []);
+
   return (
     <React.StrictMode>
       <HelmetProvider>

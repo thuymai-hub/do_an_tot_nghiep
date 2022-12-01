@@ -1,10 +1,11 @@
-import { Avatar, Button, Comment, Input } from "antd";
+import { Avatar, Button, Comment, Input, message } from "antd";
 import LocalStorage from "apis/LocalStorage";
 import React from "react";
 import {
   AiOutlineComment,
   AiOutlineHeart,
   AiOutlineSend,
+  AiFillHeart,
 } from "react-icons/ai";
 
 interface IForumItem {
@@ -12,10 +13,11 @@ interface IForumItem {
   addNewComment: (idPost: number, commentContent: string) => void;
   onConfirmPosts: (id: number) => void;
   likePost: (idPost: number, authorName?: string | null) => void;
+  unLikePost: (idPost: number) => void;
 }
 
 export const ForumItem = (props: IForumItem) => {
-  const { item, addNewComment, onConfirmPosts, likePost } = props;
+  const { item, addNewComment, onConfirmPosts, likePost, unLikePost } = props;
   const [comment, setComment] = React.useState<string>("");
   const [isLiked, setIsLiked] = React.useState<boolean>();
   const [isShowingComment, setIsShowingComment] =
@@ -89,11 +91,23 @@ export const ForumItem = (props: IForumItem) => {
             <div
               className="flex items-center cursor-pointer px-4 py-2 rounded hover:bg-gray-200"
               onClick={() => {
-                console.log(111111);
-                likePost(item?.id, LocalStorage?.getUserName());
+                if (item?.status === "1") {
+                  message.error("Vui lòng phê duyệt bài viết!");
+                } else {
+                  if (item?.isLiked) {
+                    unLikePost(item?.id);
+                  } else {
+                    likePost(item?.id, LocalStorage?.getUserName());
+                  }
+                }
               }}
             >
-              <AiOutlineHeart className="mr-2 " />
+              {item?.isLiked ? (
+                <AiFillHeart className="mr-2 " />
+              ) : (
+                <AiOutlineHeart className="mr-2 " />
+              )}
+
               {item.loveCount}
             </div>
             <div

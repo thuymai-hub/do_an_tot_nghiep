@@ -20,6 +20,14 @@ export const ForumPage: React.FC = () => {
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  const checkAlreadyLike = (arr: string) => {
+    const listIds = JSON.parse(arr);
+
+    const check = listIds.filter((item: any) => Number(item) === userInfor?.id);
+    if (check.length > 0) return true;
+    return false;
+  };
+
   const onSearch = () => {
     if (search && !status) {
       setLoading(true);
@@ -80,8 +88,9 @@ export const ForumPage: React.FC = () => {
             content: item?.acf?.content,
             image: item?.acf?.image,
             status: item?.acf?.is_confirmed,
+            isLiked: checkAlreadyLike(item?.acf?.people_like),
             peopleList:
-              item?.acf.people_like === "" || item?.acf?.people_like
+              item?.acf.people_like === "" || !item?.acf?.people_like
                 ? []
                 : JSON.parse(item?.acf.people_like),
           }));
@@ -178,18 +187,16 @@ export const ForumPage: React.FC = () => {
       });
   };
 
-  const likePost = (idPost: number, authorName?: string | null) => {
-    const newPerson = {
-      author: authorName,
-    };
+  const likePost = (idPost: number) => {
+    const newPerson = userInfor.id;
 
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
 
-    const targetListComment = targetPost[0]?.peopleList;
+    const targetListLove = JSON.parse(targetPost[0]?.peopleList);
 
-    targetListComment.unshift(newPerson);
+    targetListLove.push(newPerson);
 
     fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
       headers: {
@@ -201,8 +208,8 @@ export const ForumPage: React.FC = () => {
       },
       body: JSON.stringify({
         fields: {
-          people_like: `${JSON.stringify(targetListComment)}`,
-          love_count: targetPost[0].loveCount + 1,
+          people_like: `${JSON.stringify(targetListLove)}`,
+          love_count: Number(targetPost[0].loveCount) + 1,
         },
         status: "publish",
       }),
@@ -212,6 +219,50 @@ export const ForumPage: React.FC = () => {
       .then((res: any) => {
         setLoading(false);
         message.success("Yêu thích thành công!");
+        getDataSource();
+      })
+      .catch((err) => {
+        message.error("Đã có lỗi xảy ra!");
+        console.log("error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const unLikePost = (idPost: number) => {
+    const targetPersonId = userInfor?.id;
+
+    const targetPost = fullDataSource?.filter(
+      (item: any) => item.id === idPost
+    );
+
+    const targetListLove = JSON.parse(targetPost[0]?.peopleList);
+    const newListLove = targetListLove?.filter(
+      (item: any) => Number(item) !== targetPersonId
+    );
+
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
+      body: JSON.stringify({
+        fields: {
+          people_like: `${JSON.stringify(newListLove)}`,
+          love_count: Number(targetPost[0].loveCount) - 1,
+        },
+        status: "publish",
+      }),
+      method: "PUT",
+    })
+      .then((res: any) => res.json())
+      .then((res: any) => {
+        setLoading(false);
+        message.success("Bỏ yêu thích thành công!");
         getDataSource();
       })
       .catch((err) => {
@@ -266,6 +317,7 @@ export const ForumPage: React.FC = () => {
                 item={item}
                 onConfirmPosts={onConfirmPosts}
                 likePost={likePost}
+                unLikePost={unLikePost}
               />
             ))}
           </div>

@@ -1,4 +1,5 @@
 import { Login } from "features/auth/pages/Login";
+import DocPagePublic from "features/web-views/page/DocPagePublic";
 import ForumPagePublic from "features/web-views/page/ForumPagePublic";
 import HomePagePublic from "features/web-views/page/HomePagePublic";
 import PostPagePublic from "features/web-views/page/PostPagePublic";
@@ -26,5 +27,13 @@ export const PublicRoutes: RouteObject[] = [
   {
     path: PUBLIC_ROUTES_PATH.FORUMPAGEPUBLIC,
     element: <ForumPagePublic />,
+  },
+  {
+    path: PUBLIC_ROUTES_PATH.DOC_PAGE_PUBLIC,
+    element: <DocPagePublic />,
+  },
+  {
+    path: PUBLIC_ROUTES_PATH.DOC_DEATIL_PAGE_PUBLIC,
+    element: <DocPagePublic />,
   },
 ];

@@ -1,13 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import AxiosClient from 'apis/AxiosClient';
+
+export const getMe: any = createAsyncThunk('user/getMe', async (params, thunkAPI) => {
+    const currentUser = await AxiosClient.get('/v2/users/me');
+    return currentUser;
+});
 
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: null
+        user: {}
     },
     reducers: {
         setUser: (state,action) => {
+            state.user = action.payload;
+        },
+    },
+    extraReducers: {
+        [getMe.fulfilled]: (state: any, action: any) => {
             state.user = action.payload;
         },
     },

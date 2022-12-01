@@ -1,7 +1,7 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import LocalStorage from './LocalStorage';
-const REACT_APP_API_URL = 'http://dev.daknongapi.winds.vn/api/web'
+const REACT_APP_API_URL = 'http://localhost:8000/wp-json/wp'
 
 
 const AxiosClient = axios.create({

@@ -6,8 +6,11 @@ import AddEditForumPost from "features/forum_chat/pages/AddEditForumPost";
 import { HomePage } from "features/home";
 import { DetailNews, NewsPage, UpdateNews } from "features/news";
 import AddEditNews from "features/news/pages/AddEditNews";
+import AddEditStudentPostPage from "features/student/AddEditStudentPostPage";
+import StudentPage from "features/student/StudentPage";
 import { StudyDocumentPage } from "features/study_document";
 import AddEditDoc from "features/study_document/pages/AddEditDoc";
+import TeacherPage from "features/teacher/TeacherPage";
 import React from "react";
 import { Navigate, Outlet, RouteObject } from "react-router-dom";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
@@ -17,6 +20,18 @@ export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
     element: <HomePage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.STUDENT,
+    element: <StudentPage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDENT_POST,
+    element: <AddEditStudentPostPage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.TEACHER,
+    element: <TeacherPage />,
   },
   {
     path: PROTECTED_ROUTES_PATH.ADD_EDIT_FORUM_POST,
@@ -105,12 +120,6 @@ export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.ADD_EDIT_STUDY_DOCUMENT,
     element: <AddEditDoc />,
-    // children: [
-    //   {
-    //     path: "",
-    //     element: <AddEditDoc />,
-    //   },
-    // ],
   },
   {
     path: PROTECTED_ROUTES_PATH.ACCOUNT,

@@ -1,10 +1,12 @@
 import {
+  Button,
   Checkbox,
   Col,
   Form,
   Input,
   message,
   PageHeader,
+  Popconfirm,
   Row,
   Select,
   Spin,
@@ -13,6 +15,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import ButtonSave from "components/Button/ButtonSave";
+import IconAntd from "components/IconAntd";
 import Container from "container/Container";
 import moment from "moment";
 import React from "react";
@@ -23,7 +26,7 @@ import MyEditor from "shared/components/MyEditor";
 import UploadComponent from "shared/components/UploadComponent";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 
-const AddEditForumPost = () => {
+const AddEditTeacherPostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [form] = Form.useForm();
@@ -108,8 +111,8 @@ const AddEditForumPost = () => {
         .then((res: any) => res.json())
         .then((res: any) => {
           setIsLoading(false);
-          message.success("Thêm bài viết diễn đàn mới thành công!");
-          navigate(PROTECTED_ROUTES_PATH.FORUM);
+          message.success("Thêm bài viết mới thành công!");
+          navigate(PROTECTED_ROUTES_PATH.STUDENT);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -144,8 +147,8 @@ const AddEditForumPost = () => {
         .then((res: any) => res.json())
         .then((res: any) => {
           setIsLoading(false);
-          message.success("Chỉnh sửa bài viết diễn đàn thành công!");
-          navigate(PROTECTED_ROUTES_PATH.FORUM);
+          message.success("Chỉnh sửa bài viết thành công!");
+          navigate(PROTECTED_ROUTES_PATH.STUDENT);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -157,8 +160,10 @@ const AddEditForumPost = () => {
     }
   };
 
-  const onConfirmPosts = () => {
-    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${targetId}`, {
+  const onDelete = (id: string) => {
+    setIsLoading(true);
+    fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${id}`, {
+      method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -166,27 +171,19 @@ const AddEditForumPost = () => {
           CLI_COOKIE_KEYS.ACCESS_TOKEN
         )}`,
       },
-      body: JSON.stringify({
-        fields: {
-          is_confirmed: 1,
-        },
-        status: "publish",
-      }),
-      method: "PUT",
     })
-      .then((res: any) => res.json())
-      .then((res: any) => {
-        setIsLoading(false);
-        message.success("Phê duyệt bài viết mới thành công!");
-        navigate(PROTECTED_ROUTES_PATH.NEWS);
-      })
-      .catch((err) => {
-        message.error("Đã có lỗi xảy ra!");
-        console.log("error: ", err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          message.success("Xoá bài viết thành công!");
+          navigate(PROTECTED_ROUTES_PATH.STUDENT);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setIsLoading(false);
+        }
+      );
   };
 
   const onChange = (e: CheckboxChangeEvent) => {
@@ -201,25 +198,45 @@ const AddEditForumPost = () => {
 
   return (
     <Spin spinning={isLoading}>
+      <br />
+      <br />
+      <br />
       <Container
         header={
           <PageHeader
-            onBack={() => navigate(PROTECTED_ROUTES_PATH.NEWS)}
+            onBack={() => navigate(PROTECTED_ROUTES_PATH.STUDENT)}
             style={{ borderRadius: 8 }}
             title={targetId ? "Chỉnh sửa bài viết" : "Thêm mới bài viết"}
             extra={
-              targetId && !isConfirmed
+              targetId
                 ? [
                     <ButtonAdd
                       htmlType="submit"
                       text={"Lưu"}
                       onClickButton={() => form.submit()}
                     />,
-                    <ButtonSave
-                      htmlType="submit"
-                      text={"Phê duyệt"}
-                      onClickButton={() => onConfirmPosts()}
-                    />,
+                    <Popconfirm
+                      title="Bạn có chắc chắn muốn xoá bài viết này?"
+                      placement="top"
+                      onConfirm={() => onDelete(targetId)}
+                      okText="Xoá"
+                      cancelText="Huỷ"
+                      okButtonProps={{
+                        type: "primary",
+                        danger: true,
+                      }}
+                      style={{ background: "red" }}
+                    >
+                      <Button
+                        style={{
+                          background: "red",
+                          color: "white",
+                          borderRadius: 6,
+                        }}
+                      >
+                        Xoá
+                      </Button>
+                    </Popconfirm>,
                   ]
                 : [
                     <ButtonAdd
@@ -307,4 +324,4 @@ const AddEditForumPost = () => {
   );
 };
 
-export default AddEditForumPost;
+export default AddEditTeacherPostPage;

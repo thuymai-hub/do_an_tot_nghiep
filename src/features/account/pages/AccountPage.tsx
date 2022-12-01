@@ -31,23 +31,25 @@ export const AccountPage: React.FC = () => {
     {
       title: "Loại tài khoản",
       dataIndex: "type",
-      render: (value: string) => <div>{renderAccountType(value)}</div>,
-    },
-    {
-      title: "Ngày tạo",
-      dataIndex: "createAt",
-      render: () => <div>{moment().format("DD/MM/YYYY")}</div>,
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      render: (value: any, record: any) => (
-        <Switch
-          checked={value}
-          onChange={() => changeStatus(record.id, value)}
-        />
+      render: (value: string) => (
+        <div>{renderAccountType(value) || " ---"}</div>
       ),
     },
+    // {
+    //   title: "Ngày tạo",
+    //   dataIndex: "createAt",
+    //   render: () => <div>{moment().format("DD/MM/YYYY")}</div>,
+    // },
+    // {
+    //   title: "Trạng thái",
+    //   dataIndex: "status",
+    //   render: (value: any, record: any) => (
+    //     <Switch
+    //       checked={value}
+    //       onChange={() => changeStatus(record.id, value)}
+    //     />
+    //   ),
+    // },
     {
       title: <b>Chi tiết</b>,
       dataIndex: "",
@@ -114,23 +116,21 @@ export const AccountPage: React.FC = () => {
 
   const getDataSource = () => {
     setIsLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/accounts")
+    fetch("http://localhost:8000/wp-json/wp/v2/users")
       .then((res) => res.json())
       .then(
         (result) => {
           console.log(
-            "🚀 ~ file: AccountPage.tsx ~ line 122 ~ getDataSource ~ result",
+            "🚀 ~ file: AccountPage.tsx ~ line 123 ~ getDataSource ~ result",
             result
           );
           const convertData = result.map((item: any, index: number) => ({
             stt: index + 1,
             id: item?.id,
-            name: item?.acf?.name,
-            createAt: item?.created_date,
-            status: item?.acf?.status === "1" ? true : false,
-            phone: item?.acf?.phone,
-            email: item?.acf?.email,
-            type: item?.acf?.account_type,
+            name: item?.name,
+            phone: item?.slug.split("-")[0],
+            email: item?.email || "---",
+            type: item?.slug.split("-")[1],
           }));
           setTotalItems(convertData.length);
           setDataSource(convertData);
@@ -178,14 +178,14 @@ export const AccountPage: React.FC = () => {
     setIsLoading(true);
     if (!accountDetail) {
       const account = {
-        name: values.name,
+        username: values.name,
         email: values.email,
-        phone: values.phone,
-        account_type: values.type,
-        status: 1,
+        // roles: renderAccountType(values.type),
         password: values.password,
+        status: "publish",
+        slug: `${values.phone}-${values.type}`,
       };
-      fetch(`http://localhost:8000/wp-json/wp/v2/accounts`, {
+      fetch(`http://localhost:8000/wp-json/wp/v2/users`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -193,14 +193,7 @@ export const AccountPage: React.FC = () => {
             CLI_COOKIE_KEYS.ACCESS_TOKEN
           )}`,
         },
-        body: JSON.stringify({
-          fields: account,
-          status: "publish",
-          title: {
-            raw: account.name,
-            rendered: account.name,
-          },
-        }),
+        body: JSON.stringify(account),
         method: "POST",
       })
         .then((res: any) => res.json())
@@ -221,7 +214,7 @@ export const AccountPage: React.FC = () => {
       const account = {
         name: values.name,
         email: values.email,
-        phone: values.phone,
+        // phone: values.phone,
         account_type: values.type,
       };
       fetch(

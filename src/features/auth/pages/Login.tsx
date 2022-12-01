@@ -5,8 +5,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { setUser } from "redux/slice/user.slice";
-import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
+import { getMe, setUser } from "redux/slice/user.slice";
+import { PROTECTED_ROUTES_PATH, PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
 import { Input, InputPassword } from "shared/components/Input";
 import { ContainerAuth } from "shared/container/ContainerAuth";
 import { Head } from "shared/container/Head";
@@ -44,10 +44,6 @@ export const Login = () => {
         .then((res) => res.json())
         .then(
           (result) => {
-            console.log(
-              "🚀 ~ file: Login.tsx ~ line 47 ~ onSubmit: ~ result",
-              result
-            );
             if (result?.data?.status === 403) {
               message.error("Tên đăng nhập hoặc mật khẩu không chính xác!");
               setLoading(false);
@@ -56,10 +52,20 @@ export const Login = () => {
                 CLI_COOKIE_KEYS.ACCESS_TOKEN,
                 result.token?.replace(/"/g, "")
               );
-              dispatch(setUser(result));
-              LocalStorage.setUsername(result.user_display_name);
+              dispatch(getMe());
               setLoading(false);
-              navigate(PROTECTED_ROUTES_PATH.HOME);
+              LocalStorage.setUsername(result.user_display_name);
+              LocalStorage.setToken(result.token);
+
+              const accountType = Number(result?.user_nicename.split("-")[1]);
+              LocalStorage.setUserType(`${accountType}`);
+              if (accountType === 1 || !accountType) {
+                navigate(PROTECTED_ROUTES_PATH.HOME);
+              } else if (accountType === 2) {
+                navigate(PROTECTED_ROUTES_PATH.TEACHER);
+              } else {
+                navigate(PROTECTED_ROUTES_PATH.STUDENT);
+              }
             }
           },
           (error) => {

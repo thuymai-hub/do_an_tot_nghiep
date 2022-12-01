@@ -24,5 +24,7 @@ export const handleLogout = async () => {
   CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, '');
   CliCookieService.set(CLI_COOKIE_KEYS.REFRESH_TOKEN, '');
   LocalStorage.removeUsername()
+  LocalStorage.removeToken()
+  LocalStorage.removeUserType()
   window.location.pathname = '/web-view';
 };
