@@ -43,9 +43,9 @@ const NavBar = () => {
             ),
           },
           {
-            key: "1",
+            key: "2",
             label: (
-              <a rel="noopener noreferrer" href="/student">
+              <a rel="noopener noreferrer" href="/teacher_course">
                 Khoá học
               </a>
             ),

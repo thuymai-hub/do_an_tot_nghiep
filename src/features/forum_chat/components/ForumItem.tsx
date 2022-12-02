@@ -19,7 +19,6 @@ interface IForumItem {
 export const ForumItem = (props: IForumItem) => {
   const { item, addNewComment, onConfirmPosts, likePost, unLikePost } = props;
   const [comment, setComment] = React.useState<string>("");
-  const [isLiked, setIsLiked] = React.useState<boolean>();
   const [isShowingComment, setIsShowingComment] =
     React.useState<boolean>(false);
 

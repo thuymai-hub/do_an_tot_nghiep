@@ -13,7 +13,9 @@ export const PROTECTED_ROUTES_PATH = {
   ADD_EDIT_FORUM_POST: '/add-edit-form-post',
   STUDENT: '/student',
   ADD_EDIT_STUDENT_POST: '/add_edit-student-post',
-  TEACHER: '/teacher'
+  TEACHER: '/teacher',
+  TEACHER_COURSE: '/teacher_course',
+  ADD_EDIT_TEACHER_COURSE: '/add_edit_teacher_course',
 };
 
 export const PUBLIC_ROUTES_PATH = {

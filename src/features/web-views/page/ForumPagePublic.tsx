@@ -184,7 +184,7 @@ const ForumPagePublic = () => {
 
     const targetListLove = JSON.parse(targetPost[0]?.peopleList);
     const newListLove = targetListLove?.filter(
-      (item: any) => item.id !== targetPersonId
+      (item: any) => Number(item) !== targetPersonId
     );
 
     fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {

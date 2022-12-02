@@ -69,6 +69,7 @@ const AddEditForum = () => {
                   padding: "0 16px",
                 }}
                 height={350}
+                setIsAllSpace={() => {}}
               />
             </Col>
           </Row>

@@ -16,11 +16,21 @@ import React from "react";
 import { Navigate, Outlet, RouteObject } from "react-router-dom";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import { PROTECTED_ROUTES_PATH } from "./RoutesPath";
+import AddEditTeacherSubject from "features/teacher/AddEditTeacherSubject";
+import TeacherSubjectPage from "features/teacher/TeacherSubjectPage";
 
 export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
     element: <HomePage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.ADD_EDIT_TEACHER_COURSE,
+    element: <AddEditTeacherSubject />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.TEACHER_COURSE,
+    element: <TeacherSubjectPage />,
   },
   {
     path: PROTECTED_ROUTES_PATH.STUDENT,

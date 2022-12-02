@@ -19,7 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import UploadComponent from "shared/components/UploadComponent";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
-import { IDetailSubject } from "../components/interface";
+import { IDetailSubject } from "features/study_document/components/interface";
 
 const courses = [
   {
@@ -39,7 +39,7 @@ const courses = [
   },
 ];
 
-const AddEditDoc = () => {
+const AddEditTeacherSubject = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [form] = Form.useForm();
@@ -123,7 +123,7 @@ const AddEditDoc = () => {
         .then((res: any) => {
           setIsLoading(false);
           message.success("Thêm môn học mới thành công!");
-          navigate(PROTECTED_ROUTES_PATH.STUDY_DOCUMENT);
+          navigate(PROTECTED_ROUTES_PATH.TEACHER_COURSE);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -161,7 +161,7 @@ const AddEditDoc = () => {
         .then((res: any) => {
           setIsLoading(false);
           message.success("Chỉnh sửa môn học thành công!");
-          navigate(PROTECTED_ROUTES_PATH.STUDY_DOCUMENT);
+          navigate(PROTECTED_ROUTES_PATH.TEACHER_COURSE);
         })
         .catch((err) => {
           message.error("Đã có lỗi xảy ra!");
@@ -179,10 +179,13 @@ const AddEditDoc = () => {
 
   return (
     <Spin spinning={isLoading}>
+      <br />
+      <br />
+      <br />
       <Container
         header={
           <PageHeader
-            onBack={() => navigate(PROTECTED_ROUTES_PATH.STUDY_DOCUMENT)}
+            onBack={() => navigate(PROTECTED_ROUTES_PATH.TEACHER_COURSE)}
             style={{ borderRadius: 8 }}
             title={targetId ? "Chỉnh sửa môn học" : "Thêm mới môn học"}
             extra={[
@@ -314,4 +317,4 @@ const AddEditDoc = () => {
   );
 };
 
-export default AddEditDoc;
+export default AddEditTeacherSubject;
