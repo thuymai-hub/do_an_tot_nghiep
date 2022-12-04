@@ -1,18 +1,21 @@
 import React from "react";
+import Document from "./Document";
 import EventPostSection from "./EventPostsSection";
 import PostSection from "./PostSection";
 
 interface IContent {
   posts: any[];
   eventPosts: any[];
+  subjects: any[];
 }
 
 const Content = (props: IContent) => {
-  const { posts, eventPosts } = props;
+  const { posts, eventPosts, subjects } = props;
   return (
-    <div className="w3-content w3-padding" style={{ maxWidth: 1564 }}>
-      <EventPostSection eventPosts={eventPosts} />
+    <div style={{ maxWidth: 1564 }}>
       <PostSection posts={posts} />
+      <EventPostSection eventPosts={eventPosts} />
+      <Document subjects={subjects} />
     </div>
   );
 };

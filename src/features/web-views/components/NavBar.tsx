@@ -74,7 +74,7 @@ const NavBar = () => {
           <b>Thuỷ Lợi</b> University
         </a>
         <div className="w3-right w3-hide-small">
-          <a href="/web-view-post" className="w3-bar-item w3-button">
+          {/* <a href="/web-view-post" className="w3-bar-item w3-button">
             Bài viết
           </a>
           <a href="/web-view-forum" className="w3-bar-item w3-button">
@@ -82,9 +82,6 @@ const NavBar = () => {
           </a>
           <a href="/web-doc-page" className="w3-bar-item w3-button">
             Tài liệu
-          </a>
-          {/* <a href="/login" className="w3-bar-item w3-button">
-            Cá nhân
           </a> */}
           {!token ? (
             <a href="/login" className="w3-bar-item w3-button">

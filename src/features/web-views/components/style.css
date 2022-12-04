@@ -1,0 +1,19 @@
+.zoom {
+    transition: transform .2s; /* Animation */
+  }
+  
+  .zoom:hover {
+    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+  .media_item_block {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }

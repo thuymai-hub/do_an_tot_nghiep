@@ -48,37 +48,25 @@ const UploadComponent: React.FC<IProps> = ({
   }, [initialFiles[0]?.url]);
 
   const beforeUploadFile = (file: any): any => {
-    let fileSize: number = 20;
-    if (accept === ".mp4") {
-      const isMP4: boolean = file.type === "video/mp4";
-      const validateFileSize: boolean = file.size / 1024 / 1024 > fileSize;
+    let fileSize: number = 2;
+    const validateFileSize: boolean = file.size > fileSize;
 
-      if (!isMP4) {
-        openNotificationWithIcon(
-          "error",
-          "Thất bại",
-          "Video không đúng định dạng!",
-          0
-        );
-        return false;
-      } else if (validateFileSize) {
-        openNotificationWithIcon(
-          "error",
-          "Thất bại",
-          "Dung lượng tối đa của video là 20.0 MB",
-          0
-        );
-        return false;
-      }
-
-      return true;
+    if (validateFileSize) {
+      // openNotificationWithIcon(
+      //   "error",
+      //   "Thất bại",
+      //   "Dung lượng tối đa của ảnh là 2.0 MB",
+      //   0
+      // );
+      setFiles([]);
+      message.error('"Dung lượng tối đa của ảnh là 2.0 MB",');
+      return false;
     }
     return true;
   };
 
   const uploadImage = async (options: any) => {
     const { onSuccess, onError, file, onProgress } = options;
-    console.log("FILE: ", file);
 
     if (beforeUploadFile(file)) {
       if (files.length > maxLength) {
@@ -117,21 +105,6 @@ const UploadComponent: React.FC<IProps> = ({
         };
         fmData.append("file", file);
         try {
-          // const res: any = await AxiosClient.post('/UploadFile/UploadFile', fmData, config);
-          // if (res.status) {
-          //     setFiles([file]);
-          //     onSuccessUpload(res?.data as string);
-          //     onSuccess('ok');
-          // } else {
-          //     file.status = 'error';
-          //     const error = new Error('Some error');
-          //     if (uploadType === 'single') {
-          //         setFiles([file]);
-          //     } else {
-          //         setFiles((f) => [...f.filter((_f) => _f.status !== 'uploading'), file]);
-          //     }
-          //     onError({ error });
-          // }
           fetch(`http://localhost:8000/wp-json/wp/v2/media`, {
             headers: {
               Authorization: `Bearer ${CliCookieService.get(
@@ -167,6 +140,8 @@ const UploadComponent: React.FC<IProps> = ({
       } else {
         setTimeout(() => onSuccess("ok"), 500);
       }
+    } else {
+      setFiles([]);
     }
   };
 

@@ -4,21 +4,25 @@ import styled from "styled-components";
 
 const About = () => {
   return (
-    <div id="about">
-      <div className="w3-container w3-padding-32" id="projects">
-        <h1
-          className="w3-border-bottom w3-border-light-grey w3-padding-16"
-          style={{ fontSize: 20, marginLeft: 10 }}
+    <div
+      id="about"
+      style={{ marginTop: 80, backgroundColor: "black", padding: "40px 0" }}
+    >
+      <div>
+        <Row
+          style={{ justifyContent: "center", marginBottom: 30, width: "90%" }}
         >
-          Về chúng tôi
-        </h1>
+          <TitleBlock>
+            <h1 className="title">Về chúng tôi</h1>
+          </TitleBlock>
+        </Row>
       </div>
       <Row>
         <Col span={3} />
         <Col span={9}>
           <img
             style={{ height: 400, width: "100%" }}
-            src="https://images.unsplash.com/photo-1473830394358-91588751b241?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+            src="https://www.tlu.edu.vn/Portals/0/2022/Thang5/Thang%206/DT2.jpg?ver=2022-11-30-165151-613"
           />
         </Col>
         <Col span={8}>
@@ -48,6 +52,15 @@ const About = () => {
   );
 };
 
-const InfoBlock = styled.div``;
+const TitleBlock = styled.div`
+  width: 240px;
+  height: 70px;
+  border-bottom: 4px solid white;
 
+  .title {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+  }
+`;
 export default About;

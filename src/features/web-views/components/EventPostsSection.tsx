@@ -37,77 +37,116 @@ const EventPostSection = (props: IEventPostSection) => {
   };
 
   return (
-    <>
-      <div className="w3-container w3-padding-32" id="projects">
-        <h1
-          className="w3-border-bottom w3-border-light-grey w3-padding-16"
-          style={{ fontSize: 20 }}
+    <div
+      style={{ marginTop: 100, backgroundColor: "black", padding: "30px 0" }}
+    >
+      <div>
+        <Row
+          style={{ justifyContent: "center", marginBottom: 30, width: "90%" }}
         >
-          Sự kiện nổi bật
-        </h1>
+          <div
+            style={{
+              width: 300,
+              height: 70,
+              borderBottom: "4px solid white",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: 40,
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              Sự kiện nổi bật
+            </h1>
+          </div>
+        </Row>
       </div>
       <Row
         style={{
-          padding: "0 16px",
-          height: 400,
+          padding: "0 50px",
+          height: 450,
           width: "90%",
         }}
       >
-        <Col span={12}>
-          <Carousel autoplay style={{ width: "100%", height: 400 }}>
+        <Col span={15}>
+          <Carousel autoplay style={{ width: "100%", height: 450 }}>
             {eventPosts.map((item: any, index: number) =>
               renderItem(item, index)
             )}
           </Carousel>
         </Col>
         <Col span={1} />
-        <Col span={10}>
+        <Col span={7}>
           <Row>
             <Col span={24}>
-              <SmallItemContainer
-                onClick={() => navigate(PUBLIC_ROUTES_PATH.FORUMPAGEPUBLIC)}
-              >
-                <img
-                  style={{
-                    width: "100%",
-                    height: 190,
-                    objectFit: "cover",
-                  }}
-                  src="https://images.unsplash.com/photo-1546640646-89b557854b23?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG5lb24lMjBsaWdodHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-                />
-                <div className="title-small-block">
-                  <p className="small-text">Diễn đàn</p>
-                </div>
-              </SmallItemContainer>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col span={24}>
-              <SmallItemContainer
-                onClick={() => {
-                  const element = document.getElementById("about");
-                  element?.scrollIntoView();
+              <div
+                style={{
+                  width: "100%",
+                  height: 400,
+                  padding: 20,
+                  backgroundColor: "white",
                 }}
               >
-                <img
-                  style={{ width: "100%", height: 190, objectFit: "cover" }}
-                  src="https://images.unsplash.com/photo-1532896374032-fdffb11e2b8e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fG5lb24lMjBsaWdodHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-                />
-                <div className="title-small-block">
-                  <p className="small-text">Về chúng tôi</p>
-                </div>
-              </SmallItemContainer>
+                <p
+                  style={{ color: "#666565", fontSize: 24, fontWeight: "600" }}
+                >
+                  Sự kiện sắp diễn ra
+                </p>
+                <Row gutter={16} style={{ cursor: "pointer" }}>
+                  <Col className="gutter-row" span={4}>
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </Col>
+                  <Col className="gutter-row" span={20}>
+                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
+                    <div style={{ marginTop: -10 }}>
+                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
+                    </div>
+                  </Col>
+                </Row>
+                <Row gutter={16} style={{ cursor: "pointer" }}>
+                  <Col className="gutter-row" span={4}>
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </Col>
+                  <Col className="gutter-row" span={20}>
+                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
+                    <div style={{ marginTop: -10 }}>
+                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
+                    </div>
+                  </Col>
+                </Row>
+                <Row gutter={16} style={{ cursor: "pointer" }}>
+                  <Col className="gutter-row" span={4}>
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </Col>
+                  <Col className="gutter-row" span={20}>
+                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
+                    <div style={{ marginTop: -10 }}>
+                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </Col>
           </Row>
         </Col>
         <Col span={1} />
       </Row>
-    </>
+    </div>
   );
 };
 
-const ItemContainer = styled.div`
+export const ItemContainer = styled.div`
   width: 100%;
   height: 400px;
   position: relative;
@@ -134,7 +173,7 @@ const ItemContainer = styled.div`
 
 const SmallItemContainer = styled.div`
   width: 100%;
-  height: 190px;
+  height: 100%;
   cursor: pointer;
 
   .title-small-block {
