@@ -5,15 +5,6 @@ import { Carousel } from "react-responsive-carousel";
 import "./style.css";
 
 const Header = () => {
-  const contentStyle: React.CSSProperties = {
-    margin: 0,
-    height: "160px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
-  };
-
   return (
     <Row style={{ height: 550, width: "90%" }}>
       <Col span={24} style={{ position: "relative" }}>
@@ -47,6 +38,9 @@ const Header = () => {
               src="https://cdn-icons-png.flaticon.com/128/3536/3536505.png"
             />
           </div>
+        </div>
+        <div className="typewriter">
+          <h1>Chào mừng đến với trường đại học đại học Thuỷ Lợi!</h1>
         </div>
         <Carousel
           autoPlay

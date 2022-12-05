@@ -38,6 +38,7 @@ const EventPostSection = (props: IEventPostSection) => {
 
   return (
     <div
+      id="event_posts"
       style={{ marginTop: 100, backgroundColor: "black", padding: "30px 0" }}
     >
       <div>

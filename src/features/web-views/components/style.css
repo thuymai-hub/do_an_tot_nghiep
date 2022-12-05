@@ -17,3 +17,56 @@
     cursor: pointer;
     margin-bottom: 10px;
   }
+
+  .typewriter {
+    position: absolute;
+    top: 250px;
+    left: 150px;
+    right: 150px;
+    z-index: 100;
+    width: 1100px;
+    height: 100px;
+  }
+
+  .typewriter h1 {
+    color: white;
+    font-weight: 800;
+    font-size: 33px;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation-iteration-count: infinite;
+    animation: 
+      typing 6.5s steps(50, end) infinite,
+      blink-caret .75s step-end infinite;
+  }
+  
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+  }
+
+  .sub-nav-bar-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    padding-top: 10px;
+    color: black;
+  }
+
+  .sub-nav-bar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+  }

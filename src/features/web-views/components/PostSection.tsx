@@ -44,7 +44,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[0]?.image}
-              style={{ width: "100%", height: "100%", fontWeight: "600" }}
+              style={{ width: "100%", height: "100%" }}
             />
             <div style={{ position: "absolute", bottom: 0, padding: 20 }}>
               <p style={{ fontSize: 20, color: "white", fontWeight: "700" }}>
