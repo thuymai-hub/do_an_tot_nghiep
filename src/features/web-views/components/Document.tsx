@@ -3,25 +3,24 @@ import { renderCourseType } from "features/study_document/pages/StudyDocumentPag
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
+import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 import styled from "styled-components";
 
 interface IDocument {
   subjects: any[];
 }
 
-const renderColor = (id: string) => {
-  switch (id) {
-    case "1":
+const renderColor = (name: string) => {
+  switch (name) {
+    case "Công nghệ thông tin":
       return "red";
-    case "2":
+    case "Thiết kế đồ hoạ":
       return "#180599";
-    case "3":
+    case "Quản trị kinh doanh":
       return "green";
-    case "4":
-      return "purple";
 
     default:
-      break;
+      return "purple";
   }
 };
 
@@ -32,7 +31,11 @@ const Document = (props: IDocument) => {
     <div style={{ marginTop: 100 }}>
       <div>
         <Row
-          style={{ justifyContent: "center", marginBottom: 50, width: "90%" }}
+          style={{
+            justifyContent: "center",
+            marginBottom: 50,
+            width: SCREEN_WIDTH,
+          }}
         >
           <TitleBlock>
             <a href="/web-doc-page">
@@ -43,7 +46,12 @@ const Document = (props: IDocument) => {
       </div>
       <Row
         gutter={26}
-        style={{ width: "88%", padding: "0 45px", marginTop: 30 }}
+        style={{
+          // width: SCREEN_WIDTH,
+          padding: "0 45px",
+          marginTop: 30,
+          marginRight: 80,
+        }}
       >
         {subjects.slice(0, 4).map((item: any, index: number) => {
           return (
@@ -59,11 +67,11 @@ const Document = (props: IDocument) => {
                 <div
                   className="course_title_block"
                   style={{
-                    borderTopColor: renderColor(item?.courseType),
+                    borderTopColor: renderColor(item?.courseType.split("-")[1]),
                     borderTopWidth: 2,
                   }}
                 >
-                  <p className="title">{renderCourseType(item?.courseType)}</p>
+                  <p className="title">{item?.courseType.split("-")[1]}</p>
                 </div>
                 <div className="course_content_block">
                   <img
@@ -72,12 +80,12 @@ const Document = (props: IDocument) => {
                   />
                   <p
                     style={{
-                      color: renderColor(item?.courseType),
+                      color: renderColor(item?.courseType.split("-")[1]),
                       textAlign: "center",
                       paddingTop: 20,
                     }}
                   >
-                    {renderCourseType(item?.courseType)}
+                    {item?.courseType.split("-")[1]}
                   </p>
                   <p className="subject_title">{item?.title}</p>
                   <p style={{ textAlign: "center" }}>

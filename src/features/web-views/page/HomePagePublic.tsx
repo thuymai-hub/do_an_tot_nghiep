@@ -15,6 +15,8 @@ const HomePagePublic = () => {
   const [posts, setPosts] = React.useState<any>([]);
   const [eventPosts, setEventPosts] = React.useState<any>([]);
   const [subjects, setSubjects] = React.useState<any>([]);
+  const [futureEvents, setFutureEvents] = React.useState<any>([]);
+  const [normalEvents, setNormalEvents] = React.useState<any>([]);
 
   const renderItem = (item: any, index: number) => {
     return (
@@ -87,6 +89,14 @@ const HomePagePublic = () => {
           }));
           setEventPosts(convertData);
           setLoading(false);
+          const data = convertData.filter((item: any) => {
+            return item?.isFutureEvent === "1";
+          });
+          setFutureEvents(data);
+          const normalData = convertData.filter(
+            (item: any) => item?.isFutureEvent === "0"
+          );
+          setNormalEvents(normalData);
         },
         (error) => {
           console.log("error", error);
@@ -133,7 +143,13 @@ const HomePagePublic = () => {
       <PageContainer>
         <NavBar />
         <Header />
-        <Content posts={posts} eventPosts={eventPosts} subjects={subjects} />
+        <Content
+          futureEvents={futureEvents}
+          normalEvents={normalEvents}
+          posts={posts}
+          eventPosts={eventPosts}
+          subjects={subjects}
+        />
         <About />
         <br />
         <br />

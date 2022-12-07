@@ -1,5 +1,6 @@
 import { Col, Row } from "antd";
 import React from "react";
+import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 
 const SubBar = () => {
   return (
@@ -7,10 +8,8 @@ const SubBar = () => {
       gutter={26}
       justify={"center"}
       style={{
-        width: "86%",
-        padding: "30px 30px 10px",
-        borderBottom: "1px solid lightgray",
-        marginLeft: "5%",
+        width: SCREEN_WIDTH,
+        padding: "60px 200px 10px",
       }}
     >
       <Col className="gutter-row sub-nav-bar-item " span={4}>

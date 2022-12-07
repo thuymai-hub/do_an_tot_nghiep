@@ -1,12 +1,18 @@
 import { Col, Row } from "antd";
 import React from "react";
+import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 import styled from "styled-components";
 
 const About = () => {
   return (
     <div
       id="about"
-      style={{ marginTop: 80, backgroundColor: "black", padding: "40px 0" }}
+      style={{
+        marginTop: 80,
+        backgroundColor: "black",
+        padding: "40px 0",
+        width: SCREEN_WIDTH,
+      }}
     >
       <div>
         <Row

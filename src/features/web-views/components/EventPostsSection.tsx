@@ -2,21 +2,18 @@ import { Carousel, Col, Row } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
+import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 import styled from "styled-components";
 
 interface IEventPostSection {
   eventPosts: any[];
+  futureEvents: any[];
+  normalEvents: any[];
 }
 
 const EventPostSection = (props: IEventPostSection) => {
-  const { eventPosts } = props;
-  console.log(
-    "🚀 ~ file: EventPostsSection.tsx ~ line 13 ~ EventPostSection ~ eventPosts",
-    eventPosts
-  );
+  const { eventPosts, futureEvents, normalEvents } = props;
   const navigate = useNavigate();
-  const [futureEvents, setFutureEvents] = React.useState<any[]>([]);
-  const [normalEvents, setNormalEvents] = React.useState<any[]>([]);
 
   const renderItem = (item: any, index: number) => {
     return (
@@ -42,25 +39,15 @@ const EventPostSection = (props: IEventPostSection) => {
     );
   };
 
-  const splitPosts = () => {
-    const data = eventPosts.filter(
-      (item: any) => Number(item.isFutureEvent) === 1
-    );
-    setFutureEvents(data);
-    const normalData = eventPosts.filter(
-      (item: any) => Number(item.isFutureEvent) !== 1
-    );
-    setNormalEvents(normalData);
-  };
-
-  React.useEffect(() => {
-    splitPosts();
-  }, []);
-
   return (
     <div
       id="event_posts"
-      style={{ marginTop: 100, backgroundColor: "black", padding: "30px 0" }}
+      style={{
+        marginTop: 100,
+        backgroundColor: "black",
+        padding: "30px 0",
+        width: SCREEN_WIDTH,
+      }}
     >
       <div>
         <Row
@@ -118,7 +105,16 @@ const EventPostSection = (props: IEventPostSection) => {
                   Sự kiện sắp diễn ra
                 </p>
                 {futureEvents.map((item: any, index: number) => (
-                  <Row gutter={16} style={{ cursor: "pointer" }}>
+                  <Row
+                    key={index}
+                    gutter={16}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      navigate(PUBLIC_ROUTES_PATH.EVENT_PAGE_PUBLIC, {
+                        state: { postId: item?.id },
+                      });
+                    }}
+                  >
                     <Col className="gutter-row" span={4}>
                       <img
                         src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"

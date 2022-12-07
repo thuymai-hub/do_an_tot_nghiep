@@ -11,40 +11,50 @@ const HomePage: React.FC = () => {
   const [accountData, setAccountData] = React.useState<IFormatData[]>([]);
   const [postData, setPostData] = React.useState<any>();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [listNewsType, setListNewsTypes] = React.useState<any[]>([]);
 
-  const getDataSource = () => {
+  const getListNewsTypes = () => {
     setLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/posts?post_status=any")
+    fetch("http://localhost:8000/wp-json/wp/v2/news_types")
       .then((res) => res.json())
       .then(
         (result) => {
           console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
-            postType: item?.acf?.post_type,
+            title: item?.acf?.title,
+            date: item?.acf?.created_date,
           }));
-          setPostData([
-            {
-              name: "Giới thiệu",
-              y: convertData.filter((item: any) => item.postType === "1")
-                .length,
-            },
-            {
-              name: "Tuyển sinh",
-              y: convertData.filter((item: any) => item.postType === "2")
-                .length,
-            },
-            {
-              name: "Đào tạo",
-              y: convertData.filter((item: any) => item.postType === "3")
-                .length,
-            },
-            {
-              name: "Nghiên cứu",
-              y: convertData.filter((item: any) => item.postType === "4")
-                .length,
-            },
-          ]);
+          setListNewsTypes(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
+  const getDataSource = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/posts")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            id: item?.id,
+            postType: item?.acf?.post_type.split("-")[0],
+          }));
+
+          const data = listNewsType.map((item: any) => ({
+            name: item?.title,
+            y: convertData.filter(
+              (itemData: any) => Number(itemData.postType) == Number(item.id)
+            ).length,
+          }));
+
+          setPostData(data);
           setLoading(false);
         },
         (error) => {
@@ -92,7 +102,10 @@ const HomePage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getDataSource();
+    getListNewsTypes();
+    setTimeout(() => {
+      getDataSource();
+    }, 500);
     getAccountData();
   }, []);
 

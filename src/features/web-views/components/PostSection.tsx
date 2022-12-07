@@ -2,6 +2,7 @@ import { ForwardOutlined } from "@ant-design/icons";
 import { Button, Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import { PROTECTED_ROUTES_PATH, PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
+import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 import styled from "styled-components";
 import "./style.css";
 
@@ -13,11 +14,9 @@ const PostSection = (props: IPostSection) => {
   const { posts } = props;
   const navigate = useNavigate();
   return (
-    <div style={{ marginTop: 100 }}>
+    <div style={{ marginTop: 100, width: SCREEN_WIDTH, paddingRight: 100 }}>
       <div>
-        <Row
-          style={{ justifyContent: "center", marginBottom: 30, width: "100%" }}
-        >
+        <Row style={{ justifyContent: "center", marginBottom: 30 }}>
           <TitleBlock>
             <a href="web-view-post">
               <h1 className="title">Tin tức</h1>
@@ -25,7 +24,7 @@ const PostSection = (props: IPostSection) => {
           </TitleBlock>
         </Row>
       </div>
-      <Row gutter={26} style={{ width: "100%", padding: "0 45px" }}>
+      <Row gutter={26} style={{ padding: "0 45px" }}>
         <Col className="gutter-row" span={12}>
           <div
             style={{
@@ -44,7 +43,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[0]?.image}
-              style={{ width: "100%", height: "100%" }}
+              style={{ height: 400, width: "100%" }}
             />
             <div style={{ position: "absolute", bottom: 0, padding: 20 }}>
               <p style={{ fontSize: 20, color: "white", fontWeight: "700" }}>
@@ -64,7 +63,6 @@ const PostSection = (props: IPostSection) => {
         >
           <div
             style={{
-              width: "100%",
               height: 190,
               position: "relative",
               overflow: "hidden",
@@ -79,7 +77,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[1]?.image}
-              style={{ width: "100%", height: 200 }}
+              style={{ height: 200 }}
             />
             <div
               style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}
@@ -106,7 +104,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[2]?.image}
-              style={{ width: "100%", height: 200 }}
+              style={{ height: 200 }}
             />
             <div
               style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}

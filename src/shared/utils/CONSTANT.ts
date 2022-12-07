@@ -55,3 +55,5 @@ export const NAME_REGEX =
 export const EMAIL_REGEX =
   /^(([^<>()[\]\.,;!_:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 export const EMAIL_REGEX_2 = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+export const SCREEN_WIDTH = window.screen.width
