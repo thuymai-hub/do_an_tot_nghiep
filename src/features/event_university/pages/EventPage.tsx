@@ -98,6 +98,7 @@ export const EventPage: React.FC = () => {
   const [postType, setPostType] = React.useState<number>();
   const [totalItem, setTotalItems] = React.useState<number>(0);
   const [dataSource, setDataSource] = React.useState<any>([]);
+  console.log("🚀 ~ file: EventPage.tsx:101 ~ dataSource", dataSource);
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -113,8 +114,8 @@ export const EventPage: React.FC = () => {
   });
 
   const onSearch = () => {
-    if (search && !postType) {
-      setLoading(true);
+    setLoading(true);
+    if (search) {
       const matchedData = fullDataSource.filter((item: any) =>
         item?.titlePost?.toLowerCase().includes(search?.toLocaleLowerCase())
       );
@@ -124,37 +125,8 @@ export const EventPage: React.FC = () => {
         setDataSource(matchedData);
         setTotalItems(matchedData.length);
       }, 500);
-    } else if (!search && postType) {
-      setLoading(true);
-      const matchedData = fullDataSource.filter(
-        (item: any) => Number(item.postType) === postType
-      );
-
-      setTimeout(() => {
-        setLoading(false);
-        setDataSource(matchedData);
-        setTotalItems(matchedData.length);
-      }, 500);
-    } else if (search && postType) {
-      setLoading(true);
-      const matchedData = fullDataSource.filter(
-        (item: any) =>
-          Number(item.postType) === postType &&
-          item.title.toLowerCase().includes(search?.toLocaleLowerCase())
-      );
-
-      setTimeout(() => {
-        setLoading(false);
-        setDataSource(matchedData);
-        setTotalItems(matchedData.length);
-      }, 500);
     } else {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setDataSource(fullDataSource);
-        setTotalItems(fullDataSource.length);
-      }, 500);
+      setDataSource(fullDataSource);
     }
   };
 
@@ -228,7 +200,7 @@ export const EventPage: React.FC = () => {
 
   React.useEffect(() => {
     onSearch();
-  }, [search, postType]);
+  }, [search]);
 
   return (
     <Spin spinning={loading}>

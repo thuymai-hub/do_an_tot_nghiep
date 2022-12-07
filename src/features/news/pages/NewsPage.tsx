@@ -185,7 +185,6 @@ export const NewsPage: React.FC = () => {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
             titlePost: item?.acf?.title_post,
@@ -198,6 +197,10 @@ export const NewsPage: React.FC = () => {
           setDataSource(convertData);
           setFullDataSource(convertData);
           setLoading(false);
+          console.log(
+            "🚀 ~ file: NewsPage.tsx:201 ~ getDataSource ~ convertData",
+            convertData
+          );
         },
         (error) => {
           console.log("error", error);
@@ -245,9 +248,9 @@ export const NewsPage: React.FC = () => {
     getDataSource();
   }, []);
 
-  React.useEffect(() => {
-    onSearch();
-  }, [search, postType]);
+  // React.useEffect(() => {
+  //   onSearch();
+  // }, [search, postType]);
 
   return (
     <Spin spinning={loading}>
