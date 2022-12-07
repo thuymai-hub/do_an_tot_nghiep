@@ -83,6 +83,7 @@ const HomePagePublic = () => {
             endDate: item?.acf?.end_date,
             status: item?.acf?.status,
             image: item?.acf?.image,
+            isFutureEvent: item?.acf?.is_future_event,
           }));
           setEventPosts(convertData);
           setLoading(false);

@@ -10,7 +10,13 @@ interface IEventPostSection {
 
 const EventPostSection = (props: IEventPostSection) => {
   const { eventPosts } = props;
+  console.log(
+    "🚀 ~ file: EventPostsSection.tsx ~ line 13 ~ EventPostSection ~ eventPosts",
+    eventPosts
+  );
   const navigate = useNavigate();
+  const [futureEvents, setFutureEvents] = React.useState<any[]>([]);
+  const [normalEvents, setNormalEvents] = React.useState<any[]>([]);
 
   const renderItem = (item: any, index: number) => {
     return (
@@ -36,6 +42,21 @@ const EventPostSection = (props: IEventPostSection) => {
     );
   };
 
+  const splitPosts = () => {
+    const data = eventPosts.filter(
+      (item: any) => Number(item.isFutureEvent) === 1
+    );
+    setFutureEvents(data);
+    const normalData = eventPosts.filter(
+      (item: any) => Number(item.isFutureEvent) !== 1
+    );
+    setNormalEvents(normalData);
+  };
+
+  React.useEffect(() => {
+    splitPosts();
+  }, []);
+
   return (
     <div
       id="event_posts"
@@ -43,7 +64,7 @@ const EventPostSection = (props: IEventPostSection) => {
     >
       <div>
         <Row
-          style={{ justifyContent: "center", marginBottom: 30, width: "90%" }}
+          style={{ justifyContent: "center", marginBottom: 30, width: "100%" }}
         >
           <div
             style={{
@@ -68,12 +89,13 @@ const EventPostSection = (props: IEventPostSection) => {
         style={{
           padding: "0 50px",
           height: 450,
-          width: "90%",
+          width: "100%",
+          marginTop: 80,
         }}
       >
         <Col span={15}>
           <Carousel autoplay style={{ width: "100%", height: 450 }}>
-            {eventPosts.map((item: any, index: number) =>
+            {normalEvents.map((item: any, index: number) =>
               renderItem(item, index)
             )}
           </Carousel>
@@ -95,48 +117,26 @@ const EventPostSection = (props: IEventPostSection) => {
                 >
                   Sự kiện sắp diễn ra
                 </p>
-                <Row gutter={16} style={{ cursor: "pointer" }}>
-                  <Col className="gutter-row" span={4}>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
-                      style={{ width: 30, height: 30 }}
-                    />
-                  </Col>
-                  <Col className="gutter-row" span={20}>
-                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
-                    <div style={{ marginTop: -10 }}>
-                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row gutter={16} style={{ cursor: "pointer" }}>
-                  <Col className="gutter-row" span={4}>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
-                      style={{ width: 30, height: 30 }}
-                    />
-                  </Col>
-                  <Col className="gutter-row" span={20}>
-                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
-                    <div style={{ marginTop: -10 }}>
-                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row gutter={16} style={{ cursor: "pointer" }}>
-                  <Col className="gutter-row" span={4}>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
-                      style={{ width: 30, height: 30 }}
-                    />
-                  </Col>
-                  <Col className="gutter-row" span={20}>
-                    <p style={{ fontSize: 18, fontWeight: "600" }}>Sự kiện 1</p>
-                    <div style={{ marginTop: -10 }}>
-                      <p style={{ fontSize: 13, color: "gray" }}>22-12-2022</p>
-                    </div>
-                  </Col>
-                </Row>
+                {futureEvents.map((item: any, index: number) => (
+                  <Row gutter={16} style={{ cursor: "pointer" }}>
+                    <Col className="gutter-row" span={4}>
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
+                        style={{ width: 30, height: 30 }}
+                      />
+                    </Col>
+                    <Col className="gutter-row" span={20}>
+                      <p style={{ fontSize: 18, fontWeight: "600" }}>
+                        {item.title}
+                      </p>
+                      <div style={{ marginTop: -10 }}>
+                        <p style={{ fontSize: 13, color: "gray" }}>
+                          {item?.endDate}
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                ))}
               </div>
             </Col>
           </Row>

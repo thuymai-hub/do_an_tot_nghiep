@@ -13,7 +13,7 @@ interface IContent {
 const Content = (props: IContent) => {
   const { posts, eventPosts, subjects } = props;
   return (
-    <div style={{ maxWidth: 1564 }}>
+    <div>
       <SubBar />
       <PostSection posts={posts} />
       <EventPostSection eventPosts={eventPosts} />

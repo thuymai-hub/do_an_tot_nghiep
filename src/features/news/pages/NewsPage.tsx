@@ -56,7 +56,6 @@ export const NewsPage: React.FC = () => {
       title: <b>Loại bài viết</b>,
       width: "12%",
       dataIndex: "postType",
-      render: (value: string) => renderPostType(value),
     },
     // {
     //   title: <b>Lượt yêu thích</b>,
@@ -122,6 +121,7 @@ export const NewsPage: React.FC = () => {
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [listTypes, setListTyoes] = React.useState<Array<any>>([]);
   const [paging, setPaging] = React.useState<any>({
     total: 0,
     current: 1,
@@ -148,7 +148,7 @@ export const NewsPage: React.FC = () => {
     } else if (!search && postType) {
       setLoading(true);
       const matchedData = fullDataSource.filter(
-        (item: any) => Number(item.postType) === postType
+        (item: any) => Number(item?.postTypeFull?.split("-")[0]) === postType
       );
 
       setTimeout(() => {
@@ -157,11 +157,15 @@ export const NewsPage: React.FC = () => {
         setTotalItems(matchedData.length);
       }, 500);
     } else if (search && postType) {
+      console.log(
+        "🚀 ~ file: NewsPage.tsx ~ line 160 ~ onSearch ~ search",
+        search
+      );
       setLoading(true);
       const matchedData = fullDataSource.filter(
         (item: any) =>
-          Number(item.postType) === postType &&
-          item.title.toLowerCase().includes(search?.toLocaleLowerCase())
+          Number(item?.postTypeFull?.split("-")[0]) === postType &&
+          item?.titlePost?.toLowerCase().includes(search?.toLocaleLowerCase())
       );
 
       setTimeout(() => {
@@ -191,7 +195,8 @@ export const NewsPage: React.FC = () => {
             titlePost: item?.acf?.title_post,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
             loveCount: item?.acf?.love_count,
-            postType: item?.acf?.post_type,
+            postType: item?.acf?.post_type.split("-")[1],
+            postTypeFull: item?.acf?.post_type,
             status: item?.acf?.is_confirmed,
           }));
           setTotalItems(convertData.length);
@@ -241,8 +246,30 @@ export const NewsPage: React.FC = () => {
       );
   };
 
+  const getListNewsTypes = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/news_types")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListTyoes(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     getDataSource();
+    getListNewsTypes();
   }, []);
 
   React.useEffect(() => {
@@ -269,7 +296,7 @@ export const NewsPage: React.FC = () => {
         }
         filterComponent={
           <Filter
-            typePosts={typePosts}
+            typePosts={listTypes}
             search={search}
             setSearch={setSearch}
             setPostType={setPostType}

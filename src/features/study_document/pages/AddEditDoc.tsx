@@ -21,24 +21,6 @@ import UploadComponent from "shared/components/UploadComponent";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import { IDetailSubject } from "../components/interface";
 
-const courses = [
-  {
-    id: 1,
-    value: 1,
-    label: "Công nghệ thông tin",
-  },
-  {
-    id: 2,
-    value: 2,
-    label: "Thiết kế đồ hoạ",
-  },
-  {
-    id: 3,
-    value: 3,
-    label: "Quản trị kinh doanh",
-  },
-];
-
 const AddEditDoc = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,7 +29,9 @@ const AddEditDoc = () => {
   const [listImages, setListImages] = React.useState<Array<any>>([]);
   const [listFiles, setListFiles] = React.useState<Array<any>>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [subjectDetail, setSubjectDetail] = React.useState<IDetailSubject>();
+  const [currentCourse, setCurrentCourse] = React.useState<any>();
+  const [listCourse, setListCourse] = React.useState<any[]>([]);
+
   const targetId = location?.state?.id;
 
   const handleChange = (value: string) => {
@@ -72,7 +56,7 @@ const AddEditDoc = () => {
             id: result?.acf?.id,
             title: result?.acf?.title,
             description: result?.acf?.content,
-            courseType: Number(result?.acf?.course_type),
+            courseType: result?.acf?.course_type.split("-")[1],
           });
           setListImages([result?.acf?.image]);
           setListFiles([result?.acf?.file_docs]);
@@ -83,12 +67,33 @@ const AddEditDoc = () => {
         }
       );
   };
+
+  const getListCourse = () => {
+    setIsLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/courses")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListCourse(convertData);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setIsLoading(false);
+        }
+      );
+  };
+
   const onFinish = async (values: any) => {
     setIsLoading(true);
     if (!targetId) {
       const newPost = {
         title: values.title,
-        course_type: values.courseType,
+        course_type: values?.courseType,
         content: values.description,
         image: listImages[0],
         file_docs: listFiles[0],
@@ -177,6 +182,10 @@ const AddEditDoc = () => {
     if (targetId) getDetailData();
   }, [targetId]);
 
+  React.useEffect(() => {
+    getListCourse();
+  }, []);
+
   return (
     <Spin spinning={isLoading}>
       <Container
@@ -226,7 +235,7 @@ const AddEditDoc = () => {
                     disabled={targetId ? true : false}
                     placeholder="Chọn loại khoá học"
                     onChange={handleChange}
-                    options={courses}
+                    options={listCourse}
                   />
                 </Form.Item>
               </Col>

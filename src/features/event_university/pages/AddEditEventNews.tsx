@@ -46,6 +46,7 @@ const AddEditEventNews = () => {
         start_date: values.date[0].format().slice(0, 10),
         end_date: values.date[1].format().slice(0, 10),
         status: 1,
+        is_future_event: values.isFutureEvent ? 1 : 0,
       };
       fetch(`http://localhost:8000/wp-json/wp/v2/event_posts`, {
         headers: {
@@ -86,6 +87,7 @@ const AddEditEventNews = () => {
         image: listImages[0],
         start_date: values.date[0].format().slice(0, 10),
         end_date: values.date[1].format().slice(0, 10),
+        is_future_event: values.isFutureEvent ? 1 : 0,
       };
       fetch(`http://localhost:8000/wp-json/wp/v2/event_posts/${targetId}`, {
         headers: {
@@ -264,7 +266,7 @@ const AddEditEventNews = () => {
           autoComplete="off"
         >
           <Row gutter={6}>
-            <Col span={12}>
+            <Col span={11}>
               <Form.Item
                 label="Tên sự kiện"
                 name="eventTitle"
@@ -275,6 +277,7 @@ const AddEditEventNews = () => {
                 <Input allowClear placeholder="Nhập tên sự kiện" />
               </Form.Item>
             </Col>
+            <Col span={1} />
             <Col span={12}>
               <Form.Item
                 label="Thời gian diễn ra"
@@ -296,6 +299,19 @@ const AddEditEventNews = () => {
           </Row>
           <br />
           <Row gutter={6}>
+            <Col span={1} />
+            <Col span={11}>
+              <Form.Item name="isFutureEvent" valuePropName="checked" label="">
+                <Checkbox>Sự kiện sắp diễn ra</Checkbox>
+              </Form.Item>
+            </Col>
+            <Col span={11}>
+              <Form.Item name="isSentNoti" valuePropName="checked" label="">
+                <Checkbox>Gửi thông báo</Checkbox>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
             <Col span={13}>
               <Form.Item
                 label="Ảnh sự kiện"
@@ -325,11 +341,6 @@ const AddEditEventNews = () => {
                   }
                   onSuccessUpload={(url: any) => setListImages([url])}
                 />
-              </Form.Item>
-            </Col>
-            <Col span={11}>
-              <Form.Item name="isSentNoti" valuePropName="checked" label="">
-                <Checkbox onChange={onChange}>Gửi thông báo</Checkbox>
               </Form.Item>
             </Col>
           </Row>

@@ -34,6 +34,7 @@ const AddEditNews = () => {
   const [isConfirmed, setIsConfirmed] = React.useState<boolean>();
   const [description, setDescription] = React.useState<any>("");
   const [listImages, setListImages] = React.useState<Array<any>>([]);
+  const [listTypes, setListTypes] = React.useState<Array<any>>([]);
 
   const getDetailData = () => {
     setIsLoading(true);
@@ -53,7 +54,7 @@ const AddEditNews = () => {
             id: result?.acf?.id,
             titlePost: result?.acf?.title_post,
             description: result?.acf?.description,
-            newsType: Number(result?.acf?.post_type),
+            newsType: result?.acf?.post_type.split("-")[1],
             isSentNoti: Number(result?.acf?.is_send_noti) === 1 ? true : false,
           });
           setIsConfirmed(result?.acf?.is_confirmed === "1" ? true : false);
@@ -122,7 +123,7 @@ const AddEditNews = () => {
       const newPost = {
         title_post: values.titlePost,
         love_count: 0,
-        post_type: values.newsType,
+        // post_type: values.newsType,
         is_send_noti: values.isSentNoti ? 1 : 0,
         content: description,
         image: listImages[0],
@@ -161,36 +162,25 @@ const AddEditNews = () => {
     }
   };
 
-  const onConfirmPosts = () => {
-    fetch(`http://localhost:8000/wp-json/wp/v2/posts/${targetId}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${CliCookieService.get(
-          CLI_COOKIE_KEYS.ACCESS_TOKEN
-        )}`,
-      },
-      body: JSON.stringify({
-        fields: {
-          is_confirmed: 1,
+  const getListNewsTypes = () => {
+    setIsLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/news_types")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListTypes(convertData);
+          setIsLoading(false);
         },
-        status: "publish",
-      }),
-      method: "PUT",
-    })
-      .then((res: any) => res.json())
-      .then((res: any) => {
-        setIsLoading(false);
-        message.success("Phê duyệt bài viết mới thành công!");
-        navigate(PROTECTED_ROUTES_PATH.NEWS);
-      })
-      .catch((err) => {
-        message.error("Đã có lỗi xảy ra!");
-        console.log("error: ", err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        (error) => {
+          console.log("error", error);
+          setIsLoading(false);
+        }
+      );
   };
 
   const onChange = (e: CheckboxChangeEvent) => {
@@ -202,6 +192,10 @@ const AddEditNews = () => {
       getDetailData();
     }
   }, [targetId]);
+
+  React.useEffect(() => {
+    getListNewsTypes();
+  }, []);
 
   return (
     <Spin spinning={isLoading}>
@@ -218,28 +212,6 @@ const AddEditNews = () => {
                 onClickButton={() => form.submit()}
               />,
             ]}
-            // extra={
-            //   targetId && !isConfirmed
-            //     ? [
-            //         <ButtonAdd
-            //           htmlType="submit"
-            //           text={"Lưu"}
-            //           onClickButton={() => form.submit()}
-            //         />,
-            //         <ButtonSave
-            //           htmlType="submit"
-            //           text={"Phê duyệt"}
-            //           onClickButton={() => onConfirmPosts()}
-            //         />,
-            //       ]
-            //     : [
-            //         <ButtonAdd
-            //           htmlType="submit"
-            //           text={"Lưu"}
-            //           onClickButton={() => form.submit()}
-            //         />,
-            //       ]
-            // }
           />
         }
         contentComponent={
@@ -275,7 +247,7 @@ const AddEditNews = () => {
                 >
                   <Select
                     placeholder="Chọn loại bài viết"
-                    options={typePosts}
+                    options={listTypes}
                     disabled={targetId ? true : false}
                   />
                 </Form.Item>

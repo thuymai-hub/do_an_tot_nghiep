@@ -34,11 +34,11 @@ const Filter = (props: IFilter) => {
           style={{ width: "100%" }}
           placeholder="Chọn danh mục"
           allowClear
-          onChange={(value: number | undefined) => {
+          onChange={(value: string | undefined) => {
             if (value === undefined) {
               setPostType(undefined);
             } else {
-              setPostType(value);
+              setPostType(Number(value.split("-")[0]));
             }
           }}
         >

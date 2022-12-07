@@ -7,7 +7,7 @@ const SubBar = () => {
       gutter={26}
       justify={"center"}
       style={{
-        width: "78%",
+        width: "86%",
         padding: "30px 30px 10px",
         borderBottom: "1px solid lightgray",
         marginLeft: "5%",
@@ -43,18 +43,20 @@ const SubBar = () => {
       <Col className="gutter-row sub-nav-bar-item " span={4}>
         <a href="/web-view-post">
           <img
-            src="https://cdn-icons-png.flaticon.com/128/741/741867.png"
+            src="https://cdn-icons-png.flaticon.com/128/2540/2540832.png"
             style={{ width: 30, height: 30, margin: "auto" }}
           />
           <p className="sub-nav-bar-title">Tin tức</p>
         </a>
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/128/1305/1305141.png"
-          style={{ width: 30, height: 30, margin: "auto" }}
-        />
-        <p className="sub-nav-bar-title">Nghiên cứu</p>
+        <a href="/web-view-forum">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/2518/2518227.png"
+            style={{ width: 30, height: 30, margin: "auto" }}
+          />
+          <p className="sub-nav-bar-title">Diễn đàn</p>
+        </a>
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
         <img

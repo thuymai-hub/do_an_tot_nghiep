@@ -6,7 +6,7 @@ import "./style.css";
 
 const Header = () => {
   return (
-    <Row style={{ height: 550, width: "90%" }}>
+    <Row>
       <Col span={24} style={{ position: "relative" }}>
         <div
           style={{

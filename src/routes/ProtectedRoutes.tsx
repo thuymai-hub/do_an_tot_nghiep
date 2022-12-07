@@ -18,11 +18,16 @@ import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import { PROTECTED_ROUTES_PATH } from "./RoutesPath";
 import AddEditTeacherSubject from "features/teacher/AddEditTeacherSubject";
 import TeacherSubjectPage from "features/teacher/TeacherSubjectPage";
+import ConfigPage from "features/config/pages/ConfigPage";
 
 export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
     element: <HomePage />,
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.CONFIG,
+    element: <ConfigPage />,
   },
   {
     path: PROTECTED_ROUTES_PATH.ADD_EDIT_TEACHER_COURSE,

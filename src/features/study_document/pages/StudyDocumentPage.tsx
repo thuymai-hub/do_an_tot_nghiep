@@ -38,7 +38,6 @@ export const StudyDocumentPage: React.FC = () => {
       title: <b>Tên khoá học</b>,
       width: "20%",
       dataIndex: "courseType",
-      render: (value: string) => renderCourseType(value),
     },
     {
       title: <b>Ngày tạo</b>,
@@ -96,6 +95,7 @@ export const StudyDocumentPage: React.FC = () => {
   const [dataSource, setDataSource] = React.useState<any>([]);
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>();
+  const [listCourse, setListCourse] = React.useState<any[]>([]);
 
   const getDataSource = () => {
     setLoading(true);
@@ -108,7 +108,8 @@ export const StudyDocumentPage: React.FC = () => {
             id: item?.id,
             title: item?.acf?.title,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
-            courseType: item?.acf?.course_type,
+            courseType: item?.acf?.course_type.split("-")[1],
+            courseTypeFull: item?.acf?.course_type,
             author: item?.acf?.author,
           }));
           setTotalItems(convertData.length);
@@ -138,7 +139,8 @@ export const StudyDocumentPage: React.FC = () => {
     } else if (!search && courseType) {
       setLoading(true);
       const matchedData = fullDataSource.filter(
-        (item: any) => Number(item.courseType) === courseType
+        (item: any) =>
+          Number(item?.courseTypeFull?.split("-")[0]) === courseType
       );
 
       setTimeout(() => {
@@ -150,8 +152,8 @@ export const StudyDocumentPage: React.FC = () => {
       setLoading(true);
       const matchedData = fullDataSource.filter(
         (item: any) =>
-          Number(item.courseType) === courseType &&
-          item.title.toLowerCase().includes(search?.toLocaleLowerCase())
+          Number(item?.courseTypeFull?.split("-")[0]) === courseType &&
+          item?.title?.toLowerCase().includes(search?.toLocaleLowerCase())
       );
 
       setTimeout(() => {
@@ -195,8 +197,30 @@ export const StudyDocumentPage: React.FC = () => {
       );
   };
 
+  const getListCourse = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/courses")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListCourse(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     getDataSource();
+    getListCourse();
   }, []);
 
   React.useEffect(() => {
@@ -225,8 +249,8 @@ export const StudyDocumentPage: React.FC = () => {
           <Filter
             search={search}
             setSearch={setSearch}
-            courseType={courseType}
             setCourseType={setCourseType}
+            listCourse={listCourse}
           />
         }
         contentComponent={

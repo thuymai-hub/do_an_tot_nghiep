@@ -16,7 +16,7 @@ const PostSection = (props: IPostSection) => {
     <div style={{ marginTop: 100 }}>
       <div>
         <Row
-          style={{ justifyContent: "center", marginBottom: 30, width: "90%" }}
+          style={{ justifyContent: "center", marginBottom: 30, width: "100%" }}
         >
           <TitleBlock>
             <a href="web-view-post">
@@ -25,7 +25,7 @@ const PostSection = (props: IPostSection) => {
           </TitleBlock>
         </Row>
       </div>
-      <Row gutter={26} style={{ width: "90%", padding: "0 45px" }}>
+      <Row gutter={26} style={{ width: "100%", padding: "0 45px" }}>
         <Col className="gutter-row" span={12}>
           <div
             style={{

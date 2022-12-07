@@ -49,7 +49,7 @@ const UploadComponent: React.FC<IProps> = ({
 
   const beforeUploadFile = (file: any): any => {
     let fileSize: number = 2;
-    const validateFileSize: boolean = file.size > fileSize;
+    const validateFileSize: boolean = file.size / 1024 / 1024 > fileSize;
 
     if (validateFileSize) {
       // openNotificationWithIcon(

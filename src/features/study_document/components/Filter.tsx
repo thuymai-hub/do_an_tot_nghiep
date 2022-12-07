@@ -6,9 +6,9 @@ import styled from "styled-components";
 
 interface IFilter {
   search?: string;
-  courseType: any;
   setCourseType: React.Dispatch<React.SetStateAction<number | undefined>>;
   setSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
+  listCourse: any;
 }
 
 export const typePosts = [
@@ -18,7 +18,7 @@ export const typePosts = [
 ];
 
 const Filter = (props: IFilter) => {
-  const { search, setSearch, courseType, setCourseType } = props;
+  const { search, setSearch, setCourseType, listCourse } = props;
 
   return (
     <CustomRow gutter={[16, 16]}>
@@ -39,15 +39,15 @@ const Filter = (props: IFilter) => {
           style={{ width: "100%" }}
           placeholder="Chọn khoá học"
           allowClear
-          onChange={(value: number | undefined) => {
+          onChange={(value: string | undefined) => {
             if (value === undefined) {
               setCourseType(undefined);
             } else {
-              setCourseType(value);
+              setCourseType(Number(value.split("-")[0]));
             }
           }}
         >
-          {typePosts.map((item: any, index: number) => (
+          {listCourse.map((item: any, index: number) => (
             <Select.Option key={index} value={item.value}>
               {item.label}
             </Select.Option>
