@@ -4,14 +4,18 @@ import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { IFormatData } from "../components/interface";
-import { totalPostBarChart } from "../components/barChart";
+import {
+  totalPostBarChart,
+  totalSubjectBarChart,
+} from "../components/barChart";
 import { totalAccountBarChart } from "../components/accountChart";
 
 const HomePage: React.FC = () => {
-  const [accountData, setAccountData] = React.useState<IFormatData[]>([]);
   const [postData, setPostData] = React.useState<any>();
+  const [subjectData, setSubjectData] = React.useState<any>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [listNewsType, setListNewsTypes] = React.useState<any[]>([]);
+  const [listCourse, setListCourse] = React.useState<any[]>([]);
 
   const getListNewsTypes = () => {
     setLoading(true);
@@ -35,25 +39,44 @@ const HomePage: React.FC = () => {
       );
   };
 
-  const getDataSource = () => {
+  const getListCourse = () => {
     setLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/posts")
+    fetch("http://localhost:8000/wp-json/wp/v2/courses")
       .then((res) => res.json())
       .then(
         (result) => {
           console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
+            title: item?.acf?.title,
+            date: item?.acf?.created_date,
+          }));
+          setListCourse(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
+  const getDataSource = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/posts")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          const convertData = result.map((item: any) => ({
+            id: item?.id,
             postType: item?.acf?.post_type.split("-")[0],
           }));
-
           const data = listNewsType.map((item: any) => ({
             name: item?.title,
             y: convertData.filter(
               (itemData: any) => Number(itemData.postType) == Number(item.id)
             ).length,
           }));
-
           setPostData(data);
           setLoading(false);
         },
@@ -64,34 +87,23 @@ const HomePage: React.FC = () => {
       );
   };
 
-  const getAccountData = () => {
+  const getSubjectData = () => {
     setLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/accounts")
+    fetch("http://localhost:8000/wp-json/wp/v2/subjects")
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
-            accountType: item?.acf?.account_type,
+            courseType: item?.acf?.course_type.split("-")[0],
           }));
-          setAccountData([
-            {
-              name: "Quản trị viên",
-              y: convertData.filter((item: any) => item.accountType === "1")
-                .length,
-            },
-            {
-              name: "Giảng viên",
-              y: convertData.filter((item: any) => item.accountType === "2")
-                .length,
-            },
-            {
-              name: "Sinh viên",
-              y: convertData.filter((item: any) => item.accountType === "3")
-                .length,
-            },
-          ]);
+          const data = listCourse.map((item: any) => ({
+            name: item?.title,
+            y: convertData.filter(
+              (itemData: any) => Number(itemData.courseType) == Number(item.id)
+            ).length,
+          }));
+          setSubjectData(data);
           setLoading(false);
         },
         (error) => {
@@ -103,11 +115,20 @@ const HomePage: React.FC = () => {
 
   React.useEffect(() => {
     getListNewsTypes();
-    setTimeout(() => {
-      getDataSource();
-    }, 500);
-    getAccountData();
+    getListCourse();
   }, []);
+
+  React.useEffect(() => {
+    if (listNewsType.length !== 0) {
+      getDataSource();
+    }
+  }, [listNewsType]);
+
+  React.useEffect(() => {
+    if (listCourse.length !== 0) {
+      getSubjectData();
+    }
+  }, [listCourse]);
 
   return (
     <Spin spinning={loading}>
@@ -141,11 +162,22 @@ const HomePage: React.FC = () => {
               <Col span={12}>
                 <HighchartsReact
                   highcharts={Highcharts}
-                  options={totalAccountBarChart(accountData)}
+                  options={totalSubjectBarChart(
+                    subjectData,
+                    "SỐ LƯỢNG MÔN HỌC"
+                  )}
                   updateArgs={[true]}
                   containerProps={{ style: { height: "100%", width: "100%" } }}
                 />
               </Col>
+              {/* <Col span={12}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={totalAccountBarChart(accountData)}
+                  updateArgs={[true]}
+                  containerProps={{ style: { height: "100%", width: "100%" } }}
+                />
+              </Col> */}
             </Row>
           </div>
         }

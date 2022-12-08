@@ -321,7 +321,7 @@ const AddEditEventNews = () => {
                 // ]}
               >
                 <UploadComponent
-                  accept=".png"
+                  accept=".jpg"
                   isUploadServerWhenUploading
                   uploadType="single"
                   listType="picture-card"

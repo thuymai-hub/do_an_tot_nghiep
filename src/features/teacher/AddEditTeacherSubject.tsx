@@ -48,6 +48,7 @@ const AddEditTeacherSubject = () => {
   const [listFiles, setListFiles] = React.useState<Array<any>>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [subjectDetail, setSubjectDetail] = React.useState<IDetailSubject>();
+  const [listCourse, setListCourse] = React.useState<any[]>([]);
   const targetId = location?.state?.id;
 
   const handleChange = (value: string) => {
@@ -83,6 +84,7 @@ const AddEditTeacherSubject = () => {
         }
       );
   };
+
   const onFinish = async (values: any) => {
     setIsLoading(true);
     if (!targetId) {
@@ -173,9 +175,34 @@ const AddEditTeacherSubject = () => {
     }
   };
 
+  const getListCourse = () => {
+    setIsLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/courses")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListCourse(convertData);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setIsLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     if (targetId) getDetailData();
   }, [targetId]);
+
+  React.useEffect(() => {
+    getListCourse();
+  }, []);
 
   return (
     <Spin spinning={isLoading}>
@@ -229,7 +256,7 @@ const AddEditTeacherSubject = () => {
                     disabled={targetId ? true : false}
                     placeholder="Chọn loại khoá học"
                     onChange={handleChange}
-                    options={courses}
+                    options={listCourse}
                   />
                 </Form.Item>
               </Col>

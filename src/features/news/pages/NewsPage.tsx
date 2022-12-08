@@ -275,9 +275,9 @@ export const NewsPage: React.FC = () => {
     getListNewsTypes();
   }, []);
 
-  // React.useEffect(() => {
-  //   onSearch();
-  // }, [search, postType]);
+  React.useEffect(() => {
+    onSearch();
+  }, [search, postType]);
 
   return (
     <Spin spinning={loading}>

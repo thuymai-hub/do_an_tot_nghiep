@@ -111,7 +111,7 @@ const TeacherSubjectPage = () => {
   return (
     <Spin spinning={loading}>
       <Container>
-        <h2 style={{ fontSize: 24, fontWeight: "bold" }}>Khoá học của tôi</h2>
+        <h2 style={{ fontSize: 24, fontWeight: "bold" }}>Môn học của tôi</h2>
         <ButtonAdd
           text="Thêm mới"
           onClickButton={() =>

@@ -101,8 +101,16 @@ export const ForumPage: React.FC = () => {
 
   const checkAlreadyLike = (arr: string) => {
     const listIds = JSON.parse(arr);
+    console.log(
+      "🚀 ~ file: ForumPage.tsx:104 ~ checkAlreadyLike ~ listIds",
+      listIds
+    );
 
     const check = listIds.filter((item: any) => Number(item) === userInfor?.id);
+    console.log(
+      "🚀 ~ file: ForumPage.tsx:107 ~ checkAlreadyLike ~ userInfor?.id",
+      userInfor?.id
+    );
     if (check.length > 0) return true;
     return false;
   };
@@ -267,13 +275,19 @@ export const ForumPage: React.FC = () => {
   };
 
   const likePost = (idPost: number) => {
+    if (
+      !CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN) ||
+      CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN)?.length === 0
+    ) {
+      message.error("Vui lòng đăng nhập để thực hiện chức năng này!");
+      return;
+    }
     const newPerson = userInfor.id;
-
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
 
-    const targetListLove = JSON.parse(targetPost[0]?.peopleList);
+    const targetListLove = targetPost[0]?.peopleList;
 
     targetListLove.push(newPerson);
 
@@ -310,13 +324,22 @@ export const ForumPage: React.FC = () => {
   };
 
   const unLikePost = (idPost: number) => {
+    if (
+      !CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN) ||
+      CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN)?.length === 0
+    ) {
+      message.error("Vui lòng đăng nhập để thực hiện chức năng này!");
+      return;
+    }
     const targetPersonId = userInfor?.id;
 
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
 
-    const targetListLove = JSON.parse(targetPost[0]?.peopleList);
+    // const targetListLove = JSON.parse(targetPost[0]?.peopleList);
+    const targetListLove = targetPost[0]?.peopleList;
+
     const newListLove = targetListLove?.filter(
       (item: any) => Number(item) !== targetPersonId
     );

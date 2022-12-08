@@ -117,6 +117,13 @@ const ForumPagePublic = () => {
   };
 
   const likePost = (idPost: number) => {
+    if (
+      !CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN) ||
+      CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN)?.length === 0
+    ) {
+      message.error("Vui lòng đăng nhập để thực hiện chức năng này!");
+      return;
+    }
     const newPerson = userInfor.id;
 
     const targetPost = fullDataSource?.filter(
@@ -168,6 +175,13 @@ const ForumPagePublic = () => {
   };
 
   const unLikePost = (idPost: number) => {
+    if (
+      !CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN) ||
+      CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN)?.length === 0
+    ) {
+      message.error("Vui lòng đăng nhập để thực hiện chức năng này!");
+      return;
+    }
     const targetPersonId = userInfor.id;
 
     const targetPost = fullDataSource?.filter(
