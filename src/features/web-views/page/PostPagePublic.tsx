@@ -13,9 +13,14 @@ const PostPagePublic = () => {
   const [posts, setPosts] = React.useState<any>([]);
   const [postType, setPostType] = React.useState<number>();
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
+  const [listTypes, setListTypes] = React.useState<Array<any>>([]);
 
-  const handleChange = (value: number | undefined) => {
-    setPostType(value);
+  const handleChange = (value: string | undefined) => {
+    if (value) {
+      setPostType(Number(value?.split("-")[0]));
+    } else {
+      setPostType(undefined);
+    }
   };
 
   const renderPostItem = (item: any, index: number) => {
@@ -43,7 +48,7 @@ const PostPagePublic = () => {
               cursor: "pointer",
             }}
           />
-          <div className="tag-block">{renderPostType(item?.postType)}</div>
+          <div className="tag-block">{item?.postType}</div>
           <div className="info-block">
             <p
               style={{
@@ -88,11 +93,16 @@ const PostPagePublic = () => {
             titlePost: item?.acf?.title_post,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
             loveCount: item?.acf?.love_count,
-            postType: item?.acf?.post_type,
+            postType: item?.acf?.post_type.split("-")[1],
+            postTypeFull: item?.acf?.post_type,
             status: item?.acf?.is_confirmed,
             image: item?.acf?.image,
           }));
           setPosts(convertData);
+          console.log(
+            "🚀 ~ file: PostPagePublic.tsx:101 ~ getPosts ~ convertData",
+            convertData
+          );
           setFullDataSource(convertData);
           setLoading(false);
         },
@@ -107,7 +117,7 @@ const PostPagePublic = () => {
     setLoading(true);
     if (postType) {
       const matchedData = fullDataSource.filter(
-        (item: any) => Number(item.postType) === postType
+        (item: any) => Number(item?.postTypeFull?.split("-")[0]) === postType
       );
 
       setTimeout(() => {
@@ -122,8 +132,29 @@ const PostPagePublic = () => {
     }
   };
 
+  const getListNewsTypes = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/news_types")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListTypes(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     getPosts();
+    getListNewsTypes();
   }, []);
 
   React.useEffect(() => {
@@ -141,12 +172,7 @@ const PostPagePublic = () => {
               placeholder="Loại bài viết"
               onChange={handleChange}
               allowClear
-              options={[
-                { label: "Giới thiệu", value: 1 },
-                { label: "Tuyển sinh", value: 2 },
-                { label: "Đào tạo", value: 3 },
-                { label: "Nghiên cứu", value: 4 },
-              ]}
+              options={listTypes}
             />
           </Row>
           <br />

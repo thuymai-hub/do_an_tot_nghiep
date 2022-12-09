@@ -1,9 +1,11 @@
 import {
+  Button,
   Col,
   Form,
   Input,
   message,
   PageHeader,
+  Popconfirm,
   Row,
   Select,
   Spin,
@@ -73,7 +75,7 @@ const AddEditTeacherSubject = () => {
             id: result?.acf?.id,
             title: result?.acf?.title,
             description: result?.acf?.content,
-            courseType: Number(result?.acf?.course_type),
+            courseType: result?.acf?.course_type.split("-")[1],
           });
           setListImages([result?.acf?.image]);
           setListFiles([result?.acf?.file_docs]);
@@ -196,6 +198,32 @@ const AddEditTeacherSubject = () => {
       );
   };
 
+  const onDelete = (id: string) => {
+    setIsLoading(true);
+    fetch(`http://localhost:8000/wp-json/wp/v2/subjects/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CliCookieService.get(
+          CLI_COOKIE_KEYS.ACCESS_TOKEN
+        )}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          navigate(PROTECTED_ROUTES_PATH.TEACHER_COURSE);
+          message.success("Xoá môn học thành công!");
+          setIsLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setIsLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     if (targetId) getDetailData();
   }, [targetId]);
@@ -221,6 +249,28 @@ const AddEditTeacherSubject = () => {
                 text="Lưu"
                 onClickButton={() => form.submit()}
               />,
+              <Popconfirm
+                title="Bạn có chắc chắn muốn xoá môn học này?"
+                placement="top"
+                onConfirm={() => onDelete(targetId)}
+                okText="Xoá"
+                cancelText="Huỷ"
+                okButtonProps={{
+                  type: "primary",
+                  danger: true,
+                }}
+                style={{ background: "red" }}
+              >
+                <Button
+                  style={{
+                    background: "red",
+                    color: "white",
+                    borderRadius: 6,
+                  }}
+                >
+                  Xoá
+                </Button>
+              </Popconfirm>,
             ]}
           />
         }

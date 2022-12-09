@@ -121,7 +121,7 @@ export const NewsPage: React.FC = () => {
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [listTypes, setListTyoes] = React.useState<Array<any>>([]);
+  const [listTypes, setListTypes] = React.useState<Array<any>>([]);
   const [paging, setPaging] = React.useState<any>({
     total: 0,
     current: 1,
@@ -157,10 +157,6 @@ export const NewsPage: React.FC = () => {
         setTotalItems(matchedData.length);
       }, 500);
     } else if (search && postType) {
-      console.log(
-        "🚀 ~ file: NewsPage.tsx ~ line 160 ~ onSearch ~ search",
-        search
-      );
       setLoading(true);
       const matchedData = fullDataSource.filter(
         (item: any) =>
@@ -260,7 +256,7 @@ export const NewsPage: React.FC = () => {
             value: `${item?.id}-${item?.acf?.title}`,
             label: item?.acf?.title,
           }));
-          setListTyoes(convertData);
+          setListTypes(convertData);
           setLoading(false);
         },
         (error) => {

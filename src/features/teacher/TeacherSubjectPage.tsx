@@ -31,7 +31,7 @@ const TeacherSubjectPage = () => {
             id: item?.id,
             title: item?.acf?.title,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
-            courseType: item?.acf?.course_type,
+            courseType: item?.acf?.course_type.split("-")[1],
             author: item?.acf?.author,
             image: item?.acf?.image,
           }));
@@ -71,7 +71,7 @@ const TeacherSubjectPage = () => {
               cursor: "pointer",
             }}
           />
-          <div className="tag-block">{renderCourse(item?.courseType)}</div>
+          <div className="tag-block">{item?.courseType}</div>
           <div className="info-block">
             <p
               style={{
