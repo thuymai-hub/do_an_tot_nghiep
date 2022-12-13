@@ -93,7 +93,7 @@ const Document = (props: IDocument) => {
                     <span style={{ fontWeight: "600" }}>{item?.author}</span>
                   </p>
                   <p style={{ textAlign: "center", color: "gray" }}>
-                    {item?.content}
+                    {item?.content || "---"}
                   </p>
                 </div>
               </SubjectItem>
@@ -129,6 +129,7 @@ const SubjectItem = styled.div`
     padding: 16px;
     align-items: center;
     align-content: center;
+    min-height: 480px;
 
     .subject_title {
       font-size: 20px;

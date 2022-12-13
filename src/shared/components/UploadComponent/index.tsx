@@ -9,6 +9,7 @@ import { openNotificationWithIcon } from "../Notification";
 type uploadType = "single" | "list";
 interface IProps {
   onSuccessUpload: (file: any) => void;
+  onSuccessRemove?: (index: number) => void;
   isUploadServerWhenUploading?: boolean;
   isShowFileList?: boolean;
   children?: ReactNode;
@@ -27,12 +28,14 @@ const UploadComponent: React.FC<IProps> = ({
   isShowFileList = true,
   isUploadServerWhenUploading = false,
   onSuccessUpload,
+  onSuccessRemove,
   children,
   maxLength = 1,
   title,
   initialFiles = [],
 }) => {
   const [files, setFiles] = React.useState<UploadFile[]>([]);
+  const [copiedFiles, setCopiedFiles] = React.useState<UploadFile[]>([]);
   const [progress, setProgress] = React.useState(0);
   const [visiblePreview, setVisiblePreview] = React.useState(false);
   const firstLoad = React.useRef(false);
@@ -52,12 +55,6 @@ const UploadComponent: React.FC<IProps> = ({
     const validateFileSize: boolean = file.size / 1024 / 1024 > fileSize;
 
     if (validateFileSize) {
-      // openNotificationWithIcon(
-      //   "error",
-      //   "Thất bại",
-      //   "Dung lượng tối đa của ảnh là 2.0 MB",
-      //   0
-      // );
       setFiles([]);
       message.error('"Dung lượng tối đa của ảnh là 2.0 MB",');
       return false;
@@ -116,7 +113,6 @@ const UploadComponent: React.FC<IProps> = ({
           })
             .then((res) => res.json())
             .then((res: any) => {
-              console.log("RES: ", res.guid.raw);
               setFiles([file]);
               onSuccessUpload(res.guid.raw as string);
               onSuccess("ok");
@@ -145,13 +141,10 @@ const UploadComponent: React.FC<IProps> = ({
     }
   };
 
-  const handleOnChange: UploadProps["onChange"] = ({
-    file,
-    fileList,
-    event,
-  }: any) => {
+  const handleOnChange: UploadProps["onChange"] = ({ file, fileList }: any) => {
     if (file.status !== "error") {
       setFiles(fileList);
+      setCopiedFiles(fileList);
       if (accept === ".mp4" && file.status !== "removed") {
         seVideoSrc(URL.createObjectURL(file.originFileObj));
       }
@@ -164,6 +157,16 @@ const UploadComponent: React.FC<IProps> = ({
         setFiles([]);
         seVideoSrc("");
         onSuccessUpload([]);
+      } else {
+        if (onSuccessRemove) {
+          for (let i = 0; i < copiedFiles.length; i++) {
+            if (copiedFiles[i].uid === file.uid) {
+              onSuccessRemove(i);
+              break;
+            }
+          }
+          setCopiedFiles(fileList);
+        }
       }
     }
   };

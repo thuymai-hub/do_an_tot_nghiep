@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import ButtonAdd from "components/Button/ButtonAdd";
-import ButtonSave from "components/Button/ButtonSave";
+import Editor, { EditorContentChanged } from "components/QuillEditor";
 import Container from "container/Container";
 import moment from "moment";
 import React from "react";
@@ -21,7 +21,6 @@ import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import MyEditor from "shared/components/MyEditor";
 import UploadComponent from "shared/components/UploadComponent";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
-import { typePosts } from "./NewsPage";
 
 const AddEditNews = () => {
   const navigate = useNavigate();
@@ -29,7 +28,6 @@ const AddEditNews = () => {
   const [form] = Form.useForm();
   const targetId = location?.state?.id;
   const userInfor = useSelector((state: any) => state?.user?.user);
-  const [isAllSpace, setIsAllSpace] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = React.useState<boolean>();
   const [description, setDescription] = React.useState<any>("");
@@ -73,6 +71,7 @@ const AddEditNews = () => {
     if (!targetId) {
       const newPost = {
         title_post: values.titlePost,
+        author: userInfor?.name,
         love_count: 0,
         comment_count: "",
         post_type: values.newsType,
@@ -86,7 +85,6 @@ const AddEditNews = () => {
           moment().hour() +
           ":" +
           moment().minutes(),
-        author: userInfor?.user_display_name,
       };
       fetch(`http://localhost:8000/wp-json/wp/v2/posts`, {
         headers: {
@@ -185,6 +183,10 @@ const AddEditNews = () => {
 
   const onChange = (e: CheckboxChangeEvent) => {
     console.log(`checked = ${e.target.checked}`);
+  };
+
+  const onEditorContentChanged = (content: EditorContentChanged) => {
+    setDescription(content.html);
   };
 
   React.useEffect(() => {
@@ -294,12 +296,12 @@ const AddEditNews = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={6}>
+            <Row gutter={6} style={{ paddingBottom: 100 }}>
               <Col span={24}>
                 <p>
                   <span style={{ color: "red" }}>* </span>Nội dung tin tức
                 </p>
-                <MyEditor
+                {/* <MyEditor
                   defaultValue={targetId ? description : ""}
                   logData={(value: string) => {
                     setDescription(value.trim());
@@ -312,7 +314,8 @@ const AddEditNews = () => {
                   }}
                   height={350}
                   setIsAllSpace={setIsAllSpace}
-                />
+                /> */}
+                <Editor value={description} onChange={onEditorContentChanged} />
               </Col>
             </Row>
           </Form>

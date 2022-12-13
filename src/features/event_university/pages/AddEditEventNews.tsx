@@ -12,6 +12,7 @@ import {
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import ButtonAdd from "components/Button/ButtonAdd";
 import ButtonSave from "components/Button/ButtonSave";
+import Editor, { EditorContentChanged } from "components/QuillEditor";
 import Container from "container/Container";
 import moment from "moment";
 import React from "react";
@@ -33,6 +34,10 @@ const AddEditEventNews = () => {
   const [isConfirmed, setIsConfirmed] = React.useState<boolean>();
   const [description, setDescription] = React.useState<any>("");
   const [listImages, setListImages] = React.useState<Array<any>>([]);
+
+  const onEditorContentChanged = (content: EditorContentChanged) => {
+    setDescription(content.html);
+  };
 
   const onFinish = async (values: any) => {
     setIsLoading(true);
@@ -182,6 +187,8 @@ const AddEditEventNews = () => {
               moment(result?.acf?.end_date, "DD-MM-YYYY"),
             ],
             isSentNoti: Number(result?.acf?.is_send_noti) === 1 ? true : false,
+            isFutureEvent:
+              Number(result?.acf?.is_future_event) === 1 ? true : false,
           });
           setIsWorking(result?.acf?.status === "1" ? true : false);
           setIsConfirmed(result?.acf?.is_confirmed === "1" ? true : false);
@@ -349,7 +356,7 @@ const AddEditEventNews = () => {
               <p>
                 <span style={{ color: "red" }}>* </span>Mô tả sự kiện
               </p>
-              <MyEditor
+              {/* <MyEditor
                 defaultValue={targetId ? description : ""}
                 logData={(value: string) => {
                   setDescription(value.trim());
@@ -363,7 +370,8 @@ const AddEditEventNews = () => {
                 height={350}
                 setIsAllSpace={setIsAllSpace}
                 placeholder="Nhập mô tả sự kiện"
-              />
+              /> */}
+              <Editor value={description} onChange={onEditorContentChanged} />
             </Col>
           </Row>
         </Form>

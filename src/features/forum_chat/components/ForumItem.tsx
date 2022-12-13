@@ -18,7 +18,6 @@ interface IForumItem {
 
 export const ForumItem = (props: IForumItem) => {
   const { item, addNewComment, onConfirmPosts, likePost, unLikePost } = props;
-  console.log("🚀 ~ file: ForumItem.tsx:21 ~ ForumItem ~ item", item);
   const [comment, setComment] = React.useState<string>("");
   const [isShowingComment, setIsShowingComment] =
     React.useState<boolean>(false);

@@ -37,11 +37,11 @@ const DocDetailPublic = () => {
             author: result?.acf?.author,
             date: result?.acf?.created_date,
             courseType: Number(result?.acf?.course_type),
-            fileDoc: result?.acf?.file_docs,
+            fileDoc: result?.acf?.file_docs.split(","),
           };
           setDetailSubject(data);
           setListImages([result?.acf?.image]);
-          setListFiles([result?.acf?.file_docs]);
+          setListFiles(result?.acf?.file_docs.split(","));
         },
         (error) => {
           console.log("error", error);
@@ -107,14 +107,19 @@ const DocDetailPublic = () => {
                 <br />
                 <p style={{ fontSize: 14, color: "black" }}>
                   Link tài liệu:{" "}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={detailSubject?.fileDoc}
-                  >
-                    {" "}
-                    {detailSubject?.fileDoc}
-                  </a>
+                  {listFiles.map((item: any, index: number) => (
+                    <li>
+                      <a
+                        key={index}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={detailSubject?.fileDoc}
+                        style={{ color: "black" }}
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  ))}
                 </p>
               </div>
             </Col>

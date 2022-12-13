@@ -29,7 +29,6 @@ const AddEditDoc = () => {
   const [listImages, setListImages] = React.useState<Array<any>>([]);
   const [listFiles, setListFiles] = React.useState<Array<any>>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [currentCourse, setCurrentCourse] = React.useState<any>();
   const [listCourse, setListCourse] = React.useState<any[]>([]);
 
   const targetId = location?.state?.id;
@@ -59,7 +58,7 @@ const AddEditDoc = () => {
             courseType: result?.acf?.course_type.split("-")[1],
           });
           setListImages([result?.acf?.image]);
-          setListFiles([result?.acf?.file_docs]);
+          setListFiles(result?.acf?.file_docs.split(","));
         },
         (error) => {
           console.log("error", error);
@@ -96,7 +95,7 @@ const AddEditDoc = () => {
         course_type: values?.courseType,
         content: values.description,
         image: listImages[0],
-        file_docs: listFiles[0],
+        file_docs: `${listFiles}`,
         created_date:
           moment().format().slice(0, 10) +
           " " +
@@ -106,6 +105,7 @@ const AddEditDoc = () => {
         author: LocalStorage.getUserName() || "Jaden Smith",
         author_id: userInfor?.id,
       };
+      console.log("listFiles: ", listFiles);
       fetch(`http://localhost:8000/wp-json/wp/v2/subjects`, {
         headers: {
           Accept: "application/json",
@@ -292,23 +292,30 @@ const AddEditDoc = () => {
                   <UploadComponent
                     accept=".pdf"
                     isUploadServerWhenUploading
-                    uploadType="single"
+                    uploadType="list"
                     listType="picture-card"
-                    maxLength={1}
+                    maxLength={4}
                     title="Tải file"
                     initialFiles={
                       targetId
-                        ? [
-                            {
-                              uid: targetId,
-                              name: "doc.pdf",
-                              status: "done",
-                              url: listFiles[0],
-                            },
-                          ]
+                        ? listFiles.map((item: any, index: number) => ({
+                            uid: index,
+                            name: `doc${index}.pdf`,
+                            status: "done",
+                            url: item,
+                          }))
                         : []
                     }
-                    onSuccessUpload={(url: any) => setListFiles([url])}
+                    onSuccessUpload={(url: any) => {
+                      listFiles.push(url);
+                      setListFiles(listFiles);
+                    }}
+                    onSuccessRemove={(index: number) => {
+                      const newList = listFiles
+                        .slice(0, index)
+                        .concat(listFiles.slice(index + 1, 5));
+                      setListFiles(newList);
+                    }}
                   />
                   <span style={{ color: "gray", fontSize: 12 }}>
                     * Vui lòng tải file dưới 2 MB

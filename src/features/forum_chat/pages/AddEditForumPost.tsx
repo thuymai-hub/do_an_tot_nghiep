@@ -13,6 +13,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import ButtonSave from "components/Button/ButtonSave";
+import Editor, { EditorContentChanged } from "components/QuillEditor";
 import Container from "container/Container";
 import moment from "moment";
 import React from "react";
@@ -193,6 +194,10 @@ const AddEditForumPost = () => {
     console.log(`checked = ${e.target.checked}`);
   };
 
+  const onEditorContentChanged = (content: EditorContentChanged) => {
+    setDescription(content.html);
+  };
+
   React.useEffect(() => {
     if (targetId) {
       getDetailData();
@@ -284,7 +289,7 @@ const AddEditForumPost = () => {
                 <p>
                   <span style={{ color: "red" }}>* </span>Nội dung bài viết
                 </p>
-                <MyEditor
+                {/* <MyEditor
                   defaultValue={targetId ? description : ""}
                   logData={(value: string) => {
                     setDescription(value.trim());
@@ -297,7 +302,8 @@ const AddEditForumPost = () => {
                   }}
                   height={350}
                   setIsAllSpace={setIsAllSpace}
-                />
+                /> */}
+                <Editor value={description} onChange={onEditorContentChanged} />
               </Col>
             </Row>
           </Form>

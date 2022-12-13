@@ -29,7 +29,7 @@ const PostSection = (props: IPostSection) => {
           <div
             style={{
               width: "100%",
-              height: 400,
+              height: "100%",
               position: "relative",
               overflow: "hidden",
               cursor: "pointer",
@@ -43,7 +43,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[0]?.image}
-              style={{ height: 400, width: "100%" }}
+              style={{ height: "100%", width: "100%" }}
             />
             <div style={{ position: "absolute", bottom: 0, padding: 20 }}>
               <p style={{ fontSize: 20, color: "white", fontWeight: "700" }}>
@@ -63,7 +63,6 @@ const PostSection = (props: IPostSection) => {
         >
           <div
             style={{
-              height: 190,
               position: "relative",
               overflow: "hidden",
               cursor: "pointer",
@@ -90,7 +89,6 @@ const PostSection = (props: IPostSection) => {
           <div
             style={{
               width: "100%",
-              height: 190,
               position: "relative",
               overflow: "hidden",
               cursor: "pointer",

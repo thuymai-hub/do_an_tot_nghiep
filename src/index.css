@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './shared/style/index.scss';
+/* @import './shared/style/index.scss'; */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto' sans-serif;
@@ -10,9 +10,9 @@ body {
   background-color: #f5f5f5;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
+} */
 
 ::-webkit-scrollbar {
   width: 10px;

@@ -38,7 +38,7 @@ export const renderPostType = (id: string) => {
 export const NewsPage: React.FC = () => {
   const columns = [
     {
-      width: "70px",
+      width: 70,
       title: <b>STT</b>,
       dataIndex: "stt",
       render: (text: any, record: any, index: any) => (

@@ -2,6 +2,7 @@ import { Button, Dropdown, MenuProps } from "antd";
 import LocalStorage from "apis/LocalStorage";
 import React from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { handleLogout } from "../../../shared/utils/functionHelper";
 
 const NavBar = () => {
@@ -70,21 +71,34 @@ const NavBar = () => {
         className="w3-bar w3-white w3-wide w3-padding w3-card"
         style={{ width: "100%" }}
       >
-        <a href="/web-view" className="w3-bar-item w3-button">
+        <a
+          href="/web-view"
+          style={{
+            padding: "8px 16px",
+            float: "left",
+            width: "auto",
+            border: "none",
+            display: "block",
+            outline: 0,
+            letterSpacing: 3,
+          }}
+        >
           <b>Thuỷ Lợi</b> University
         </a>
         <div className="w3-right w3-hide-small">
-          {/* <a href="/web-view-post" className="w3-bar-item w3-button">
-            Bài viết
-          </a>
-          <a href="/web-view-forum" className="w3-bar-item w3-button">
-            Diễn đàn
-          </a>
-          <a href="/web-doc-page" className="w3-bar-item w3-button">
-            Tài liệu
-          </a> */}
           {!token ? (
-            <a href="/login" className="w3-bar-item w3-button">
+            <a
+              href="/login"
+              style={{
+                padding: "8px 16px",
+                float: "left",
+                width: "auto",
+                border: "none",
+                display: "block",
+                outline: 0,
+                letterSpacing: 3,
+              }}
+            >
               Cá nhân
             </a>
           ) : (
