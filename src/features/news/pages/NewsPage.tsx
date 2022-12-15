@@ -181,7 +181,7 @@ export const NewsPage: React.FC = () => {
 
   const getDataSource = () => {
     setLoading(true);
-    fetch("http://localhost:8000/wp-json/wp/v2/posts?post_status=any")
+    fetch("http://localhost:8000/wp-json/wp/v2/posts")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -198,10 +198,6 @@ export const NewsPage: React.FC = () => {
           setDataSource(convertData);
           setFullDataSource(convertData);
           setLoading(false);
-          console.log(
-            "🚀 ~ file: NewsPage.tsx:201 ~ getDataSource ~ convertData",
-            convertData
-          );
         },
         (error) => {
           console.log("error", error);

@@ -101,16 +101,7 @@ export const ForumPage: React.FC = () => {
 
   const checkAlreadyLike = (arr: string) => {
     const listIds = JSON.parse(arr);
-    console.log(
-      "🚀 ~ file: ForumPage.tsx:104 ~ checkAlreadyLike ~ listIds",
-      listIds
-    );
-
     const check = listIds.filter((item: any) => Number(item) === userInfor?.id);
-    console.log(
-      "🚀 ~ file: ForumPage.tsx:107 ~ checkAlreadyLike ~ userInfor?.id",
-      userInfor?.id
-    );
     if (check.length > 0) return true;
     return false;
   };
@@ -200,15 +191,11 @@ export const ForumPage: React.FC = () => {
       content: commentContent,
       author: LocalStorage.getUserName(),
     };
-
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
-
     const targetListComment = targetPost[0]?.commentCount;
-
     targetListComment.unshift(newComment);
-
     fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
       headers: {
         Accept: "application/json",
@@ -286,11 +273,8 @@ export const ForumPage: React.FC = () => {
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
-
     const targetListLove = targetPost[0]?.peopleList;
-
     targetListLove.push(newPerson);
-
     fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${idPost}`, {
       headers: {
         Accept: "application/json",
