@@ -8,6 +8,7 @@ import ForumPagePublic from "features/web-views/page/ForumPagePublic";
 import HomePagePublic from "features/web-views/page/HomePagePublic";
 import PostPagePublic from "features/web-views/page/PostPagePublic";
 import PostPagePublicDetail from "features/web-views/page/PostPagePublicDetail";
+import StudentWebviewPage from "features/web-views/page/StudentWebViewPage";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Route, RouteObject, Routes, useNavigate } from "react-router-dom";
@@ -55,6 +56,10 @@ export const AppRoutes = () => {
         <Route path={"/web-view-post"} element={<PostPagePublic />} />
         <Route path={"/event-view"} element={<EventPagePublic />} />
         <Route path={"/web-doc-page"} element={<DocPagePublic />} />
+        <Route
+          path={"/web-view-student-page"}
+          element={<StudentWebviewPage />}
+        />
         <Route
           path={"/web-view-post-detail"}
           element={<PostPagePublicDetail />}

@@ -44,7 +44,7 @@ const About = () => {
               borderRadius: 1000,
               objectFit: "cover",
             }}
-            src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+            src="https://scontent.fhan17-1.fna.fbcdn.net/v/t1.6435-9/118803452_2653770108194815_5441057767048637165_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=0debeb&_nc_ohc=82uRQ5wG688AX8xa9jK&_nc_ht=scontent.fhan17-1.fna&oh=00_AfDyirZjVkDzPFURkVrXQMsvYUMyfz_8RZ2j1STuuZyhmQ&oe=63C09134"
           />
         </div>
       </Row>

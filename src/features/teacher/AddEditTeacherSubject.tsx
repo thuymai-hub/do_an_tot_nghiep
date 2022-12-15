@@ -95,7 +95,7 @@ const AddEditTeacherSubject = () => {
         course_type: values.courseType,
         content: values.description,
         image: listImages[0],
-        file_docs: listFiles[0],
+        file_docs: `${listFiles}`,
         created_date:
           moment().format().slice(0, 10) +
           " " +
@@ -363,23 +363,34 @@ const AddEditTeacherSubject = () => {
                   <UploadComponent
                     accept=".pdf"
                     isUploadServerWhenUploading
-                    uploadType="single"
+                    uploadType="list"
                     listType="picture-card"
-                    maxLength={1}
+                    maxLength={4}
                     title="Tải file"
                     initialFiles={
                       targetId
-                        ? [
-                            {
-                              uid: targetId,
-                              name: "doc.pdf",
-                              status: "done",
-                              url: listFiles[0],
-                            },
-                          ]
+                        ? listFiles.map((item: any, index: number) => ({
+                            uid: index,
+                            name: `doc${index}.pdf`,
+                            status: "done",
+                            url: item,
+                          }))
                         : []
                     }
-                    onSuccessUpload={(url: any) => setListFiles([url])}
+                    onSuccessUpload={(url: any) => {
+                      listFiles.push(url);
+                      console.log(
+                        "🚀 ~ file: AddEditTeacherSubject.tsx:382 ~ AddEditTeacherSubject ~ listFiles",
+                        listFiles
+                      );
+                      setListFiles(listFiles);
+                    }}
+                    onSuccessRemove={(index: number) => {
+                      const newList = listFiles
+                        .slice(0, index)
+                        .concat(listFiles.slice(index + 1, 5));
+                      setListFiles(newList);
+                    }}
                   />
                   <span style={{ color: "gray", fontSize: 12 }}>
                     * Vui lòng tải file dưới 2 MB

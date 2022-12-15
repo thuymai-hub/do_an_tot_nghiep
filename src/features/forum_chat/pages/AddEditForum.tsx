@@ -1,6 +1,7 @@
 import { Checkbox, Col, Form, Input, PageHeader, Row } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import ButtonAdd from "components/Button/ButtonAdd";
+import Editor, { EditorContentChanged } from "components/QuillEditor";
 import Container from "container/Container";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +14,10 @@ const AddEditForum = () => {
   const [form] = Form.useForm();
   const targetId = location?.state?.id;
   const [description, setDescription] = React.useState<any>("");
+
+  const onEditorContentChanged = (content: EditorContentChanged) => {
+    setDescription(content.html);
+  };
 
   const onFinish = async () => {};
 
@@ -59,18 +64,7 @@ const AddEditForum = () => {
               <p>
                 <span style={{ color: "red" }}>* </span>Nội dung bài viết
               </p>
-              <MyEditor
-                defaultValue={targetId ? description : ""}
-                logData={(value: string) => {}}
-                editorStyle={{
-                  border: "1px solid #ACB0B0",
-                  borderRadius: "5px",
-                  overflow: "hidden scroll",
-                  padding: "0 16px",
-                }}
-                height={350}
-                setIsAllSpace={() => {}}
-              />
+              <Editor value={description} onChange={onEditorContentChanged} />
             </Col>
           </Row>
         </Form>

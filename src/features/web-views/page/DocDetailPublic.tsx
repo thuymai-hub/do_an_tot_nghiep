@@ -39,6 +39,11 @@ const DocDetailPublic = () => {
             courseType: Number(result?.acf?.course_type),
             fileDoc: result?.acf?.file_docs.split(","),
           };
+          console.log(
+            "🚀 ~ file: DocDetailPublic.tsx:41 ~ getDetailData ~ result?.acf?.file_docs.split(",
+            ")",
+            result?.acf?.file_docs.split(",")
+          );
           setDetailSubject(data);
           setListImages([result?.acf?.image]);
           setListFiles(result?.acf?.file_docs.split(","));
@@ -113,7 +118,7 @@ const DocDetailPublic = () => {
                         key={index}
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={detailSubject?.fileDoc}
+                        href={item}
                         style={{ color: "black" }}
                       >
                         {item}

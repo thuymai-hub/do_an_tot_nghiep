@@ -58,11 +58,13 @@ const SubBar = () => {
         </a>
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/128/3048/3048425.png"
-          style={{ width: 30, height: 30, margin: "auto" }}
-        />
-        <p className="sub-nav-bar-title">Sinh viên</p>
+        <a href="/web-view-student-page">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/3048/3048425.png"
+            style={{ width: 30, height: 30, margin: "auto" }}
+          />
+          <p className="sub-nav-bar-title">Sinh viên</p>
+        </a>
       </Col>
     </Row>
   );

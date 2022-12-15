@@ -16,6 +16,7 @@ import LocalStorage from "apis/LocalStorage";
 import ButtonAdd from "components/Button/ButtonAdd";
 import ButtonSave from "components/Button/ButtonSave";
 import IconAntd from "components/IconAntd";
+import Editor, { EditorContentChanged } from "components/QuillEditor";
 import Container from "container/Container";
 import moment from "moment";
 import React from "react";
@@ -160,6 +161,10 @@ const AddEditTeacherPostPage = () => {
     }
   };
 
+  const onEditorContentChanged = (content: EditorContentChanged) => {
+    setDescription(content.html);
+  };
+
   const onDelete = (id: string) => {
     setIsLoading(true);
     fetch(`http://localhost:8000/wp-json/wp/v2/forum_posts/${id}`, {
@@ -301,20 +306,7 @@ const AddEditTeacherPostPage = () => {
                 <p>
                   <span style={{ color: "red" }}>* </span>Nội dung bài viết
                 </p>
-                <MyEditor
-                  defaultValue={targetId ? description : ""}
-                  logData={(value: string) => {
-                    setDescription(value.trim());
-                  }}
-                  editorStyle={{
-                    border: "1px solid #ACB0B0",
-                    borderRadius: "5px",
-                    overflow: "hidden scroll",
-                    padding: "0 16px",
-                  }}
-                  height={350}
-                  setIsAllSpace={setIsAllSpace}
-                />
+                <Editor value={description} onChange={onEditorContentChanged} />
               </Col>
             </Row>
           </Form>

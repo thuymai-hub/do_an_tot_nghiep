@@ -70,3 +70,40 @@
     flex-direction: column;
     cursor: pointer;
   }
+
+  .btn {
+    width: 150px;
+    height: 46px;
+    border: 2px solid #5988de;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-top: 40px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    width: 150px;
+    height: 46px;
+    border: 2px solid #5988de;
+    border-radius: 20px;
+    padding: 10px 16px;
+    margin-top: 40px;
+    cursor: pointer;
+    background: #5988de;
+    transition: all .6s linear;
+  }
+
+  .text {
+    text-align: center;
+    color: #5988de;
+    font-size: 18;
+    font-weight: 600;
+  }
+
+  .btn:hover .text {
+    color: white;
+    font-size: 18;
+    font-weight: 600;
+    text-align: center;
+
+  }
