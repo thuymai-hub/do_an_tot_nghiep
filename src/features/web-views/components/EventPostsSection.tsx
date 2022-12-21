@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
 import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 import styled from "styled-components";
+import "./style.css";
 
 interface IEventPostSection {
   eventPosts: any[];
@@ -75,17 +76,114 @@ const EventPostSection = (props: IEventPostSection) => {
       <Row
         style={{
           padding: "0 50px",
-          height: 450,
+          height: 470,
           width: "100%",
           marginTop: 80,
         }}
       >
-        <Col span={15}>
-          <Carousel autoplay style={{ width: "100%", height: 450 }}>
-            {normalEvents.map((item: any, index: number) =>
-              renderItem(item, index)
-            )}
-          </Carousel>
+        <Col
+          span={15}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          {normalEvents.slice(0, 2).map((item: any, index: number) => (
+            <div
+              style={{
+                width: "46%",
+                backgroundColor: "white",
+                position: "relative",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                navigate(PUBLIC_ROUTES_PATH.EVENT_PAGE_PUBLIC, {
+                  state: { postId: item?.id },
+                });
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  right: 20,
+                  bottom: 190,
+                  width: 80,
+                  height: 100,
+                  backgroundColor: "#4D55B7",
+                  padding: "20px 2px",
+                  zIndex: 10,
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 13,
+                    fontWeight: "700",
+                    color: "white",
+                    textTransform: "uppercase",
+                    textAlign: "center",
+                  }}
+                >
+                  Tháng {item?.createdDate.split("-")[1]}
+                </p>
+                <div style={{ marginTop: -20 }}>
+                  <p
+                    style={{
+                      fontSize: 26,
+                      fontWeight: "700",
+                      color: "white",
+                      textTransform: "uppercase",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item?.createdDate.split("-")[0]}
+                  </p>
+                </div>
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: 250,
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  className="zoom"
+                  src={item?.image}
+                  style={{ width: "100%", height: 250, objectFit: "cover" }}
+                />
+              </div>
+              <div style={{ width: "100%", padding: "50px 20px 20px" }}>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    color: "#4D55B7",
+                    fontWeight: "800",
+                    fontSize: 18,
+                  }}
+                >
+                  {item?.title}
+                </p>
+                <p
+                  style={{
+                    color: "gray",
+                    fontWeight: "600",
+                    fontSize: 15,
+                  }}
+                >
+                  {item?.shortDes}
+                </p>
+                <p
+                  style={{
+                    fontWeight: "600",
+                    fontSize: 15,
+                  }}
+                >
+                  Địa điểm: {item?.place || "---"}
+                </p>
+              </div>
+            </div>
+          ))}
         </Col>
         <Col span={1} />
         <Col span={7}>
@@ -94,21 +192,16 @@ const EventPostSection = (props: IEventPostSection) => {
               <div
                 style={{
                   width: "100%",
-                  height: 400,
+                  height: 470,
                   padding: 20,
                   backgroundColor: "white",
                 }}
               >
-                <p
-                  style={{ color: "#666565", fontSize: 24, fontWeight: "600" }}
-                >
-                  Sự kiện sắp diễn ra
-                </p>
-                {futureEvents.map((item: any, index: number) => (
+                {normalEvents.slice(2, 4).map((item: any, index: number) => (
                   <Row
                     key={index}
                     gutter={16}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", marginBottom: 20 }}
                     onClick={() => {
                       navigate(PUBLIC_ROUTES_PATH.EVENT_PAGE_PUBLIC, {
                         state: { postId: item?.id },
@@ -116,23 +209,134 @@ const EventPostSection = (props: IEventPostSection) => {
                     }}
                   >
                     <Col className="gutter-row" span={4}>
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/2273/2273225.png"
-                        style={{ width: 30, height: 30 }}
-                      />
+                      <div
+                        style={{
+                          width: 80,
+                          height: 100,
+                          backgroundColor: "#4D55B7",
+                          padding: "20px 2px",
+                          zIndex: 10,
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontSize: 13,
+                            fontWeight: "700",
+                            color: "white",
+                            textTransform: "uppercase",
+                            textAlign: "center",
+                          }}
+                        >
+                          Tháng {item?.createdDate.split("-")[1]}
+                        </p>
+                        <div style={{ marginTop: -20 }}>
+                          <p
+                            style={{
+                              fontSize: 26,
+                              fontWeight: "700",
+                              color: "white",
+                              textTransform: "uppercase",
+                              textAlign: "center",
+                            }}
+                          >
+                            {item?.createdDate.split("-")[0]}
+                          </p>
+                        </div>
+                      </div>
                     </Col>
-                    <Col className="gutter-row" span={20}>
+                    <Col span={3} />
+                    <Col className="gutter-row" span={16}>
                       <p style={{ fontSize: 18, fontWeight: "600" }}>
                         {item.title}
                       </p>
                       <div style={{ marginTop: -10 }}>
                         <p style={{ fontSize: 13, color: "gray" }}>
-                          {item?.endDate}
+                          {item?.shortDes}
                         </p>
                       </div>
                     </Col>
                   </Row>
                 ))}
+                <Row
+                  style={{
+                    width: "100%",
+                    borderTopWidth: 1,
+                    borderTopColor: "#EEEEEE",
+                  }}
+                >
+                  <div style={{ width: "100%", marginTop: 16 }}>
+                    <p
+                      style={{
+                        color: "#4D55B7",
+                        fontSize: 20,
+                        fontWeight: "800",
+                        textAlign: "center",
+                      }}
+                    >
+                      Sự kiện sắp diễn ra
+                    </p>
+                  </div>
+                  {futureEvents.slice(0, 1).map((item: any, index: number) => (
+                    <Row
+                      key={index}
+                      gutter={16}
+                      style={{ cursor: "pointer", marginBottom: 20 }}
+                      onClick={() => {
+                        navigate(PUBLIC_ROUTES_PATH.EVENT_PAGE_PUBLIC, {
+                          state: { postId: item?.id },
+                        });
+                      }}
+                    >
+                      <Col className="gutter-row" span={4}>
+                        <div
+                          style={{
+                            width: 80,
+                            height: 100,
+                            backgroundColor: "#4D55B7",
+                            padding: "20px 2px",
+                            zIndex: 10,
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: 13,
+                              fontWeight: "700",
+                              color: "white",
+                              textTransform: "uppercase",
+                              textAlign: "center",
+                            }}
+                          >
+                            Tháng {item?.createdDate.split("-")[1]}
+                          </p>
+                          <div style={{ marginTop: -20 }}>
+                            <p
+                              style={{
+                                fontSize: 26,
+                                fontWeight: "700",
+                                color: "white",
+                                textTransform: "uppercase",
+                                textAlign: "center",
+                              }}
+                            >
+                              {item?.createdDate.split("-")[0]}
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col span={3} />
+                      <Col className="gutter-row" span={16}>
+                        <p style={{ fontSize: 18, fontWeight: "600" }}>
+                          {item.title}
+                        </p>
+                        <div style={{ marginTop: -10 }}>
+                          <p style={{ fontSize: 13, color: "gray" }}>
+                            {item?.shortDes}
+                          </p>
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </Row>
               </div>
             </Col>
           </Row>

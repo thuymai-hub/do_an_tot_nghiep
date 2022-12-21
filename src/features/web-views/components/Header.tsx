@@ -7,7 +7,7 @@ import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 
 const Header = () => {
   return (
-    <Row style={{ width: SCREEN_WIDTH, height: 550 }}>
+    <Row style={{ width: SCREEN_WIDTH, height: 550, marginTop: 100 }}>
       <Col span={24} style={{ position: "relative" }}>
         <div
           style={{

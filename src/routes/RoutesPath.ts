@@ -28,4 +28,7 @@ export const PUBLIC_ROUTES_PATH = {
   DOC_PAGE_PUBLIC: '/web-doc-page',
   DOC_DEATIL_PAGE_PUBLIC: '/web-doc-detail-page',
   STUDENT_WEB_VIEW_PAGE: '/web-view-student-page',
+  ADMISSION_PAGE: '/web-view-admission-page',
+  CONTACT_PAGE: '/web-view-contact-page',
+  INTRODUCTION_PAGE: '/web-view-introduction',
 };

@@ -9,6 +9,7 @@ import NavBar from "../components/NavBar";
 import { PageContainer } from "./HomePagePublic";
 import { ContentContainer } from "./PostPagePublic";
 import { convert } from "html-to-text";
+import Footer from "../components/Footer";
 
 const PostPagePublicDetail = () => {
   const navigate = useNavigate();
@@ -119,10 +120,7 @@ const PostPagePublicDetail = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer>
-          <br />
-          <br />
-          <br />
+        <ContentContainer style={{ marginTop: 120, marginBottom: 100 }}>
           <Row style={{ width: "100%" }}>
             <Col span={1} />
             <Col span={15}>
@@ -313,6 +311,7 @@ const PostPagePublicDetail = () => {
             </Col>
           </Row>
         </ContentContainer>
+        <Footer />
       </PageContainer>
     </Spin>
   );

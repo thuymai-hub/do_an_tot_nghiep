@@ -13,7 +13,7 @@ const SubBar = () => {
       }}
     >
       <Col className="gutter-row sub-nav-bar-item " span={4}>
-        <a href="#about">
+        <a href="/web-view-introduction">
           <img
             src="https://cdn-icons-png.flaticon.com/128/1030/1030902.png"
             style={{ width: 30, height: 30, margin: "auto" }}
@@ -22,7 +22,7 @@ const SubBar = () => {
         </a>
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
-        <a href="">
+        <a href="/web-view-admission-page">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2231/2231642.png"
             style={{ width: 30, height: 30, margin: "auto" }}

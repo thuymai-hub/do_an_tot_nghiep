@@ -14,7 +14,7 @@ const PostSection = (props: IPostSection) => {
   const { posts } = props;
   const navigate = useNavigate();
   return (
-    <div style={{ marginTop: 100, width: SCREEN_WIDTH, paddingRight: 100 }}>
+    <div style={{ marginTop: 50, width: SCREEN_WIDTH, paddingRight: 100 }}>
       <div>
         <Row style={{ justifyContent: "center", marginBottom: 30 }}>
           <TitleBlock>

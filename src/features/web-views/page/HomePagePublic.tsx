@@ -6,6 +6,7 @@ import styled from "styled-components";
 import About from "../components/About";
 import Content from "../components/Content";
 import { ItemContainer } from "../components/EventPostsSection";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 
@@ -85,7 +86,9 @@ const HomePagePublic = () => {
             endDate: item?.acf?.end_date,
             status: item?.acf?.status,
             image: item?.acf?.image,
+            place: item?.acf?.place,
             isFutureEvent: item?.acf?.is_future_event,
+            shortDes: item?.acf?.short_description,
           }));
           setEventPosts(convertData);
           setLoading(false);
@@ -150,10 +153,11 @@ const HomePagePublic = () => {
           eventPosts={eventPosts}
           subjects={subjects}
         />
-        <About />
+        {/* <About /> */}
         <br />
         <br />
         <br />
+        <Footer />
       </PageContainer>
     </Spin>
   );

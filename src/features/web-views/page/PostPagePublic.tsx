@@ -165,8 +165,17 @@ const PostPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer>
-          <Row style={{ width: "100%", marginTop: 100 }}>
+        <ContentContainer style={{ marginTop: 130 }}>
+          <p
+            style={{
+              fontSize: 22,
+              color: "#5988de",
+              fontWeight: "bold",
+            }}
+          >
+            Trang chủ - Tin tức
+          </p>
+          <Row style={{ width: "100%" }}>
             <Select
               style={{ width: 120 }}
               placeholder="Loại bài viết"

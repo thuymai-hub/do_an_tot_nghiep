@@ -63,7 +63,7 @@ const DocDetailPublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer>
+        <ContentContainer style={{ marginTop: 130 }}>
           <Row>
             <Col span={2} />
             <Col span={10}>

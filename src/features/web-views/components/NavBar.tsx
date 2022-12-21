@@ -1,9 +1,10 @@
-import { Button, Dropdown, MenuProps } from "antd";
+import { Button, Col, Dropdown, MenuProps, Row } from "antd";
 import LocalStorage from "apis/LocalStorage";
+import R from "assets";
 import React from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 import { handleLogout } from "../../../shared/utils/functionHelper";
+import "./style.css";
 
 const NavBar = () => {
   const userInfor = useSelector((state: any) => state?.user?.user);
@@ -66,24 +67,31 @@ const NavBar = () => {
         ];
 
   return (
-    <div className="w3-top" style={{ zIndex: 1000 }}>
-      <div
+    <div className="w3-top" style={{ zIndex: 1000, height: 110 }}>
+      {/* <div
         className="w3-bar w3-white w3-wide w3-padding w3-card"
-        style={{ width: "100%" }}
+        style={{ height: 100, backgroundColor: "#4D55B7" }}
       >
+        <img
+          src={R.images.logo_TL}
+          alt="logo"
+          width={40}
+          height={20}
+          style={{ position: "absolute", top: 10, left: 20 }}
+        />
         <a
           href="/web-view"
           style={{
-            padding: "8px 16px",
+            padding: "8px 60px",
             float: "left",
             width: "auto",
             border: "none",
             display: "block",
             outline: 0,
-            letterSpacing: 3,
+            letterSpacing: 2,
           }}
         >
-          <b>Thuỷ Lợi</b> University
+          <b>Tin tức</b> CNTT
         </a>
         <div className="w3-right w3-hide-small">
           {!token ? (
@@ -114,7 +122,138 @@ const NavBar = () => {
             </>
           )}
         </div>
-      </div>
+      </div> */}
+      <Row
+        style={{
+          height: 100,
+          backgroundColor: "white",
+          boxShadow: "0px 5px 10px #c7c7c7",
+        }}
+      >
+        <Col span={1} />
+        <Col className="block_1" span={11}>
+          <div className="logo_block">
+            <a href="/web-view">
+              <img src={R.images.logo_TL} alt="logo" width={80} height={60} />
+            </a>
+          </div>
+          <div className="title_block">
+            <a href="/web-view">
+              <p className="title_1">Khoa công nghệ thông tin</p>
+              <div style={{ marginTop: -30 }}>
+                <p className="title_2">Đại học Thuỷ Lợi</p>
+              </div>
+            </a>
+          </div>
+        </Col>
+        <Col span={1} />
+        <Col span={11} className="block_2">
+          {!token ? (
+            <div style={{ paddingTop: 30 }}>
+              <a
+                href="/login"
+                style={{
+                  padding: "8px 16px",
+                  float: "right",
+                  width: "auto",
+                  border: "none",
+                  display: "flex",
+                  flexDirection: "row",
+                  outline: 0,
+                  letterSpacing: 2,
+                  color: "#4D55B7",
+                  fontWeight: "800",
+                }}
+              >
+                CÁ NHÂN
+                <img
+                  style={{
+                    width: 30,
+                    height: 30,
+                    marginLeft: 10,
+                    marginTop: -5,
+                  }}
+                  src="https://cdn-icons-png.flaticon.com/128/4140/4140077.png"
+                />
+              </a>
+
+              <a
+                href="/web-view-contact-page"
+                style={{
+                  padding: "8px 16px",
+                  float: "right",
+                  width: "auto",
+                  border: "none",
+                  display: "flex",
+                  flexDirection: "row",
+                  outline: 0,
+                  letterSpacing: 2,
+                  color: "#4D55B7",
+                  fontWeight: "800",
+                }}
+              >
+                LIÊN HỆ
+                <img
+                  style={{
+                    width: 26,
+                    height: 26,
+                    marginLeft: 10,
+                    marginTop: -5,
+                  }}
+                  src="https://cdn-icons-png.flaticon.com/128/9194/9194885.png"
+                />
+              </a>
+            </div>
+          ) : (
+            <div style={{ paddingTop: 30 }}>
+              <Dropdown menu={{ items }} placement="bottomRight">
+                <a
+                  style={{
+                    padding: "8px 16px",
+                    float: "right",
+                    width: "auto",
+                    border: "none",
+                    display: "flex",
+                    flexDirection: "row",
+                    outline: 0,
+                    letterSpacing: 2,
+                    color: "#4D55B7",
+                    fontWeight: "600",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {LocalStorage.getUserName()}
+                  <img
+                    style={{
+                      width: 30,
+                      height: 30,
+                      marginLeft: 10,
+                      marginTop: -5,
+                    }}
+                    src="https://cdn-icons-png.flaticon.com/128/4140/4140077.png"
+                  />
+                </a>
+              </Dropdown>
+              {/* <a
+                href="/noti"
+                style={{
+                  padding: "8px 16px",
+                  float: "right",
+                  width: "auto",
+                  border: "none",
+                  display: "block",
+                  outline: 0,
+                  letterSpacing: 2,
+                  color: "#4D55B7",
+                  fontWeight: "600",
+                }}
+              >
+                THÔNG BÁO
+              </a> */}
+            </div>
+          )}
+        </Col>
+      </Row>
     </div>
   );
 };

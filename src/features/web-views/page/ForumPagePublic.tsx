@@ -241,10 +241,7 @@ const ForumPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <br />
-        <br />
-        <br />
-        <CustomContentContainer>
+        <CustomContentContainer style={{ marginTop: 130 }}>
           {dataSource?.map((item: any, index: number) => (
             <ForumItem
               addNewComment={addNewComment}

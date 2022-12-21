@@ -44,6 +44,8 @@ const AddEditEventNews = () => {
     if (!targetId) {
       const newPost = {
         title: values.eventTitle,
+        place: values.place,
+        short_description: values.shortDes,
         is_send_noti: values.isSentNoti ? 1 : 0,
         love_count: 0,
         content: description,
@@ -87,6 +89,8 @@ const AddEditEventNews = () => {
     } else {
       const newPost = {
         title: values.eventTitle,
+        place: values.place,
+        short_description: values.shortDes,
         is_send_noti: values.isSentNoti ? 1 : 0,
         content: description,
         image: listImages[0],
@@ -180,7 +184,9 @@ const AddEditEventNews = () => {
           setIsLoading(false);
           form.setFieldsValue({
             id: result?.acf?.id,
+            place: result?.acf?.place,
             eventTitle: result?.acf?.title,
+            shortDes: result?.acf?.short_description,
             description: result?.acf?.description,
             date: [
               moment(result?.acf?.start_date, "DD-MM-YYYY"),
@@ -305,6 +311,33 @@ const AddEditEventNews = () => {
             </Col>
           </Row>
           <br />
+          <Row>
+            <Col span={11}>
+              <Form.Item
+                label="Mô tả ngắn"
+                name="shortDes"
+                rules={[
+                  { required: true, message: "Vui lòng nhập mô tả ngắn!" },
+                ]}
+              >
+                <Input allowClear placeholder="Nhập mô tả ngắn" />
+              </Form.Item>
+            </Col>
+            <Col span={13}>
+              <Form.Item
+                label="Địa điểm"
+                name="place"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mô địa điểm diễn ra!",
+                  },
+                ]}
+              >
+                <Input allowClear placeholder="Nhập địa điểm" />
+              </Form.Item>
+            </Col>
+          </Row>
           <Row gutter={6}>
             <Col span={1} />
             <Col span={11}>

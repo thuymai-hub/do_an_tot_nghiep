@@ -1,11 +1,14 @@
 import LocalStorage from "apis/LocalStorage";
 import { Login } from "features/auth/pages/Login";
 import Page404 from "features/Page404";
+import AdmissionPage from "features/web-views/page/AdmissionPage";
+import ContactPage from "features/web-views/page/ContactPage";
 import DocDetailPublic from "features/web-views/page/DocDetailPublic";
 import DocPagePublic from "features/web-views/page/DocPagePublic";
 import EventPagePublic from "features/web-views/page/EventPagePublic";
 import ForumPagePublic from "features/web-views/page/ForumPagePublic";
 import HomePagePublic from "features/web-views/page/HomePagePublic";
+import IntroductionPage from "features/web-views/page/IntroductionPage";
 import PostPagePublic from "features/web-views/page/PostPagePublic";
 import PostPagePublicDetail from "features/web-views/page/PostPagePublicDetail";
 import StudentWebviewPage from "features/web-views/page/StudentWebViewPage";
@@ -65,7 +68,10 @@ export const AppRoutes = () => {
           element={<PostPagePublicDetail />}
         />
         <Route path={"/web-view-forum"} element={<ForumPagePublic />} />
+        <Route path={"/web-view-contact-page"} element={<ContactPage />} />
+        <Route path={"/web-view-admission-page"} element={<AdmissionPage />} />
         <Route path={"/web-doc-detail-page"} element={<DocDetailPublic />} />
+        <Route path={"/web-view-introduction"} element={<IntroductionPage />} />
       </Routes>
     </Body>
   );

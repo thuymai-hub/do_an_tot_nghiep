@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import styled from "styled-components";
+import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { PageContainer } from "./HomePagePublic";
 import { ContentContainer } from "./PostPagePublic";
@@ -40,6 +41,7 @@ const EventPagePublic = () => {
             endDate: item?.acf?.end_date,
             status: item?.acf?.status,
             image: item?.acf?.image,
+            place: item?.acf?.place,
           }));
           const finalData = convertData.filter(
             (item: any) => Number(item.id) !== targetId
@@ -102,6 +104,7 @@ const EventPagePublic = () => {
             image: result?.acf?.image,
             newsType: Number(result?.acf?.post_type),
             content: result?.acf?.content,
+            place: result?.acf?.place,
             isSentNoti: Number(result?.acf?.is_send_noti) === 1 ? true : false,
           });
         },
@@ -121,10 +124,7 @@ const EventPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer>
-          <br />
-          <br />
-          <br />
+        <ContentContainer style={{ marginTop: 130 }}>
           <Row style={{ width: "100%" }}>
             <Col span={1} />
             <Col span={15}>
@@ -239,6 +239,18 @@ const EventPagePublic = () => {
                 </Block>
               </div>
               <div style={{ marginTop: 20, width: "95%" }}>
+                <p>
+                  Địa điểm :{" "}
+                  <span style={{ fontWeight: "bold" }}>
+                    {detailPost?.place}
+                  </span>
+                </p>
+                <p>
+                  Thời gian:{" "}
+                  <span style={{ fontWeight: "bold" }}>
+                    {detailPost?.startDate}
+                  </span>
+                </p>
                 <img
                   style={{ width: "100%", height: 500, marginBottom: 20 }}
                   src={detailPost?.image}
@@ -300,6 +312,7 @@ const EventPagePublic = () => {
             </Col>
           </Row>
         </ContentContainer>
+        <Footer />
       </PageContainer>
     </Spin>
   );
