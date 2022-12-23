@@ -164,8 +164,8 @@ const PostPagePublic = () => {
   return (
     <Spin spinning={loading}>
       <PageContainer>
-        <NavBar />
-        <ContentContainer style={{ marginTop: 130 }}>
+        <NavBar current={4} />
+        <ContentContainer style={{ marginTop: 160 }}>
           <p
             style={{
               fontSize: 22,

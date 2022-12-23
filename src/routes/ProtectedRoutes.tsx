@@ -161,7 +161,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = CliCookieService.get(CLI_COOKIE_KEYS.ACCESS_TOKEN);
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/web-view" replace />;
   }
   return <>{children}</>;
 };

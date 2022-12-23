@@ -11,6 +11,12 @@ const AdmissionPage = () => {
   const [posts, setPosts] = React.useState<any>([]);
   const navigate = useNavigate();
 
+  const renderReadingTime = (content: any) => {
+    const result = Math.ceil(content?.length / 60);
+    if (result >= 20) return 10;
+    return result;
+  };
+
   const getPosts = () => {
     setLoading(true);
     fetch("http://localhost:8000/wp-json/wp/v2/posts?post_status=any")
@@ -31,6 +37,7 @@ const AdmissionPage = () => {
               postType: item?.acf?.post_type.split("-")[1],
               postTypeFull: item?.acf?.post_type,
               status: item?.acf?.is_confirmed,
+              content: item?.acf?.content,
               image: item?.acf?.image,
             }))
             .filter((item: any) => item?.postType === "Tuyển sinh");
@@ -50,8 +57,8 @@ const AdmissionPage = () => {
   return (
     <Spin spinning={loading}>
       <PageContainer>
-        <NavBar />
-        <ContentContainer style={{ marginTop: 130 }}>
+        <NavBar current={2} />
+        <ContentContainer style={{ marginTop: 160 }}>
           <p
             style={{
               fontSize: 22,
@@ -101,7 +108,32 @@ const AdmissionPage = () => {
                       >
                         {item?.titlePost}
                       </p>
-                      <p style={{ fontSize: 14 }}>{item?.createdDate}</p>
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginRight: 30,
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/591/591576.png"
+                            style={{ width: 24, height: 24, marginRight: 10 }}
+                          />
+                          <p style={{ fontSize: 16, color: "#757575" }}>
+                            {item?.createdDate}
+                          </p>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/2784/2784459.png"
+                            style={{ width: 24, height: 24, marginRight: 10 }}
+                          />
+                          <p style={{ fontSize: 16, color: "#757575" }}>
+                            {renderReadingTime(item?.content)} phút đọc
+                          </p>
+                        </div>
+                      </div>
 
                       <div className="btn">
                         <p className="text">Xem chi tiết</p>
@@ -135,7 +167,32 @@ const AdmissionPage = () => {
                       >
                         {item?.titlePost}
                       </p>
-                      <p style={{ fontSize: 14 }}>{item?.createdDate}</p>
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginRight: 30,
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/591/591576.png"
+                            style={{ width: 24, height: 24, marginRight: 10 }}
+                          />
+                          <p style={{ fontSize: 16, color: "#757575" }}>
+                            {item?.createdDate}
+                          </p>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/2784/2784459.png"
+                            style={{ width: 24, height: 24, marginRight: 10 }}
+                          />
+                          <p style={{ fontSize: 16, color: "#757575" }}>
+                            {renderReadingTime(item?.content)} phút đọc
+                          </p>
+                        </div>
+                      </div>
 
                       <div className="btn">
                         <p className="text">Xem chi tiết</p>

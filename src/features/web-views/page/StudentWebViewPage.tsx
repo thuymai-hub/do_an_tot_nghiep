@@ -9,8 +9,8 @@ import "../components/style.css";
 const StudentWebviewPage = () => {
   return (
     <PageContainer>
-      <NavBar />
-      <ContentContainer style={{ padding: 100, marginTop: 30 }}>
+      <NavBar current={6} />
+      <ContentContainer style={{ padding: 100, marginTop: 80 }}>
         <p style={{ fontSize: 22, color: "#5988de", fontWeight: "bold" }}>
           Trang chủ - Sinh viên
         </p>

@@ -14,7 +14,7 @@ export const Sidebar: React.FC = () => {
         </div>
 
         <div className="text-center py-4 font-bold text-sky-500 italic">
-          Trường Đại Học Thủy Lợi
+          Khoa Công Nghệ Thông Tin
         </div>
       </div>
 

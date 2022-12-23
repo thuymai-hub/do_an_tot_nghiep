@@ -91,6 +91,7 @@ const EventPostSection = (props: IEventPostSection) => {
         >
           {normalEvents.slice(0, 2).map((item: any, index: number) => (
             <div
+              key={index}
               style={{
                 width: "46%",
                 backgroundColor: "white",
@@ -358,7 +359,7 @@ export const ItemContainer = styled.div`
     width: 100%;
     padding: 16px;
     position: absolute;
-    top: 160px;
+    top: 140px;
     left: 0;
     right: 0;
     text-align: center;

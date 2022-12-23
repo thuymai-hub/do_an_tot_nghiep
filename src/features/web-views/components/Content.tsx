@@ -16,7 +16,6 @@ const Content = (props: IContent) => {
   const { posts, eventPosts, subjects, normalEvents, futureEvents } = props;
   return (
     <div>
-      <SubBar />
       <PostSection posts={posts} />
       <EventPostSection
         eventPosts={eventPosts}

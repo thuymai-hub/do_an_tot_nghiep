@@ -9,8 +9,8 @@ const IntroductionPage = () => {
   return (
     <Spin spinning={loading}>
       <PageContainer>
-        <NavBar />
-        <ContentContainer style={{ marginTop: 120 }}>
+        <NavBar current={1} />
+        <ContentContainer style={{ marginTop: 160 }}>
           <p
             style={{
               fontSize: 22,

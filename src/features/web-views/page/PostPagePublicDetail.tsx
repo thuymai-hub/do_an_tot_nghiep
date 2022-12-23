@@ -120,7 +120,7 @@ const PostPagePublicDetail = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 120, marginBottom: 100 }}>
+        <ContentContainer style={{ marginTop: 160, marginBottom: 100 }}>
           <Row style={{ width: "100%" }}>
             <Col span={1} />
             <Col span={15}>

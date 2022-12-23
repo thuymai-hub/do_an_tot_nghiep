@@ -5,8 +5,22 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { handleLogout } from "../../../shared/utils/functionHelper";
 import "./style.css";
+import SubBar from "./SubBar";
 
-const NavBar = () => {
+interface INavBar {
+  current?: number;
+  isAtHomePage?: boolean;
+  isChooseEventSection?: boolean;
+  setIsChooseEventSection?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NavBar = (props: INavBar) => {
+  const {
+    current,
+    isAtHomePage,
+    isChooseEventSection,
+    setIsChooseEventSection,
+  } = props;
   const userInfor = useSelector((state: any) => state?.user?.user);
   const userType = LocalStorage.getUserType();
 
@@ -68,77 +82,36 @@ const NavBar = () => {
 
   return (
     <div className="w3-top" style={{ zIndex: 1000, height: 110 }}>
-      {/* <div
-        className="w3-bar w3-white w3-wide w3-padding w3-card"
-        style={{ height: 100, backgroundColor: "#4D55B7" }}
-      >
-        <img
-          src={R.images.logo_TL}
-          alt="logo"
-          width={40}
-          height={20}
-          style={{ position: "absolute", top: 10, left: 20 }}
-        />
-        <a
-          href="/web-view"
-          style={{
-            padding: "8px 60px",
-            float: "left",
-            width: "auto",
-            border: "none",
-            display: "block",
-            outline: 0,
-            letterSpacing: 2,
-          }}
-        >
-          <b>Tin tức</b> CNTT
-        </a>
-        <div className="w3-right w3-hide-small">
-          {!token ? (
-            <a
-              href="/login"
-              style={{
-                padding: "8px 16px",
-                float: "left",
-                width: "auto",
-                border: "none",
-                display: "block",
-                outline: 0,
-                letterSpacing: 3,
-              }}
-            >
-              Cá nhân
-            </a>
-          ) : (
-            <>
-              <a href="/noti" className="w3-bar-item w3-button">
-                Thông báo
-              </a>
-              <Dropdown menu={{ items }} placement="bottomRight">
-                <a className="w3-bar-item w3-button">
-                  {LocalStorage.getUserName()}
-                </a>
-              </Dropdown>
-            </>
-          )}
-        </div>
-      </div> */}
       <Row
         style={{
           height: 100,
-          backgroundColor: "white",
+          backgroundColor: "#2357e8",
           boxShadow: "0px 5px 10px #c7c7c7",
         }}
       >
         <Col span={1} />
         <Col className="block_1" span={11}>
           <div className="logo_block">
-            <a href="/web-view">
+            <a
+              href="/web-view"
+              onClick={() => {
+                if (setIsChooseEventSection) {
+                  setIsChooseEventSection(false);
+                }
+              }}
+            >
               <img src={R.images.logo_TL} alt="logo" width={80} height={60} />
             </a>
           </div>
           <div className="title_block">
-            <a href="/web-view">
+            <a
+              href="/web-view"
+              onClick={() => {
+                if (setIsChooseEventSection) {
+                  setIsChooseEventSection(false);
+                }
+              }}
+            >
               <p className="title_1">Khoa công nghệ thông tin</p>
               <div style={{ marginTop: -30 }}>
                 <p className="title_2">Đại học Thuỷ Lợi</p>
@@ -161,7 +134,7 @@ const NavBar = () => {
                   flexDirection: "row",
                   outline: 0,
                   letterSpacing: 2,
-                  color: "#4D55B7",
+                  color: "white",
                   fontWeight: "800",
                 }}
               >
@@ -173,7 +146,7 @@ const NavBar = () => {
                     marginLeft: 10,
                     marginTop: -5,
                   }}
-                  src="https://cdn-icons-png.flaticon.com/128/4140/4140077.png"
+                  src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
                 />
               </a>
 
@@ -188,7 +161,7 @@ const NavBar = () => {
                   flexDirection: "row",
                   outline: 0,
                   letterSpacing: 2,
-                  color: "#4D55B7",
+                  color: "white",
                   fontWeight: "800",
                 }}
               >
@@ -200,7 +173,7 @@ const NavBar = () => {
                     marginLeft: 10,
                     marginTop: -5,
                   }}
-                  src="https://cdn-icons-png.flaticon.com/128/9194/9194885.png"
+                  src="https://cdn-icons-png.flaticon.com/128/9194/9194905.png"
                 />
               </a>
             </div>
@@ -253,6 +226,14 @@ const NavBar = () => {
             </div>
           )}
         </Col>
+      </Row>
+      <Row>
+        <SubBar
+          current={current}
+          isAtHomePage={isAtHomePage}
+          isChooseEventSection={isChooseEventSection}
+          setIsChooseEventSection={setIsChooseEventSection}
+        />
       </Row>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Carousel, Col, Row, Spin } from "antd";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
 import styled from "styled-components";
 import About from "../components/About";
@@ -11,6 +11,9 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 
 const HomePagePublic = () => {
+  const location = useLocation();
+  const [isChooseEventSection, setIsChooseEventSection] = React.useState(false);
+  const isEventChosen = location?.state?.id;
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [posts, setPosts] = React.useState<any>([]);
@@ -108,6 +111,20 @@ const HomePagePublic = () => {
       );
   };
 
+  const pageScroll = () => {
+    if (document) {
+      document
+        ?.getElementById("event_posts")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  React.useEffect(() => {
+    if (isEventChosen === 1) {
+      pageScroll();
+    }
+  }, []);
+
   const getListSubjects = () => {
     setLoading(true);
     fetch("http://localhost:8000/wp-json/wp/v2/subjects")
@@ -144,7 +161,12 @@ const HomePagePublic = () => {
   return (
     <Spin spinning={loading}>
       <PageContainer>
-        <NavBar />
+        <NavBar
+          current={isEventChosen ? 3 : 10}
+          isAtHomePage={true}
+          isChooseEventSection={isChooseEventSection}
+          setIsChooseEventSection={setIsChooseEventSection}
+        />
         <Header />
         <Content
           futureEvents={futureEvents}
