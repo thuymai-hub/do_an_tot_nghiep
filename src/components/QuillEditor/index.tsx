@@ -72,7 +72,7 @@ export default function Editor(props: any) {
           "emoji-shortname": true,
         }}
         value={value}
-        style={{ height: 300, marginBottom: 40 }}
+        style={{ height: 400, marginBottom: 40 }}
         onChange={onChange}
       />
     </>

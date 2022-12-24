@@ -203,14 +203,11 @@ const AddEditTeacherPostPage = () => {
 
   return (
     <Spin spinning={isLoading}>
-      <br />
-      <br />
-      <br />
       <Container
         header={
           <PageHeader
             onBack={() => navigate(PROTECTED_ROUTES_PATH.STUDENT)}
-            style={{ borderRadius: 8 }}
+            style={{ borderRadius: 8, marginTop: 160 }}
             title={targetId ? "Chỉnh sửa bài viết" : "Thêm mới bài viết"}
             extra={
               targetId
@@ -254,62 +251,67 @@ const AddEditTeacherPostPage = () => {
           />
         }
         contentComponent={
-          <Form
-            form={form}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 18 }}
-            onFinish={onFinish}
-            autoComplete="off"
-          >
-            <Row gutter={6}>
-              <Col span={13}>
-                <Form.Item
-                  label={"Ảnh bài viết"}
-                  name="file"
-                  // rules={[
-                  //   { required: true, message: "Vui lòng tải ảnh bài viết" },
-                  // ]}
-                >
-                  <UploadComponent
-                    accept=".jpg, .jpeg, .png"
-                    isUploadServerWhenUploading
-                    uploadType="single"
-                    listType="picture-card"
-                    maxLength={1}
-                    title="Tải ảnh"
-                    initialFiles={
-                      location?.state?.id
-                        ? [
-                            {
-                              uid: location?.state?.id,
-                              name: "image.png",
-                              status: "done",
-                              url: listImages[0],
-                            },
-                          ]
-                        : []
-                    }
-                    onSuccessUpload={(url: any) => {
-                      setListImages([url]);
-                    }}
+          <div style={{ paddingBottom: 30 }}>
+            <Form
+              form={form}
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 18 }}
+              onFinish={onFinish}
+              autoComplete="off"
+            >
+              <Row gutter={6}>
+                <Col span={13}>
+                  <Form.Item
+                    label={"Ảnh bài viết"}
+                    name="file"
+                    // rules={[
+                    //   { required: true, message: "Vui lòng tải ảnh bài viết" },
+                    // ]}
+                  >
+                    <UploadComponent
+                      accept=".jpg, .jpeg, .png"
+                      isUploadServerWhenUploading
+                      uploadType="single"
+                      listType="picture-card"
+                      maxLength={1}
+                      title="Tải ảnh"
+                      initialFiles={
+                        location?.state?.id
+                          ? [
+                              {
+                                uid: location?.state?.id,
+                                name: "image.png",
+                                status: "done",
+                                url: listImages[0],
+                              },
+                            ]
+                          : []
+                      }
+                      onSuccessUpload={(url: any) => {
+                        setListImages([url]);
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={11}>
+                  <Form.Item name="isSentNoti" valuePropName="checked" label="">
+                    <Checkbox onChange={onChange}>Gửi thông báo</Checkbox>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={6}>
+                <Col span={24}>
+                  <p>
+                    <span style={{ color: "red" }}>* </span>Nội dung bài viết
+                  </p>
+                  <Editor
+                    value={description}
+                    onChange={onEditorContentChanged}
                   />
-                </Form.Item>
-              </Col>
-              <Col span={11}>
-                <Form.Item name="isSentNoti" valuePropName="checked" label="">
-                  <Checkbox onChange={onChange}>Gửi thông báo</Checkbox>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={6}>
-              <Col span={24}>
-                <p>
-                  <span style={{ color: "red" }}>* </span>Nội dung bài viết
-                </p>
-                <Editor value={description} onChange={onEditorContentChanged} />
-              </Col>
-            </Row>
-          </Form>
+                </Col>
+              </Row>
+            </Form>
+          </div>
         }
       />
     </Spin>

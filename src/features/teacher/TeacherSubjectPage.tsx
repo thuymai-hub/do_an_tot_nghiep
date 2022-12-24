@@ -110,7 +110,7 @@ const TeacherSubjectPage = () => {
 
   return (
     <Spin spinning={loading}>
-      <Container>
+      <Container style={{ marginTop: 130 }}>
         <h2 style={{ fontSize: 24, fontWeight: "bold" }}>Môn học của tôi</h2>
         <ButtonAdd
           text="Thêm mới"

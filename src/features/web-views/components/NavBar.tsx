@@ -190,7 +190,7 @@ const NavBar = (props: INavBar) => {
                     flexDirection: "row",
                     outline: 0,
                     letterSpacing: 2,
-                    color: "#4D55B7",
+                    color: "white",
                     fontWeight: "600",
                     textTransform: "uppercase",
                   }}
