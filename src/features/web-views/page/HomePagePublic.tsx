@@ -113,6 +113,7 @@ const HomePagePublic = () => {
 
   const pageScroll = () => {
     if (document) {
+      setIsChooseEventSection(true);
       document
         ?.getElementById("event_posts")
         ?.scrollIntoView({ behavior: "smooth" });

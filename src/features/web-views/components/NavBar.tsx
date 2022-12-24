@@ -168,12 +168,12 @@ const NavBar = (props: INavBar) => {
                 LIÊN HỆ
                 <img
                   style={{
-                    width: 26,
-                    height: 26,
+                    width: 28,
+                    height: 28,
                     marginLeft: 10,
                     marginTop: -5,
                   }}
-                  src="https://cdn-icons-png.flaticon.com/128/9194/9194905.png"
+                  src="https://cdn-icons-png.flaticon.com/128/8898/8898833.png"
                 />
               </a>
             </div>

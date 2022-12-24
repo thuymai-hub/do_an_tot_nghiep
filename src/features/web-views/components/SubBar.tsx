@@ -35,14 +35,12 @@ const SubBar = (props: ISubBar) => {
     >
       <Col className="gutter-row sub-nav-bar-item " span={4}>
         <a href="/web-view-introduction">
-          {/* <img
-            src="https://cdn-icons-png.flaticon.com/128/1030/1030902.png"
-            style={{ width: 30, height: 30, margin: "auto" }}
-          /> */}
           <p
             className="sub-nav-bar-title"
             style={
-              current === 1 ? { color: "#5988de", fontSize: 18 } : undefined
+              current === 1
+                ? { color: "#5988de", fontWeight: "700" }
+                : undefined
             }
           >
             Giới thiệu
@@ -51,14 +49,12 @@ const SubBar = (props: ISubBar) => {
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
         <a href="/web-view-admission-page">
-          {/* <img
-            src="https://cdn-icons-png.flaticon.com/128/2231/2231642.png"
-            style={{ width: 30, height: 30, margin: "auto" }}
-          /> */}
           <p
             className="sub-nav-bar-title"
             style={
-              current === 2 ? { color: "#5988de", fontSize: 18 } : undefined
+              current === 2
+                ? { color: "#5988de", fontWeight: "700" }
+                : undefined
             }
           >
             Tuyển sinh
@@ -79,7 +75,7 @@ const SubBar = (props: ISubBar) => {
               className="sub-nav-bar-title"
               style={
                 isChooseEventSection
-                  ? { color: "#5988de", fontSize: 18 }
+                  ? { color: "#5988de", fontWeight: "700" }
                   : undefined
               }
             >
@@ -90,9 +86,7 @@ const SubBar = (props: ISubBar) => {
           <div
             style={{ background: "white", cursor: "pointer", marginTop: -14 }}
             onClick={() => {
-              console.log(1);
               if (setIsChooseEventSection) {
-                console.log(2);
                 setIsChooseEventSection(true);
               }
               navigate(PUBLIC_ROUTES_PATH.HOMEPAGEPUBLIC, {
@@ -104,7 +98,7 @@ const SubBar = (props: ISubBar) => {
               className="sub-nav-bar-title"
               style={
                 isChooseEventSection
-                  ? { color: "#5988de", fontSize: 18 }
+                  ? { color: "#5988de", fontWeight: "700" }
                   : undefined
               }
             >
@@ -122,7 +116,9 @@ const SubBar = (props: ISubBar) => {
           <p
             className="sub-nav-bar-title"
             style={
-              current === 4 ? { color: "#5988de", fontSize: 18 } : undefined
+              current === 4
+                ? { color: "#5988de", fontWeight: "700" }
+                : undefined
             }
           >
             Tin tức
@@ -138,7 +134,9 @@ const SubBar = (props: ISubBar) => {
           <p
             className="sub-nav-bar-title"
             style={
-              current === 5 ? { color: "#5988de", fontSize: 18 } : undefined
+              current === 5
+                ? { color: "#5988de", fontWeight: "700" }
+                : undefined
             }
           >
             Diễn đàn
@@ -154,7 +152,9 @@ const SubBar = (props: ISubBar) => {
           <p
             className="sub-nav-bar-title"
             style={
-              current === 6 ? { color: "#5988de", fontSize: 18 } : undefined
+              current === 6
+                ? { color: "#5988de", fontWeight: "700" }
+                : undefined
             }
           >
             Sinh viên
