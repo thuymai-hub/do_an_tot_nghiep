@@ -234,44 +234,51 @@ const AddEditTeacherSubject = () => {
 
   return (
     <Spin spinning={isLoading}>
-      <br />
-      <br />
-      <br />
       <Container
         header={
           <PageHeader
             onBack={() => navigate(PROTECTED_ROUTES_PATH.TEACHER_COURSE)}
-            style={{ borderRadius: 8 }}
+            style={{ borderRadius: 8, marginTop: 160 }}
             title={targetId ? "Chỉnh sửa môn học" : "Thêm mới môn học"}
-            extra={[
-              <ButtonAdd
-                key={1}
-                text="Lưu"
-                onClickButton={() => form.submit()}
-              />,
-              <Popconfirm
-                title="Bạn có chắc chắn muốn xoá môn học này?"
-                placement="top"
-                onConfirm={() => onDelete(targetId)}
-                okText="Xoá"
-                cancelText="Huỷ"
-                okButtonProps={{
-                  type: "primary",
-                  danger: true,
-                }}
-                style={{ background: "red" }}
-              >
-                <Button
-                  style={{
-                    background: "red",
-                    color: "white",
-                    borderRadius: 6,
-                  }}
-                >
-                  Xoá
-                </Button>
-              </Popconfirm>,
-            ]}
+            extra={
+              targetId
+                ? [
+                    <ButtonAdd
+                      key={1}
+                      text="Lưu"
+                      onClickButton={() => form.submit()}
+                    />,
+                    <Popconfirm
+                      title="Bạn có chắc chắn muốn xoá môn học này?"
+                      placement="top"
+                      onConfirm={() => onDelete(targetId)}
+                      okText="Xoá"
+                      cancelText="Huỷ"
+                      okButtonProps={{
+                        type: "primary",
+                        danger: true,
+                      }}
+                      style={{ background: "red" }}
+                    >
+                      <Button
+                        style={{
+                          background: "red",
+                          color: "white",
+                          borderRadius: 6,
+                        }}
+                      >
+                        Xoá
+                      </Button>
+                    </Popconfirm>,
+                  ]
+                : [
+                    <ButtonAdd
+                      key={1}
+                      text="Lưu"
+                      onClickButton={() => form.submit()}
+                    />,
+                  ]
+            }
           />
         }
         contentComponent={

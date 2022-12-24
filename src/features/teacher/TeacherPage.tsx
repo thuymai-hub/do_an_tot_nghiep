@@ -135,7 +135,7 @@ const TeacherPage = () => {
 
   return (
     <Spin spinning={loading}>
-      <Container>
+      <Container style={{ marginTop: 130 }}>
         <h2 style={{ fontSize: 24, fontWeight: "bold" }}>Bài viết của tôi</h2>
         <ButtonAdd
           text="Thêm mới"
