@@ -45,6 +45,7 @@ const EventPostSection = (props: IEventPostSection) => {
       id="event_posts"
       style={{
         marginTop: 100,
+        minHeight: 700,
         backgroundColor: "black",
         padding: "30px 0",
         width: SCREEN_WIDTH,
@@ -108,7 +109,7 @@ const EventPostSection = (props: IEventPostSection) => {
                 style={{
                   position: "absolute",
                   right: 20,
-                  bottom: 190,
+                  bottom: 220,
                   width: 80,
                   height: 100,
                   backgroundColor: "#4D55B7",
@@ -180,7 +181,7 @@ const EventPostSection = (props: IEventPostSection) => {
                     fontSize: 15,
                   }}
                 >
-                  Địa điểm: {item?.place || "---"}
+                  Địa điểm: <span style={{fontWeight: '600'}}>{item?.place || "---"}</span>
                 </p>
               </div>
             </div>
@@ -329,11 +330,11 @@ const EventPostSection = (props: IEventPostSection) => {
                         <p style={{ fontSize: 18, fontWeight: "600" }}>
                           {item.title}
                         </p>
-                        <div style={{ marginTop: -10 }}>
+                        {/* <div style={{ marginTop: -10 }}>
                           <p style={{ fontSize: 13, color: "gray" }}>
                             {item?.shortDes}
                           </p>
-                        </div>
+                        </div> */}
                       </Col>
                     </Row>
                   ))}

@@ -14,7 +14,7 @@ const PostSection = (props: IPostSection) => {
   const { posts } = props;
   const navigate = useNavigate();
   return (
-    <div style={{ marginTop: 50, width: SCREEN_WIDTH, paddingRight: 100 }}>
+    <div style={{ marginTop: 50, width: SCREEN_WIDTH, paddingRight: 60 }}>
       <div>
         <Row style={{ justifyContent: "center", marginBottom: 30 }}>
           <TitleBlock>
@@ -24,7 +24,7 @@ const PostSection = (props: IPostSection) => {
           </TitleBlock>
         </Row>
       </div>
-      <Row gutter={26} style={{ padding: "0 45px" }}>
+      <Row gutter={26} style={{ padding: "0 30px 0 60px" }}>
         <Col className="gutter-row" span={12}>
           <div
             style={{
@@ -76,12 +76,12 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[1]?.image}
-              style={{ height: 200 }}
+              style={{ height: 200, width: '100%' }}
             />
             <div
               style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}
             >
-              <p style={{ fontSize: 16, color: "white", fontWeight: "700" }}>
+              <p style={{ fontSize: 15, color: "white", fontWeight: "700" }}>
                 {posts[1]?.titlePost}
               </p>
             </div>
@@ -102,7 +102,7 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[2]?.image}
-              style={{ height: 200 }}
+              style={{ height: 200, width: '100%' }}
             />
             <div
               style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}
