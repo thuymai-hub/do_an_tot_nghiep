@@ -124,7 +124,7 @@ const EventPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 130 }}>
+        <ContentContainer style={{ marginTop: 160 }}>
           <Row style={{ width: "100%" }}>
             <Col span={1} />
             <Col span={15}>

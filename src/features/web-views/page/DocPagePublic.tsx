@@ -147,19 +147,29 @@ const DocPagePublic = () => {
       <PageContainer>
         <NavBar />
         <ContentContainer>
-          <Row style={{ width: "100%", marginTop: 100 }}>
-            <Select
-              style={{ width: 200 }}
-              placeholder="Chọn khoá học"
-              onChange={handleChange}
-              allowClear
-              options={[
-                { label: "Công nghệ thông tin", value: 1 },
-                { label: "Thiết kế đồ hoạ", value: 2 },
-                { label: "Quản trị kinh doanh", value: 3 },
-              ]}
-            />
+          <Row style={{ width: "100%", marginTop: 160 }}>
+            <p
+              style={{
+                fontSize: 22,
+                color: "#5988de",
+                fontWeight: "bold",
+                marginLeft: 24,
+              }}
+            >
+              Trang chủ - Tài liệu
+            </p>
           </Row>
+          <Select
+            style={{ width: 200 }}
+            placeholder="Chọn khoá học"
+            onChange={handleChange}
+            allowClear
+            options={[
+              { label: "Công nghệ thông tin", value: 1 },
+              { label: "Thiết kế đồ hoạ", value: 2 },
+              { label: "Quản trị kinh doanh", value: 3 },
+            ]}
+          />
           <br />
           <br />
           <Row

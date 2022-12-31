@@ -144,7 +144,7 @@ const SubBar = (props: ISubBar) => {
         </a>
       </Col>
       <Col className="gutter-row sub-nav-bar-item " span={4}>
-        <a href="/web-view-student-page">
+        <a href="/web-doc-page">
           {/* <img
             src="https://cdn-icons-png.flaticon.com/128/3048/3048425.png"
             style={{ width: 30, height: 30, margin: "auto" }}
@@ -157,7 +157,7 @@ const SubBar = (props: ISubBar) => {
                 : undefined
             }
           >
-            Sinh viên
+            Tài liệu
           </p>
         </a>
       </Col>
