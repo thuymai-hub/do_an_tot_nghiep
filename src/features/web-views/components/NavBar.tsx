@@ -135,7 +135,7 @@ const NavBar = (props: INavBar) => {
                   outline: 0,
                   letterSpacing: 2,
                   color: "white",
-                  fontWeight: "800",
+                  fontWeight: "600",
                 }}
               >
                 CÁ NHÂN
@@ -162,7 +162,7 @@ const NavBar = (props: INavBar) => {
                   outline: 0,
                   letterSpacing: 2,
                   color: "white",
-                  fontWeight: "800",
+                  fontWeight: "600",
                 }}
               >
                 LIÊN HỆ

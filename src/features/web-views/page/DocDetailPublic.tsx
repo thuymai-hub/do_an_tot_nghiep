@@ -63,12 +63,12 @@ const DocDetailPublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 130 }}>
+        <ContentContainer style={{ marginTop: 160 }}>
           <Row>
             <Col span={2} />
-            <Col span={10}>
+            <Col span={9}>
               <img
-                style={{ height: 500, width: "100%", borderRadius: 10 }}
+                style={{ height: 400, width:440, borderRadius: 10 }}
                 src={
                   detailSubject?.image ||
                   "https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGJvb2t8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
@@ -81,9 +81,9 @@ const DocDetailPublic = () => {
                   boxShadow: "5px 0 5px #ededeb",
                   padding: 20,
                   position: "absolute",
-                  left: -80,
+                  left: -200,
                   background: "white",
-                  top: 100,
+                  top: 80,
                   minWidth: 400,
                 }}
               >

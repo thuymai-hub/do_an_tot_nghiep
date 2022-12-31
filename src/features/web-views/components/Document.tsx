@@ -50,7 +50,7 @@ const Document = (props: IDocument) => {
           // width: SCREEN_WIDTH,
           padding: "0 45px",
           marginTop: 30,
-          marginRight: 80,
+          // marginRight: 40,
         }}
       >
         {subjects.slice(0, 4).map((item: any, index: number) => {

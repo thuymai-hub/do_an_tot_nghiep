@@ -12,7 +12,7 @@ const Header = () => {
         <div
           style={{
             position: "absolute",
-            right: 80,
+            right: 30,
             top: 200,
             width: 60,
             zIndex: 10,
@@ -41,7 +41,7 @@ const Header = () => {
           </div>
         </div>
         <div className="typewriter">
-          <h1>Chào mừng đến với trường đại học đại học Thuỷ Lợi!</h1>
+          <h1>Website tin tức khoa CNTT - Đại học Thủy Lợi</h1>
         </div>
         <Carousel
           autoPlay

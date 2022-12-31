@@ -30,8 +30,8 @@
 
   .typewriter h1 {
     color: white;
-    font-weight: 800;
-    font-size: 33px;
+    font-weight: 600;
+    font-size: 30px;
     overflow: hidden; /* Ensures the content is not revealed until the animation */
     border-right: .15em solid orange; /* The typwriter cursor */
     white-space: nowrap; /* Keeps the content on a single line */
