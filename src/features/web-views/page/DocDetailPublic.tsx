@@ -1,5 +1,5 @@
 import { Col, Row, Spin } from "antd";
-import React from "react";
+import React, { Fragment } from "react";
 import { useLocation } from "react-router-dom";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import styled from "styled-components";
@@ -35,15 +35,10 @@ const DocDetailPublic = () => {
             description: result?.acf?.content,
             image: result?.acf?.image,
             author: result?.acf?.author,
-            date: result?.acf?.created_date,
-            courseType: Number(result?.acf?.course_type),
+            date: result?.acf?.created_date.slice(0, 10),
+            courseType: result?.acf?.course_type.split("-")[1],
             fileDoc: result?.acf?.file_docs.split(","),
           };
-          console.log(
-            "🚀 ~ file: DocDetailPublic.tsx:41 ~ getDetailData ~ result?.acf?.file_docs.split(",
-            ")",
-            result?.acf?.file_docs.split(",")
-          );
           setDetailSubject(data);
           setListImages([result?.acf?.image]);
           setListFiles(result?.acf?.file_docs.split(","));
@@ -63,12 +58,17 @@ const DocDetailPublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 160 }}>
+        <ContentContainer style={{ marginTop: 180 }}>
           <Row>
             <Col span={2} />
             <Col span={9}>
               <img
-                style={{ height: 400, width:440, borderRadius: 10 }}
+                style={{
+                  height: 440,
+                  width: 440,
+                  borderRadius: 10,
+                  objectFit: "cover",
+                }}
                 src={
                   detailSubject?.image ||
                   "https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGJvb2t8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
@@ -76,57 +76,86 @@ const DocDetailPublic = () => {
               />
             </Col>
             <Col span={8}>
+              <h1
+                style={{ fontSize: 30, fontWeight: "bold", letterSpacing: 1 }}
+              >
+                {detailSubject?.title}
+              </h1>
               <div
                 style={{
-                  boxShadow: "5px 0 5px #ededeb",
-                  padding: 20,
-                  position: "absolute",
-                  left: -200,
-                  background: "white",
-                  top: 80,
-                  minWidth: 400,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                <div style={{ position: "absolute", top: 20, right: 20 }}>
-                  <p style={{ fontSize: 12, letterSpacing: 1, color: "gray" }}>
-                    {renderCourse(detailSubject?.courseType)}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <img
+                    style={{ width: 20, height: 20, marginRight: 8 }}
+                    src="https://cdn-icons-png.flaticon.com/128/2103/2103423.png"
+                  />
+                  <p style={{ fontSize: 14, color: "gray" }}>
+                    {detailSubject?.courseType}
                   </p>
                 </div>
-                <h1
-                  style={{ fontSize: 20, fontWeight: "bold", letterSpacing: 1 }}
-                >
-                  {detailSubject?.title}
-                </h1>
 
-                <h1 style={{ fontSize: 14, color: "gray" }}>
-                  {detailSubject?.author} -{" "}
-                  <span
-                    style={{ fontSize: 12, fontStyle: "italic", color: "gray" }}
-                  >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <img
+                    style={{ width: 20, height: 20, marginRight: 8 }}
+                    src="https://cdn-icons-png.flaticon.com/128/1155/1155211.png"
+                  />
+
+                  <h1 style={{ fontSize: 14, color: "gray" }}>
+                    {detailSubject?.author}
+                  </h1>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <img
+                    style={{ width: 20, height: 20, marginRight: 8 }}
+                    src="https://cdn-icons-png.flaticon.com/128/3652/3652191.png"
+                  />
+                  <p style={{ fontSize: 14, color: "gray" }}>
                     {detailSubject?.date}
-                  </span>
-                </h1>
-                <p style={{ textAlign: "justify", color: "gray" }}>
-                  {detailSubject?.description?.replace(/<[^>]+>/g, "")}
-                </p>
-                <br />
-                <p style={{ fontSize: 14, color: "black" }}>
-                  Link tài liệu:{" "}
-                  {listFiles.map((item: any, index: number) => (
-                    <li>
-                      <a
-                        key={index}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={item}
-                        style={{ color: "black" }}
-                      >
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </p>
+                  </p>
+                </div>
               </div>
+
+              <p style={{ textAlign: "justify", color: "darkgray" }}>
+                Mô tả:{" "}
+                <span
+                  style={{ color: "gray", fontStyle: "italic" }}
+                >{`"${detailSubject?.description?.replace(
+                  /<[^>]+>/g,
+                  ""
+                )}"`}</span>
+              </p>
+              <br />
+              <p style={{ fontSize: 14, color: "black" }}>
+                Link tài liệu:{" "}
+                {listFiles.map((item: any, index: number) => (
+                  <li>
+                    <a
+                      key={index}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={item}
+                      style={{ color: "black" }}
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </p>
             </Col>
             <Col span={4} />
           </Row>

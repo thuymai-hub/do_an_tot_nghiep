@@ -25,6 +25,7 @@ const DocPagePublic = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [courseType, setCourseType] = React.useState<number>();
   const [dataSource, setDataSource] = React.useState<any>([]);
+  const [listCourse, setListCourse] = React.useState<any>([]);
   const [fullDataSource, setFullDataSource] = React.useState<any>([]);
 
   const handleChange = (value: number | undefined) => {
@@ -56,7 +57,7 @@ const DocPagePublic = () => {
               cursor: "pointer",
             }}
           />
-          <div className="tag-block">{renderCourse(item?.courseType)}</div>
+          <div className="tag-block">{item?.courseType}</div>
           <div className="info-block">
             <p
               style={{
@@ -95,15 +96,19 @@ const DocPagePublic = () => {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("result:", result);
           const convertData = result.map((item: any) => ({
             id: item?.id,
             title: item?.acf?.title,
             createdDate: item?.date.slice(0, 10).split("-").reverse().join("-"),
-            courseType: item?.acf?.course_type,
+            courseType: item?.acf?.course_type.split("-")[1],
+            courseTypeFull: item?.acf?.course_type,
             author: item?.acf?.author,
             image: item?.acf?.image,
           }));
+          console.log(
+            "🚀 ~ file: DocPagePublic.tsx:108 ~ convertData ~ convertData",
+            convertData
+          );
           setDataSource(convertData);
           setFullDataSource(convertData);
           setLoading(false);
@@ -119,7 +124,8 @@ const DocPagePublic = () => {
     setLoading(true);
     if (courseType) {
       const matchedData = fullDataSource.filter(
-        (item: any) => Number(item.courseType) === courseType
+        (item: any) =>
+          Number(item?.courseTypeFull?.split("-")[0]) === courseType
       );
 
       setTimeout(() => {
@@ -134,8 +140,30 @@ const DocPagePublic = () => {
     }
   };
 
+  const getListCourse = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/wp-json/wp/v2/courses")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("result:", result);
+          const convertData = result.map((item: any) => ({
+            value: `${item?.id}-${item?.acf?.title}`,
+            label: item?.acf?.title,
+          }));
+          setListCourse(convertData);
+          setLoading(false);
+        },
+        (error) => {
+          console.log("error", error);
+          setLoading(false);
+        }
+      );
+  };
+
   React.useEffect(() => {
     getDataSource();
+    getListCourse();
   }, []);
 
   React.useEffect(() => {
@@ -164,11 +192,7 @@ const DocPagePublic = () => {
             placeholder="Chọn khoá học"
             onChange={handleChange}
             allowClear
-            options={[
-              { label: "Công nghệ thông tin", value: 1 },
-              { label: "Thiết kế đồ hoạ", value: 2 },
-              { label: "Quản trị kinh doanh", value: 3 },
-            ]}
+            options={listCourse}
           />
           <br />
           <br />

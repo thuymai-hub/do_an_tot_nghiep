@@ -8,19 +8,6 @@ import { PROTECTED_ROUTES_PATH } from "routes/RoutesPath";
 import { CliCookieService, CLI_COOKIE_KEYS } from "shared/services/cli-cookie";
 import Filter from "../components/Filter";
 
-export const renderCourseType = (id: string) => {
-  switch (id) {
-    case "1":
-      return "Công nghệ thông tin";
-    case "2":
-      return "Thiết kế đồ hoạ";
-    case "3":
-      return "Quản trị kinh doanh";
-    default:
-      break;
-  }
-};
-
 export const StudyDocumentPage: React.FC = () => {
   const columns = [
     {

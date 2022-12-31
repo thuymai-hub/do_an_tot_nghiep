@@ -1,5 +1,4 @@
 import { Col, Row } from "antd";
-import { renderCourseType } from "features/study_document/pages/StudyDocumentPage";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
