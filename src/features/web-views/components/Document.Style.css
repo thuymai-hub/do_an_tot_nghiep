@@ -1,0 +1,113 @@
+.title-container {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.title-container h1 {
+  text-align: "center";
+  font-size: 40px;
+}
+
+.documnet-container-content {
+  padding: 0 60px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.document-container {
+  margin-top: 100px;
+}
+
+.document-item-container {
+  width: 22%;
+  min-height: 250px;
+  box-shadow: 4px 5px 10px #e6e6e6;
+  cursor: pointer;
+  border-top: 2px solid #4d55b7;
+  background-color: #f2f2f2;
+
+}
+
+.course-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: "#5C5C5C";
+  text-align: center;
+  padding-top: 10px;
+}
+
+.subject_title {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.course_content_block {
+  background-color: #f2f2f2;
+  padding: 16px;
+  align-items: center;
+  align-content: center;
+  min-height: 250px;
+}
+
+.image-block {
+  width: 100%;
+  height: 200px;
+}
+
+@media (min-width: 1388px) {
+}
+@media (min-width: 1024px) and (max-width: 1387px) {
+  .documnet-container-content {
+    padding: 0 30px;
+  }
+  .document-item-container {
+    width: 24%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+  .documnet-container-content {
+    padding: 0 60px;
+  }
+  .document-item-container {
+    width: 45%;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 600px) and (min-width: 415px) {
+  .documnet-container-content {
+    padding: 0 30px;
+  }
+  .document-item-container {
+    width: 45%;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 414px) {
+  .documnet-container-content {
+    padding: 0px;
+  }
+  .document-item-container {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .course_content_block {
+    padding: 30px;
+  }
+
+  .title-container h1 {
+    color: white
+  }
+  
+  .document-container {
+    background-color: black;
+    padding-top: 30px;
+  }
+}

@@ -10,6 +10,7 @@ import { PageContainer } from "./HomePagePublic";
 import { ContentContainer } from "./PostPagePublic";
 import { convert } from "html-to-text";
 import Footer from "../components/Footer";
+import "../components/DetailPostPage.Style.css";
 
 const PostPagePublicDetail = () => {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ const PostPagePublicDetail = () => {
 
   const renderPostItem = (item: any, index: number) => {
     return (
-      <PostItem
+      <div
+        className="other-post-item"
         key={index}
         onClick={() => {
           navigate(PUBLIC_ROUTES_PATH.POSTPAGEPUBLICDETAIL, {
@@ -37,18 +39,28 @@ const PostPagePublicDetail = () => {
           window.location.reload();
         }}
       >
-        <div className="image-block">
-          <img src={item.image} className="image" />
+        <div className="other-post-item-image-block ">
+          <img
+            src={item.image}
+            style={{
+              width: "100%",
+              borderRadius: 10,
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
         </div>
-        <div className="info-block">
+        <div className="other-post-item-info-block">
           {item.titlePost.length >= 60 ? (
-            <span className="title">{item.titlePost.slice(0, 60)}...</span>
+            <span className="other-post-item-info-title">
+              {item.titlePost.slice(0, 60)}...
+            </span>
           ) : (
-            <span className="title">{item.titlePost}</span>
+            <span className="other-post-item-info-title">{item.titlePost}</span>
           )}
-          <p className="date">{item.date}</p>
+          <p className="other-post-item-info-date">{item.date}</p>
         </div>
-      </PostItem>
+      </div>
     );
   };
 
@@ -120,162 +132,146 @@ const PostPagePublicDetail = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 160, marginBottom: 100 }}>
-          <Row style={{ width: "100%" }}>
-            <Col span={1} />
-            <Col span={15}>
-              <div>
-                <p style={{ fontSize: 12, color: "gray" }}>
-                  Trang chủ - {detailPost?.newsType} - {detailPost?.titlePost}
-                </p>
-              </div>
-              <Tag>
-                <p
-                  style={{
-                    textTransform: "uppercase",
-                    color: "white",
-                    fontWeight: "400",
-                    textAlign: "center",
-                  }}
-                >
-                  {detailPost?.newsType}
-                </p>
-              </Tag>
-              <div>
-                <span style={{ fontSize: 30, fontWeight: "bold" }}>
-                  {detailPost?.titlePost}
+        <div className="detail-post-container">
+          <div>
+            <div>
+              <p style={{ fontSize: 12, color: "gray" }}>
+                Trang chủ - {detailPost?.newsType} - {detailPost?.titlePost}
+              </p>
+            </div>
+            <Tag>
+              <p
+                style={{
+                  textTransform: "uppercase",
+                  color: "white",
+                  fontWeight: "400",
+                  textAlign: "center",
+                }}
+              >
+                {detailPost?.newsType}
+              </p>
+            </Tag>
+            <div>
+              <span style={{ fontSize: 30, fontWeight: "bold" }}>
+                {detailPost?.titlePost}
+              </span>
+              <p style={{ color: "gray", fontSize: 16, marginTop: 10 }}>
+                Chúc bạn một ngày tốt lành!
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <img
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 100,
+                  objectFit: "cover",
+                  marginRight: 10,
+                }}
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+              />
+              <p
+                style={{
+                  color: "gray",
+                  marginRight: 26,
+                  lineHeight: "30px",
+                  fontSize: 12,
+                }}
+              >
+                Tác giả:{" "}
+                <span style={{ color: "black" }}>
+                  {detailPost?.author || "---"}
                 </span>
-                <p style={{ color: "gray", fontSize: 16, marginTop: 10 }}>
-                  Chúc bạn một ngày tốt lành!
-                </p>
-              </div>
+              </p>
+              <p
+                style={{
+                  color: "gray",
+                  marginRight: 10,
+                  lineHeight: "30px",
+                  fontSize: 12,
+                }}
+              >
+                {detailPost?.date}
+              </p>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
+                  marginLeft: 16,
                 }}
               >
                 <img
                   style={{
-                    width: 30,
-                    height: 30,
+                    width: 20,
+                    height: 20,
                     borderRadius: 100,
                     objectFit: "cover",
-                    marginRight: 10,
-                  }}
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                />
-                <p
-                  style={{
+                    marginRight: 8,
+                    marginTop: 5,
                     color: "gray",
-                    marginRight: 26,
-                    lineHeight: "30px",
-                    fontSize: 12,
                   }}
-                >
-                  Tác giả:{" "}
-                  <span style={{ color: "black" }}>
-                    {detailPost?.author || "---"}
-                  </span>
-                </p>
-                <p
-                  style={{
-                    color: "gray",
-                    marginRight: 10,
-                    lineHeight: "30px",
-                    fontSize: 12,
-                  }}
-                >
-                  {detailPost?.date}
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginLeft: 16,
-                  }}
-                >
-                  <img
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 100,
-                      objectFit: "cover",
-                      marginRight: 8,
-                      marginTop: 5,
-                      color: "gray",
-                    }}
-                    src="https://cdn-icons-png.flaticon.com/128/9127/9127069.png"
-                  />
-                  <p
-                    style={{ color: "gray", lineHeight: "30px", fontSize: 12 }}
-                  >
-                    {renderReadingTime()} phút đọc
-                  </p>
-                </div>
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "row", marginTop: 20 }}
-              >
-                <Block style={{ backgroundColor: "#4267B2" }}>
-                  <img
-                    style={{ width: 20, height: 20, marginRight: 10 }}
-                    src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
-                  />
-                  <span style={{ color: "white" }}>Facebook</span>
-                </Block>
-                <Block style={{ backgroundColor: "#cf2c23" }}>
-                  <img
-                    style={{ width: 20, height: 20, marginRight: 10 }}
-                    src="https://cdn-icons-png.flaticon.com/128/3536/3536559.png"
-                  />
-                  <span style={{ color: "white" }}>Pinterest</span>
-                </Block>
-                <Block
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "lightgray",
-                    borderRadius: 4,
-                    width: 50,
-                    cursor: "pointer",
-                  }}
-                >
-                  <img
-                    style={{ width: 20, height: 20, color: "lightgray" }}
-                    src="https://cdn-icons-png.flaticon.com/128/2958/2958783.png"
-                  />
-                </Block>
-              </div>
-              <div style={{ marginTop: 20, width: "95%" }}>
-                <img
-                  style={{ width: "100%", height: 500, marginBottom: 20 }}
-                  src={detailPost?.image}
+                  src="https://cdn-icons-png.flaticon.com/128/9127/9127069.png"
                 />
-                {/* <p style={{ textAlign: "justify" }}>
-                  {convert(detailPost?.content, { wordwrap: 1000 })}
-                </p> */}
-                <div
-                  dangerouslySetInnerHTML={{ __html: detailPost?.content }}
-                />
+                <p style={{ color: "gray", lineHeight: "30px", fontSize: 12 }}>
+                  {renderReadingTime()} phút đọc
+                </p>
               </div>
-            </Col>
-            <Col
-              style={{
-                marginLeft: 10,
-                borderLeftWidth: 1,
-                borderColor: "lightgray",
-                padding: "0 20px",
-              }}
-              span={6}
+            </div>
+            <div
+              style={{ display: "flex", flexDirection: "row", marginTop: 20 }}
             >
-              <div
+              <Block style={{ backgroundColor: "#4267B2" }}>
+                <img
+                  style={{ width: 20, height: 20, marginRight: 10 }}
+                  src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
+                />
+                <span style={{ color: "white" }}>Facebook</span>
+              </Block>
+              <Block style={{ backgroundColor: "#cf2c23" }}>
+                <img
+                  style={{ width: 20, height: 20, marginRight: 10 }}
+                  src="https://cdn-icons-png.flaticon.com/128/3536/3536559.png"
+                />
+                <span style={{ color: "white" }}>Pinterest</span>
+              </Block>
+              <Block
                 style={{
-                  width: "100%",
-                  height: 250,
-                  objectFit: "cover",
-                  position: "relative",
+                  borderWidth: 1,
+                  borderColor: "lightgray",
+                  borderRadius: 4,
+                  width: 50,
+                  cursor: "pointer",
                 }}
               >
+                <img
+                  style={{ width: 20, height: 20, color: "lightgray" }}
+                  src="https://cdn-icons-png.flaticon.com/128/2958/2958783.png"
+                />
+              </Block>
+            </div>
+            <div style={{ marginTop: 20, width: "95%" }}>
+              <img className="image-title" src={detailPost?.image} />
+              {/* <p style={{ textAlign: "justify" }}>
+                  {convert(detailPost?.content, { wordwrap: 1000 })}
+                </p> */}
+              <div dangerouslySetInnerHTML={{ __html: detailPost?.content }} />
+            </div>
+          </div>
+          <div className="more-options-block">
+            <div
+              style={{
+                width: "100%",
+                height: 250,
+                objectFit: "cover",
+                position: "relative",
+              }}
+            >
+              <div className="move-to-forum-block">
                 <img
                   style={{ width: "100%", height: "100%" }}
                   src="https://images.unsplash.com/photo-1543269664-7eef42226a21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzd8fHN0dWRlbnR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
@@ -293,24 +289,27 @@ const PostPagePublicDetail = () => {
                     }
                   />
                 </div>
-                <div>
-                  <p
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: "700",
-                      paddingTop: 30,
-                    }}
-                  >
-                    Bài viết khác
-                  </p>
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "700",
+                    paddingTop: 30,
+                  }}
+                >
+                  Bài viết khác
+                </p>
+                <div className="other-post-section">
                   {otherPosts.map((item: any, index: number) =>
                     renderPostItem(item, index)
                   )}
                 </div>
               </div>
-            </Col>
-          </Row>
-        </ContentContainer>
+            </div>
+          </div>
+        </div>
+        <div className="space" />
         <Footer />
       </PageContainer>
     </Spin>
@@ -358,11 +357,13 @@ const PostItem = styled.div`
   .info-block {
     flex: 2;
     padding: 0 14px;
+    margin-left: 10px;
 
-    .title {
-      font-weight: 800;
+    .other-post-title {
+      font-weight: 700;
       text-align: justify;
       font-size: 13px;
+      color: black;
     }
 
     .date {

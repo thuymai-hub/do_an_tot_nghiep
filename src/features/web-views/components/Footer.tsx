@@ -1,30 +1,32 @@
 import { Button, Col, Row } from "antd";
 import React from "react";
 import styled from "styled-components";
+import "./Footer.Style.css";
 
 const Footer = () => {
   return (
-    <div style={{ height: 600, padding: 100, background: "black" }}>
-      <Row gutter={16}>
-        <Col span={8}>
+    <div className="footer-container">
+      <div className="first-row-container">
+        <div className="block-1">
           <p style={{ color: "#5988de", fontWeight: "700", fontSize: 18 }}>
             Về chúng tôi
           </p>
           <p style={{ color: "white", textAlign: "justify" }}>
-            “It is my hope that the principles in the document will be
-            translated into action”, said UN Special Representative in Sudan,
-            Volker Perthes. “The transitional authorities need to respect and
-            protect the rights and freedoms of all Sudanese, regardless of their
-            ethnic, religious or political background.”
+            “Trường Đại học Thuỷ lợi là trường đại học công lập có sứ mệnh đào
+            tạo nguồn nhân lực chất lượng cao, nghiên cứu khoa học, phát triển
+            và chuyển giao công nghệ tiên tiến trong các ngành khoa học, kỹ
+            thuật, kinh tế và quản lý, đặc biệt trong lĩnh vực thuỷ lợi, môi
+            trường, phòng chống và giảm nhẹ thiên tai; góp phần thúc đẩy nhanh
+            quá trình công nghiệp hoá, hiện đại hoá và phát triển bền vững Tổ
+            quốc Việt Nam.”
           </p>
           <div className="btn" style={{ width: 130, height: 40 }}>
             <a href="/web-view-contact-page">
               <p className="text">Liên hệ</p>
             </a>
           </div>
-        </Col>
-        <Col span={1} />
-        <Col span={6}>
+        </div>
+        <div className="block-2">
           <p style={{ color: "#5988de", fontWeight: "700", fontSize: 18 }}>
             Nội dung trang web
           </p>
@@ -40,8 +42,8 @@ const Footer = () => {
           <a href="/web-doc-page">
             <li style={{ color: "white" }}>Tài liệu</li>
           </a>
-        </Col>
-        <Col span={8}>
+        </div>
+        <div className="block-3">
           <p style={{ color: "#5988de", fontWeight: "700", fontSize: 18 }}>
             Ảnh nổi bật
           </p>
@@ -93,19 +95,9 @@ const Footer = () => {
               />
             </div>
           </div>
-        </Col>
-      </Row>
-      <Row
-        style={{
-          marginTop: 40,
-          borderTopWidth: 1,
-          borderTopColor: "#6b6a6a",
-          marginRight: 40,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
+        </div>
+      </div>
+      <div className="footer-block">
         <div style={{ display: "flex", flexDirection: "row", paddingTop: 16 }}>
           <SocialMediaBlock>
             <img
@@ -126,17 +118,8 @@ const Footer = () => {
             />
           </SocialMediaBlock>
         </div>
-        <p
-          style={{
-            color: "#5988de",
-            fontSize: 24,
-            fontFamily: "ABradley Hand",
-            paddingTop: 20,
-          }}
-        >
-          Thank you!
-        </p>
-      </Row>
+        <p className="thank">Thank you!</p>
+      </div>
     </div>
   );
 };

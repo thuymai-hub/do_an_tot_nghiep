@@ -7,17 +7,9 @@ import { SCREEN_WIDTH } from "shared/utils/CONSTANT";
 
 const Header = () => {
   return (
-    <Row style={{ width: SCREEN_WIDTH, height: 600, marginTop: 140 }}>
-      <Col span={24} style={{ position: "relative" }}>
-        <div
-          style={{
-            position: "absolute",
-            right: 30,
-            top: 200,
-            width: 60,
-            zIndex: 10,
-          }}
-        >
+    <div className="carousel-container">
+      <div className="media-container">
+        <div className="media_block">
           <div className="media_item_block">
             <img
               style={{ width: 26, height: 26 }}
@@ -50,27 +42,27 @@ const Header = () => {
           infiniteLoop
           transitionTime={500}
         >
-          <div>
+          <div className="image-carousel-block">
             <img
-              style={{ height: 550, objectFit: "cover" }}
+              className="img-carousel"
               src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dW5pdmVyaXR5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
             />
           </div>
-          <div>
+          <div className="image-carousel-block">
             <img
-              style={{ height: 550, objectFit: "cover" }}
+              className="img-carousel"
               src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3R1ZGVudHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
             />
           </div>
-          <div>
+          <div className="image-carousel-block">
             <img
-              style={{ height: 550, objectFit: "cover" }}
+              className="img-carousel"
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c3R1ZGVudHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
             />
           </div>
         </Carousel>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 

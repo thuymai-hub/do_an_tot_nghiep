@@ -14,26 +14,18 @@ const PostSection = (props: IPostSection) => {
   const { posts } = props;
   const navigate = useNavigate();
   return (
-    <div style={{ marginTop: 50, width: SCREEN_WIDTH, paddingRight: 60 }}>
-      <div>
-        <Row style={{ justifyContent: "center", marginBottom: 30 }}>
-          <TitleBlock>
-            <a href="web-view-post">
-              <h1 className="title">Tin tức</h1>
-            </a>
-          </TitleBlock>
-        </Row>
+    <div className="post-section-container">
+      <div className="title-container">
+        <a href="web-view-post">
+          <h1 style={{ color: "black" }} className="title">
+            Tin tức
+          </h1>
+        </a>
       </div>
-      <Row gutter={26} style={{ padding: "0 30px 0 60px" }}>
-        <Col className="gutter-row" span={12}>
+      <div className="post-content-container">
+        <div className="first-post-container">
           <div
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "relative",
-              overflow: "hidden",
-              cursor: "pointer",
-            }}
+            className="first-post-image-container"
             onClick={() => {
               navigate(PUBLIC_ROUTES_PATH.POSTPAGEPUBLICDETAIL, {
                 state: { postId: posts[0]?.id },
@@ -43,30 +35,17 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[0]?.image}
-              style={{ height: "100%", width: "100%" }}
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
             />
-            <div style={{ position: "absolute", bottom: 0, padding: 20 }}>
-              <p style={{ fontSize: 20, color: "white", fontWeight: "700" }}>
-                {posts[0]?.titlePost}
-              </p>
+            <div className="title-post-container">
+              <p className="first-title-post">{posts[0]?.titlePost}</p>
             </div>
           </div>
-        </Col>
-        <Col
-          className="gutter-row"
-          span={6}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
+        </div>
+        <div className="second-post-container">
           <div
-            style={{
-              position: "relative",
-              overflow: "hidden",
-              cursor: "pointer",
-            }}
+            className="second-post-item-block"
+            style={{ marginBottom: 20 }}
             onClick={() => {
               navigate(PUBLIC_ROUTES_PATH.POSTPAGEPUBLICDETAIL, {
                 state: { postId: posts[1]?.id },
@@ -76,23 +55,14 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[1]?.image}
-              style={{ height: 200, width: '100%' }}
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
             />
-            <div
-              style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}
-            >
-              <p style={{ fontSize: 15, color: "white", fontWeight: "700" }}>
-                {posts[1]?.titlePost}
-              </p>
+            <div className="title-post-container">
+              <p className="second-post-title">{posts[1]?.titlePost}</p>
             </div>
           </div>
           <div
-            style={{
-              width: "100%",
-              position: "relative",
-              overflow: "hidden",
-              cursor: "pointer",
-            }}
+            className="second-post-item-block "
             onClick={() => {
               navigate(PUBLIC_ROUTES_PATH.POSTPAGEPUBLICDETAIL, {
                 state: { postId: posts[2]?.id },
@@ -102,18 +72,16 @@ const PostSection = (props: IPostSection) => {
             <img
               className="zoom"
               src={posts[2]?.image}
-              style={{ height: 200, width: '100%' }}
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
             />
             <div
               style={{ position: "absolute", bottom: 0, left: 10, right: 10 }}
             >
-              <p style={{ fontSize: 16, color: "white", fontWeight: "700" }}>
-                {posts[2]?.titlePost}
-              </p>
+              <p className="second-post-title">{posts[2]?.titlePost}</p>
             </div>
           </div>
-        </Col>
-        <Col span={6} className="gutter-row">
+        </div>
+        <div className="third-post-container">
           {posts.slice(3, 8).map((item: any, index: number) => (
             <PostItem
               key={index}
@@ -123,15 +91,15 @@ const PostSection = (props: IPostSection) => {
                 });
               }}
             >
-              <p style={{ fontSize: 16, fontWeight: "600" }}>
+              <p className="third-title-post">
                 {item.titlePost.length > 60
                   ? `${item.titlePost.slice(0, 60)}...`
                   : item.titlePost}
               </p>
             </PostItem>
           ))}
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   );
 };
@@ -150,7 +118,7 @@ const TitleBlock = styled.div`
 
 const PostItem = styled.div`
   padding: 8px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #d1d1d1;
   cursor: pointer;
 `;
 

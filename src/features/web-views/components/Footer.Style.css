@@ -1,0 +1,122 @@
+.footer-container {
+  height: 600px;
+  padding: 100px;
+  background-color: black;
+}
+
+.first-row-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.block-1 {
+  flex: 1;
+}
+.block-2 {
+  flex: 1;
+  margin-left: 60px;
+}
+.block-3 {
+  flex: 1;
+}
+
+.thank {
+    color: #5988de;
+    font-size: 24px;
+    font-family: 'ABradley Hand';
+    padding-top: 20px;
+  }
+
+.footer-block {
+  margin-top: 40px;
+  border-top: 1px solid gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (min-width: 1024px) and (max-width: 1387px) {
+  .footer-container {
+    padding: 50px;
+    height: 530px;
+  }
+
+  .block-1 {
+    flex: 2;
+  }
+  .block-2 {
+    flex: 1;
+    margin-left: 20px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+    .footer-container {
+        padding: 50px;
+        height: 450px;
+      }
+    
+      .block-1 {
+        flex: 2;
+      }
+      .block-2 {
+        flex: 1;
+        margin-left: 20px;
+      }
+
+      .block-3 {
+        display: none;
+      }
+      
+}
+
+@media (max-width: 600px) and (min-width: 415px) {
+    .footer-container {
+        padding: 50px 30px;
+        height: 460px;
+      }
+    
+      .block-1 {
+        flex: 2;
+      }
+      .block-2 {
+        flex: 1;
+        margin-left: 20px;
+      }
+
+      .block-3 {
+        display: none;
+      }
+      
+}
+
+@media (max-width: 414px) {
+    .footer-container {
+        padding: 50px 20px;
+        height: 650px;
+      }
+
+      .first-row-container {
+        flex-direction: column;
+
+      }
+    
+      .block-1 {
+        flex: 1;
+      }
+      .block-2 {
+        flex: 1;
+        margin-left: 0;
+        margin-top: 30px;
+      }
+
+      .block-3 {
+        display: none;
+      }
+
+      .thank {
+        display: none
+      }
+}

@@ -81,7 +81,7 @@ const NavBar = (props: INavBar) => {
         ];
 
   return (
-    <div className="w3-top" style={{ zIndex: 1000, height: 110 }}>
+    <div className="nav-bar-container">
       <Row
         style={{
           height: 100,
@@ -89,7 +89,7 @@ const NavBar = (props: INavBar) => {
           boxShadow: "0px 5px 10px #c7c7c7",
         }}
       >
-        <Col span={1} />
+        <Col span={1} className="column-1" />
         <Col className="block_1" span={11}>
           <div className="logo_block">
             <a
@@ -119,25 +119,10 @@ const NavBar = (props: INavBar) => {
             </a>
           </div>
         </Col>
-        <Col span={1} />
         <Col span={11} className="block_2">
           {!token ? (
             <div style={{ paddingTop: 30 }}>
-              <a
-                href="/login"
-                style={{
-                  padding: "8px 16px",
-                  float: "right",
-                  width: "auto",
-                  border: "none",
-                  display: "flex",
-                  flexDirection: "row",
-                  outline: 0,
-                  letterSpacing: 2,
-                  color: "white",
-                  fontWeight: "600",
-                }}
-              >
+              <a href="/login" className="account-item">
                 CÁ NHÂN
                 <img
                   style={{
@@ -150,21 +135,7 @@ const NavBar = (props: INavBar) => {
                 />
               </a>
 
-              <a
-                href="/web-view-contact-page"
-                style={{
-                  padding: "8px 16px",
-                  float: "right",
-                  width: "auto",
-                  border: "none",
-                  display: "flex",
-                  flexDirection: "row",
-                  outline: 0,
-                  letterSpacing: 2,
-                  color: "white",
-                  fontWeight: "600",
-                }}
-              >
+              <a href="/web-view-contact-page" className="account-item contact">
                 LIÊN HỆ
                 <img
                   style={{
@@ -180,21 +151,7 @@ const NavBar = (props: INavBar) => {
           ) : (
             <div style={{ paddingTop: 30 }}>
               <Dropdown menu={{ items }} placement="bottomRight">
-                <a
-                  style={{
-                    padding: "8px 16px",
-                    float: "right",
-                    width: "auto",
-                    border: "none",
-                    display: "flex",
-                    flexDirection: "row",
-                    outline: 0,
-                    letterSpacing: 2,
-                    color: "white",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <a className="account-item">
                   {LocalStorage.getUserName()}
                   <img
                     style={{
@@ -207,22 +164,6 @@ const NavBar = (props: INavBar) => {
                   />
                 </a>
               </Dropdown>
-              {/* <a
-                href="/noti"
-                style={{
-                  padding: "8px 16px",
-                  float: "right",
-                  width: "auto",
-                  border: "none",
-                  display: "block",
-                  outline: 0,
-                  letterSpacing: 2,
-                  color: "#4D55B7",
-                  fontWeight: "600",
-                }}
-              >
-                THÔNG BÁO
-              </a> */}
             </div>
           )}
         </Col>

@@ -8,6 +8,7 @@ import React from "react";
 import NavBar from "../components/NavBar";
 import { ContentContainer } from "./DocPagePublic";
 import { PageContainer } from "./HomePagePublic";
+import "../components/ContactPage.Style.css";
 
 const data1 = [
   {
@@ -67,13 +68,12 @@ const ContactPage = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 160 }}>
+        <div className="contact-page-container ">
           <p
             style={{
               fontSize: 22,
               color: "#5988de",
               fontWeight: "bold",
-              marginLeft: 24,
             }}
           >
             Trang chủ - Liên hệ
@@ -82,14 +82,13 @@ const ContactPage = () => {
             <p
               style={{
                 fontSize: 16,
-                marginLeft: 24,
               }}
             >
               Nếu bạn cần hỗ trợ, hãy gửi thông tin vào biểu mẫu. Chúng tôi sẽ
               cố gắng phản hồi sớm nhất !
             </p>
-            <Row gutter={16} style={{ marginLeft: 20 }}>
-              <Col className="gutter-row" span={13}>
+            <div className="contact-container">
+              <div className="column-1">
                 <>
                   <div
                     style={{
@@ -210,8 +209,8 @@ const ContactPage = () => {
                     ))}
                   </div>
                 </>
-              </Col>
-              <Col className="gutter-row" span={8}>
+              </div>
+              <div className="column-2">
                 <div>
                   <div
                     style={{
@@ -262,10 +261,10 @@ const ContactPage = () => {
                     </Row>
                   </div>
                 </div>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </ContentContainer>
+        </div>
       </PageContainer>
     </Spin>
   );

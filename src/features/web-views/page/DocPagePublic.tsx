@@ -6,6 +6,7 @@ import { PUBLIC_ROUTES_PATH } from "routes/RoutesPath";
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import { PageContainer } from "./HomePagePublic";
+import "../components/PostPage.Style.css";
 
 export const renderCourse = (id: string) => {
   switch (id) {
@@ -34,9 +35,8 @@ const DocPagePublic = () => {
 
   const renderPostItem = (item: any, index: number) => {
     return (
-      <Col
-        className="gutter-row"
-        span={6}
+      <div
+        className="post-item-container"
         onClick={() => {
           navigate(PUBLIC_ROUTES_PATH.DOC_DEATIL_PAGE_PUBLIC, {
             state: { subjectId: item?.id },
@@ -86,7 +86,7 @@ const DocPagePublic = () => {
             </div>
           </div>
         </PostItem>
-      </Col>
+      </div>
     );
   };
 
@@ -176,16 +176,7 @@ const DocPagePublic = () => {
         <NavBar />
         <ContentContainer>
           <Row style={{ width: "100%", marginTop: 160 }}>
-            <p
-              style={{
-                fontSize: 22,
-                color: "#5988de",
-                fontWeight: "bold",
-                marginLeft: 24,
-              }}
-            >
-              Trang chủ - Tài liệu
-            </p>
+            <p className="header">Trang chủ - Tài liệu</p>
           </Row>
           <Select
             style={{ width: 200 }}
@@ -196,14 +187,11 @@ const DocPagePublic = () => {
           />
           <br />
           <br />
-          <Row
-            gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-            style={{ width: "93%" }}
-          >
+          <div className="post-page-content-container">
             {dataSource.map((item: any, index: number) =>
               renderPostItem(item, index)
             )}
-          </Row>
+          </div>
         </ContentContainer>
       </PageContainer>
     </Spin>
@@ -211,7 +199,6 @@ const DocPagePublic = () => {
 };
 
 export const ContentContainer = styled.div`
-  width: 1500px;
   padding: 20px 40px;
   min-height: 700px;
 `;

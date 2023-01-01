@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { PageContainer } from "./HomePagePublic";
 import { ContentContainer } from "./PostPagePublic";
+import "../components/DetailPostPage.Style.css";
 
 const EventPagePublic = () => {
   const location = useLocation();
@@ -58,7 +59,8 @@ const EventPagePublic = () => {
 
   const renderPostItem = (item: any, index: number) => {
     return (
-      <PostItem
+      <div
+        className="other-post-item"
         key={index}
         onClick={() => {
           navigate(PUBLIC_ROUTES_PATH.EVENT_PAGE_PUBLIC, {
@@ -67,18 +69,28 @@ const EventPagePublic = () => {
           window.location.reload();
         }}
       >
-        <div className="image-block">
-          <img src={item.image} className="image" />
+        <div className="other-post-item-image-block ">
+          <img
+            src={item.image}
+            style={{
+              width: "100%",
+              borderRadius: 10,
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
         </div>
-        <div className="info-block">
+        <div className="other-post-item-info-block">
           {item?.titlePost?.length >= 60 ? (
-            <span className="title">{item.titlePost.slice(0, 60)}...</span>
+            <span className="other-post-item-info-title">
+              {item.titlePost.slice(0, 60)}...
+            </span>
           ) : (
-            <span className="title">{item.titlePost}</span>
+            <span className="other-post-item-info-title">{item.titlePost}</span>
           )}
-          <p className="date">{item?.startDate}</p>
+          <p className="other-post-item-info-date">{item?.startDate}</p>
         </div>
-      </PostItem>
+      </div>
     );
   };
 
@@ -124,10 +136,9 @@ const EventPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 160 }}>
+        <div className="detail-post-container">
           <Row style={{ width: "100%" }}>
-            <Col span={1} />
-            <Col span={15}>
+            <div className="detail-post-content-block">
               <div>
                 <p style={{ fontSize: 12, color: "gray" }}>
                   Trang chủ - Sự kiện - {detailPost?.titlePost}
@@ -251,24 +262,13 @@ const EventPagePublic = () => {
                     {detailPost?.startDate}
                   </span>
                 </p>
-                <img
-                  style={{ width: "100%", height: 500, marginBottom: 20 }}
-                  src={detailPost?.image}
-                />
+                <img className="image-title" src={detailPost?.image} />
                 <div
                   dangerouslySetInnerHTML={{ __html: detailPost?.content }}
                 />
               </div>
-            </Col>
-            <Col
-              style={{
-                marginLeft: 10,
-                borderLeftWidth: 1,
-                borderColor: "lightgray",
-                padding: "0 20px",
-              }}
-              span={6}
-            >
+            </div>
+            <div className="more-options-block">
               <div
                 style={{
                   width: "100%",
@@ -277,22 +277,28 @@ const EventPagePublic = () => {
                   position: "relative",
                 }}
               >
-                <img
-                  style={{ width: "100%", height: "100%" }}
-                  src="https://images.unsplash.com/photo-1543269664-7eef42226a21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzd8fHN0dWRlbnR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
-                />
-                <div style={{ position: "absolute", left: 20, bottom: 30 }}>
-                  <p
-                    style={{ fontSize: 20, fontWeight: "700", color: "white" }}
-                  >
-                    Khám phá những bài viết từ sinh viên khác
-                  </p>
-                  <ButtonAdd
-                    text={"Khám phá"}
-                    onClickButton={() =>
-                      navigate(PUBLIC_ROUTES_PATH.FORUMPAGEPUBLIC)
-                    }
+                <div className="move-to-forum-block">
+                  <img
+                    style={{ width: "100%", height: "100%" }}
+                    src="https://images.unsplash.com/photo-1543269664-7eef42226a21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzd8fHN0dWRlbnR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
                   />
+                  <div style={{ position: "absolute", left: 20, bottom: 30 }}>
+                    <p
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "700",
+                        color: "white",
+                      }}
+                    >
+                      Khám phá những bài viết từ sinh viên khác
+                    </p>
+                    <ButtonAdd
+                      text={"Khám phá"}
+                      onClickButton={() =>
+                        navigate(PUBLIC_ROUTES_PATH.FORUMPAGEPUBLIC)
+                      }
+                    />
+                  </div>
                 </div>
                 <div>
                   <p
@@ -309,9 +315,11 @@ const EventPagePublic = () => {
                   )}
                 </div>
               </div>
-            </Col>
+            </div>
           </Row>
-        </ContentContainer>
+        </div>
+        <div className="space" />
+
         <Footer />
       </PageContainer>
     </Spin>

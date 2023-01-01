@@ -1,145 +1,621 @@
 .zoom {
-    transition: transform .2s; /* Animation */
+  transition: transform 0.2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(
+    1.2
+  ); /* (150% zoom - Note: if the zoom is too large; it will go outside of the viewport) */
+}
+
+.media_item_block {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.typewriter {
+  position: absolute;
+  top: 250px;
+  left: 150px;
+  right: 150px;
+  z-index: 100;
+  width: 1100px;
+  height: 100px;
+}
+
+.typewriter h1 {
+  color: white;
+  font-weight: 600;
+  font-size: 30px;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation-iteration-count: infinite;
+  animation: typing 6.5s steps(50, end) infinite,
+    blink-caret 0.75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}
+
+.sub-nav-bar-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+}
+
+.sub-nav-bar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  padding-top: 14px;
+  flex: 1;
+}
+
+.btn {
+  width: 150px;
+  height: 46px;
+  border: 2px solid #5988de;
+  border-radius: 10px;
+  padding: 8px 16px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  width: 150px;
+  height: 46px;
+  border: 2px solid #5988de;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-top: 40px;
+  cursor: pointer;
+  background: #5988de;
+  transition: all 0.6s linear;
+}
+
+.text {
+  text-align: center;
+  color: #5988de;
+  font-size: 18;
+  font-weight: 600;
+}
+
+.btn:hover .text {
+  color: white;
+  font-size: 18;
+  font-weight: 600;
+  text-align: center;
+}
+
+.logo_block {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.block_1 {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  padding: 18px 30px;
+}
+
+.title_block {
+  margin-left: 30px;
+}
+
+.title_1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+.title_2 {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  text-transform: uppercase;
+}
+
+.block_2 {
+  display: flex-end;
+  flex-direction: row;
+}
+
+.account-item {
+  padding: 8px 16px;
+  float: right;
+  width: auto;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  outline: 0;
+  letter-spacing: 2;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.nav-bar-container {
+  z-index: 1000;
+  height: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.contact {
+  /* display: block; */
+}
+
+.column-1 {
+}
+
+.sub-bar-container {
+  width: 100%;
+  padding: 10px 200px;
+  background: white;
+  height: 46px;
+  padding-top: 10px;
+  box-shadow: 0 5px 20px #d9d9d9;
+  display: flex;
+  flex-direction: row;
+}
+
+.carousel-container {
+  width: 100%;
+  height: 600px;
+  margin-top: 140px;
+  position: relative;
+}
+
+.media_block {
+  position: absolute;
+  right: 60px;
+  top: 200px;
+  width: 60px;
+  z-index: 10;
+}
+
+.media-container {
+  position: absolute;
+}
+
+.image-carousel-block {
+  width: 100%;
+  height: 600px;
+}
+
+.img-carousel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-section-container {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+}
+
+.title-container {
+  width: 100%;
+  margin-bottom: 40px;
+  padding: auto;
+}
+
+.title-container h1 {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.post-content-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0 60px;
+  flex-wrap: wrap;
+}
+
+.first-post-container {
+  width: 50%;
+  height: 450px;
+  margin-right: 20px;
+}
+
+.first-post-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.second-post-container {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.second-post-item-block {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: 215px;
+}
+
+.third-post-container {
+  width: 25%
+}
+
+.title-post-container { 
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px; 
+}
+
+.first-title-post { 
+  font-size: 20px;
+  color: white;
+   font-weight: 700
+  }
+
+  .third-title-post {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .second-post-title { 
+    font-size: 12px,;
+    color: white;
+    font-weight: 700;
+  }
+
+/* Super large */
+@media (max-width: 1920px) {
+}
+
+/* Large */
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .post-section-container {
+    margin-top: 10px;
+  }
+
+  .third-title-post {
+    font-size: 14px;
+  }
+
+  .post-content-container {
+    padding: 0 30px;
+  }
+  .first-post-container {
+    width: 45%;
+    height: 400px;
+  }
+
+  .first-title-post { 
+    font-size: 18px;
+    }
+  
+  .first-post-image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .second-post-container {
+    width: 25%;
   }
   
-  .zoom:hover {
-    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  .second-post-item-block {
+    height: 200px;
   }
 
-  .media_item_block {
-    width: 50px;
-    height: 50px;
-    border-radius: 100px;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    display: flex;
-    cursor: pointer;
-    margin-bottom: 10px;
+  .third-post-container {
+    width: 25%
   }
-
-  .typewriter {
+  
+  .title-post-container { 
     position: absolute;
-    top: 250px;
-    left: 150px;
-    right: 150px;
-    z-index: 100;
-    width: 1100px;
-    height: 100px;
+    bottom: 0;
+    left: 10;
+    right: 10 
   }
-
-  .typewriter h1 {
-    color: white;
-    font-weight: 600;
-    font-size: 30px;
-    overflow: hidden; /* Ensures the content is not revealed until the animation */
-    border-right: .15em solid orange; /* The typwriter cursor */
-    white-space: nowrap; /* Keeps the content on a single line */
-    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-    letter-spacing: .15em; /* Adjust as needed */
-    animation-iteration-count: infinite;
-    animation: 
-      typing 6.5s steps(50, end) infinite,
-      blink-caret .75s step-end infinite;
-  }
-  
-  /* The typing effect */
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  
-  /* The typewriter cursor effect */
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: white; }
-  }
-
-  .sub-nav-bar-title {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: black;
-  }
-
-  .sub-nav-bar-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    cursor: pointer;
-  }
-
-  .btn {
-    width: 150px;
-    height: 46px;
-    border: 2px solid #5988de;
-    border-radius: 10px;
-    padding: 8px 16px;
-    margin-top: 40px;
-    cursor: pointer;
-  }
-
-  .btn:hover {
-    width: 150px;
-    height: 46px;
-    border: 2px solid #5988de;
-    border-radius: 10px;
-    padding: 10px 16px;
-    margin-top: 40px;
-    cursor: pointer;
-    background: #5988de;
-    transition: all .6s linear;
-  }
-
-  .text {
-    text-align: center;
-    color: #5988de;
-    font-size: 18;
-    font-weight: 600;
-  }
-
-  .btn:hover .text {
-    color: white;
-    font-size: 18;
-    font-weight: 600;
-    text-align: center;
-
-  }
-
-  .logo_block {
-    width: 80px;
-    height: 100px;
-    object-fit: 'cover';
-  }
-
-  .block_1 {
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    padding: 18px 30px;
-
-  }
-
-  .title_block {
-    margin-left: 30px;
-  }
-
   .title_1 {
-    font-size: 26px;
-    font-weight: bold;
-    color: white;
-    text-transform: uppercase;
+    font-size: 20px;
   }
   .title_2 {
     font-size: 16px;
-    font-weight: 600;
-    color: white;
-    text-transform: uppercase;
+    padding-top: 10px;
+    font-weight: 400;
+  }
+  .sub-bar-container {
+    padding: 0 100px;
   }
 
-  .block_2 {
-    display: flex-end;
+  .typewriter {
+    left: 120px;
+  }
+
+  .typewriter h1 {
+    font-size: 28px;
+  }
+
+  .media_block {
+    display: none;
+  }
+
+  .image-carousel-block {
+    height: 500px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+  .post-section-container {
+    margin-top: 60px;
+  }
+
+  .post-content-container {
+    padding: 0 20px;
+  }
+  .first-post-container {
+    width: 52%;
+    height: 400px;
+  }
+
+  .first-title-post { 
+    font-size: 16px;
+    }
+
+  .second-post-container {
+    width: 45%;
+    margin-right: 0;
+  }
+  
+  .second-post-item-block {
+    height: 190px;
+  }
+
+  .third-post-container {
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .title_1 {
+    font-size: 15px;
+    padding-top: 10px;
+  }
+  .title_2 {
+    font-size: 14px;
+    padding-top: 10px;
+  }
+  .block_1 {
+    padding: 18px 0px;
+  }
+
+  .sub-bar-container {
+    padding: 0 40px;
+  }
+
+  .sub-nav-bar-title {
+    font-size: 15px;
+  }
+
+  .carousel-container {
+    height: 400px;
+    margin-top: 140px;
+  }
+
+  .typewriter {
+    left: 50px;
+    top: 150px;
+  }
+
+  .typewriter h1 {
+    font-size: 24px;
+  }
+
+  .media_block {
+    display: none;
+  }
+
+  .image-carousel-block {
+    height: 400px;
+  }
+}
+
+@media (max-width: 600px) and (min-width: 401px) {
+  .post-section-container {
+    margin-top: -30px;
+  }
+
+  .post-content-container {
+    padding: 0 30px;
+  }
+  .first-post-container {
+    width: 100%;
+    height: 400px;
+    margin-right: 0px;
+  }
+
+  .first-title-post { 
+    font-size: 16px;
+    }
+
+  .second-post-container {
+    width: 100%;
     flex-direction: row;
-
+    margin-right: 0;
+    margin-top: 20px;
   }
+  
+  .second-post-item-block {
+    height: 190px;
+    width: 48%;
+  }
+
+  .third-post-container {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .title_1 {
+    font-size: 14px;
+  }
+  .title_2 {
+    font-size: 12px;
+    padding-top: 14px;
+  }
+  .block_1 {
+    padding: 18px 0px;
+  }
+  .contact {
+    display: none;
+  }
+
+  .sub-bar-container {
+    padding: 0 20px;
+  }
+
+  .sub-nav-bar-title {
+    font-size: 14px;
+  }
+
+  .typewriter {
+    left: 30px;
+    top: 200px;
+  }
+
+  .typewriter h1 {
+    font-size: 20px;
+  }
+
+  .media_block {
+    display: none;
+  }
+
+  .image-carousel-block {
+    height: 450px;
+  }
+}
+
+@media (max-width: 400px) {
+  .post-section-container {
+    margin-top: 200px;
+  }
+  .second-post-title { 
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .post-content-container {
+    padding: 0 0 0 10px;
+  }
+  .first-post-container {
+    width: 100%;
+    height: 300px;
+    margin-right: 0;
+    }
+
+  .first-title-post { 
+    font-size: 16px;
+    }
+
+  .second-post-container {
+    width: 100%;
+    flex-direction: row;
+    margin-right: 0;
+    margin-top: 20px;
+  }
+  
+  .second-post-item-block {
+    height: 190px;
+    width: 48%;
+  }
+
+  .third-title-post {
+    font-size: 14px;
+  }
+
+  .third-post-container {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .logo_block {
+    display: none;
+  }
+  .title_1 {
+    font-size: 11px;
+    padding-top: 12px;
+  }
+  .title_2 {
+    display: none;
+  }
+  .contact {
+    display: none;
+  }
+  .title_block {
+    margin-left: 0px;
+  }
+
+  .column-1 {
+    display: none;
+  }
+
+  .account-item {
+    font-size: 12px;
+  }
+
+  .sub-bar-container {
+    padding: 0;
+  }
+
+  .sub-nav-bar-title {
+    font-size: 12px;
+  }
+
+  .carousel-container {
+    display: none;
+  }
+}

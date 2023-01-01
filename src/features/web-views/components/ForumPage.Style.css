@@ -1,0 +1,78 @@
+
+.container {
+    margin-top: 200px;
+    padding: 0 160px;
+}
+
+.item-header {
+    width: 100%;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: row
+}
+
+.item-info {
+    margin-left: 20px;
+}
+
+.author {
+    font-weight: 700;
+}
+
+.item-interact {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.love-block {
+    width: 100px;
+    padding: 0 20px 20px 20px;
+}
+
+.love-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-top: -6px;
+}
+
+.image {
+    height: 200px;
+    width: 350px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+@media (min-width: 1388px) {
+}
+@media (min-width: 1024px) and (max-width: 1387px) {
+    .container {
+        padding: 0 120px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+    .container {
+        padding: 0 80px;
+    }
+}
+
+@media (max-width: 600px) and (min-width: 415px) {
+    .container {
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 414px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .image {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+    }
+}

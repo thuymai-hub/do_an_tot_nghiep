@@ -26,18 +26,18 @@ export const ForumItem = (props: IForumItem) => {
     <>
       <div className="flex justify-center mt-3">
         <div className="bg-white rounded-xl w-3/4 shadow-lg">
-          <div className="grid grid-cols-12 gap-x-2 gap-y-4 px-4 py-2">
+          <div className="item-header">
             <div className="col-span-1 flex justify-center items-center">
               <Avatar
-                style={{ width: 36, height: 36 }}
+                style={{ width: 40, height: 40 }}
                 src={
                   "https://images.unsplash.com/photo-1669054078259-9f305691b761?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"
                 }
               />
             </div>
-            <div className="col-span-11 flex justify-between">
+            <div className="item-info">
               <div>
-                <div className="font-semibold">{item.author}</div>
+                <div className="author">{item.author}</div>
                 <div>
                   <span style={{ fontSize: 12, color: "gray" }}>
                     {item?.createdDate}
@@ -80,15 +80,12 @@ export const ForumItem = (props: IForumItem) => {
             className="px-4 py-2 text-justify"
             dangerouslySetInnerHTML={{ __html: item?.content }}
           />
-          <img
-            style={{ height: 200, width: 350, borderRadius: 10, margin: 10 }}
-            src={item?.image}
-          />
+          <img className="image" src={item?.image} />
 
           <hr />
-          <div className="flex text-xl px-4 py-2">
+          <div className="item-interact">
             <div
-              className="flex items-center cursor-pointer px-4 py-2 rounded hover:bg-gray-200"
+              className="love-block"
               onClick={() => {
                 if (item?.status === "1") {
                   message.error("Vui lòng phê duyệt bài viết!");
@@ -103,21 +100,23 @@ export const ForumItem = (props: IForumItem) => {
               }}
             >
               {item?.isLiked ? (
-                <AiFillHeart className="mr-2 " />
+                <AiFillHeart className="love-icon " />
               ) : (
-                <AiOutlineHeart className="mr-2 " />
+                <AiOutlineHeart className="love-icon " />
               )}
 
-              {item.loveCount}
+              <span style={{ fontSize: 20 }}>{item.loveCount}</span>
             </div>
             <div
-              className="flex items-center cursor-pointer px-4 py-2 rounded hover:bg-gray-200"
+              className="love-block"
               onClick={() => {
                 setIsShowingComment((value) => !value);
               }}
             >
-              <AiOutlineComment className="mr-2 " />
-              {item?.commentCount?.length || 0}
+              <AiOutlineComment className="love-icon " />
+              <span style={{ fontSize: 20 }}>
+                {item?.commentCount?.length || 0}
+              </span>
             </div>
           </div>
           <div className="px-4 pb-2 flex flex-row">

@@ -8,6 +8,7 @@ import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import { PageContainer } from "./HomePagePublic";
 import { ContentContainer } from "./PostPagePublic";
+import "../components/ForumPage.Style.css";
 
 const ForumPagePublic = () => {
   const userInfor = useSelector((state: any) => state?.user?.user);
@@ -241,7 +242,7 @@ const ForumPagePublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar current={5} />
-        <CustomContentContainer style={{ marginTop: 160 }}>
+        <div className="container">
           {dataSource?.map((item: any, index: number) => (
             <ForumItem
               addNewComment={addNewComment}
@@ -252,7 +253,7 @@ const ForumPagePublic = () => {
               unLikePost={unLikePost}
             />
           ))}
-        </CustomContentContainer>
+        </div>
       </PageContainer>
     </Spin>
   );

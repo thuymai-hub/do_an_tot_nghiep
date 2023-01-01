@@ -21,19 +21,8 @@ const SubBar = (props: ISubBar) => {
   const navigate = useNavigate();
 
   return (
-    <Row
-      gutter={26}
-      justify={"center"}
-      style={{
-        width: SCREEN_WIDTH,
-        padding: "0 200px",
-        background: "white",
-        height: 46,
-        paddingTop: 10,
-        boxShadow: "0 5px 20px #d9d9d9",
-      }}
-    >
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+    <div className="sub-bar-container">
+      {/* <div className="gutter-row sub-nav-bar-item ">
         <a href="/web-view-introduction">
           <p
             className="sub-nav-bar-title"
@@ -46,8 +35,8 @@ const SubBar = (props: ISubBar) => {
             Giới thiệu
           </p>
         </a>
-      </Col>
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+      </div> */}
+      <div className="gutter-row sub-nav-bar-item ">
         <a href="/web-view-admission-page">
           <p
             className="sub-nav-bar-title"
@@ -60,8 +49,8 @@ const SubBar = (props: ISubBar) => {
             Tuyển sinh
           </p>
         </a>
-      </Col>
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+      </div>
+      <div className="gutter-row sub-nav-bar-item ">
         {isAtHomePage ? (
           <a
             href="#event_posts"
@@ -79,7 +68,7 @@ const SubBar = (props: ISubBar) => {
                   : undefined
               }
             >
-              Sự kiện nổi bật
+              Sự kiện
             </p>
           </a>
         ) : (
@@ -102,12 +91,12 @@ const SubBar = (props: ISubBar) => {
                   : undefined
               }
             >
-              Sự kiện nổi bật
+              Sự kiện
             </span>
           </div>
         )}
-      </Col>
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+      </div>
+      <div className="gutter-row sub-nav-bar-item ">
         <a href="/web-view-post">
           {/* <img
             src="https://cdn-icons-png.flaticon.com/128/2540/2540832.png"
@@ -124,8 +113,8 @@ const SubBar = (props: ISubBar) => {
             Tin tức
           </p>
         </a>
-      </Col>
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+      </div>
+      <div className="gutter-row sub-nav-bar-item ">
         <a href="/web-view-forum">
           {/* <img
             src="https://cdn-icons-png.flaticon.com/128/2518/2518227.png"
@@ -142,8 +131,8 @@ const SubBar = (props: ISubBar) => {
             Diễn đàn
           </p>
         </a>
-      </Col>
-      <Col className="gutter-row sub-nav-bar-item " span={4}>
+      </div>
+      <div className="gutter-row sub-nav-bar-item ">
         <a href="/web-doc-page">
           {/* <img
             src="https://cdn-icons-png.flaticon.com/128/3048/3048425.png"
@@ -160,8 +149,8 @@ const SubBar = (props: ISubBar) => {
             Tài liệu
           </p>
         </a>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
