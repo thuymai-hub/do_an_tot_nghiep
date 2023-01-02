@@ -130,16 +130,8 @@ const ForumPagePublic = () => {
     const targetPost = fullDataSource?.filter(
       (item: any) => item.id === idPost
     );
-    console.log(
-      "🚀 ~ file: ForumPagePublic.tsx ~ line 116 ~ likePost ~ targetPost",
-      targetPost
-    );
 
     const targetListLove = JSON.parse(targetPost[0]?.peopleList);
-    console.log(
-      "🚀 ~ file: ForumPagePublic.tsx ~ line 118 ~ likePost ~ targetListLove",
-      targetListLove
-    );
 
     targetListLove.push(newPerson);
 

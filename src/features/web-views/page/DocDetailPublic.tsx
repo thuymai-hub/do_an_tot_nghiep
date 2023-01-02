@@ -6,6 +6,7 @@ import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import { renderCourse } from "./DocPagePublic";
 import { PageContainer } from "./HomePagePublic";
+import "../components/DocDetailPage.Style.css";
 
 const DocDetailPublic = () => {
   const location = useLocation();
@@ -58,15 +59,20 @@ const DocDetailPublic = () => {
     <Spin spinning={loading}>
       <PageContainer>
         <NavBar />
-        <ContentContainer style={{ marginTop: 180 }}>
-          <Row>
-            <Col span={2} />
-            <Col span={9}>
+        <div
+          style={{
+            marginTop: 200,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <div className="doc-detail-container">
+            <div className="image-block">
               <img
                 style={{
-                  height: 440,
-                  width: 440,
-                  borderRadius: 10,
+                  height: "100%",
+                  width: "100%",
+                  borderRadius: 20,
                   objectFit: "cover",
                 }}
                 src={
@@ -74,8 +80,8 @@ const DocDetailPublic = () => {
                   "https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGJvb2t8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
                 }
               />
-            </Col>
-            <Col span={8}>
+            </div>
+            <div className="content-doc-container">
               <h1
                 style={{ fontSize: 30, fontWeight: "bold", letterSpacing: 1 }}
               >
@@ -156,10 +162,9 @@ const DocDetailPublic = () => {
                   </li>
                 ))}
               </p>
-            </Col>
-            <Col span={4} />
-          </Row>
-        </ContentContainer>
+            </div>
+          </div>
+        </div>
       </PageContainer>
     </Spin>
   );

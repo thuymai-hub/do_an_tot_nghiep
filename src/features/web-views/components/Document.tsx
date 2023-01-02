@@ -49,7 +49,7 @@ const Document = (props: IDocument) => {
               <div className="course_title_block">
                 <p className="course-title">{item?.courseType.split("-")[1]}</p>
               </div>
-              <div className="image-block">
+              <div className="doc-image-block">
                 <img
                   src={item?.image}
                   style={{

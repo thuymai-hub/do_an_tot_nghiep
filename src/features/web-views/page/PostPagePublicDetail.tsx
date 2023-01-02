@@ -133,8 +133,8 @@ const PostPagePublicDetail = () => {
       <PageContainer>
         <NavBar />
         <div className="detail-post-container">
-          <div>
-            <div>
+          <div className="detail-post-content-block ">
+            <div className="">
               <p style={{ fontSize: 12, color: "gray" }}>
                 Trang chủ - {detailPost?.newsType} - {detailPost?.titlePost}
               </p>

@@ -24,8 +24,11 @@ export const ForumItem = (props: IForumItem) => {
 
   return (
     <>
-      <div className="flex justify-center mt-3">
-        <div className="bg-white rounded-xl w-3/4 shadow-lg">
+      <div className="flex justify-center mt-2">
+        <div
+          style={{ position: "relative", boxShadow: "2px 2px 10px lightgray" }}
+          className="bg-white rounded-xl w-3/4"
+        >
           <div className="item-header">
             <div className="col-span-1 flex justify-center items-center">
               <Avatar
@@ -44,8 +47,11 @@ export const ForumItem = (props: IForumItem) => {
                   </span>
                 </div>
               </div>
-              <div className="cursor-pointer flex justify-center items-center">
-                {item?.status === "1" ? (
+              <div
+                style={{ position: "absolute", top: 20, right: 20 }}
+                className="cursor-pointer flex justify-center items-center"
+              >
+                {item?.status === "1" && (
                   <Button
                     type="primary"
                     size="small"
@@ -53,24 +59,6 @@ export const ForumItem = (props: IForumItem) => {
                   >
                     Phê duyệt
                   </Button>
-                ) : (
-                  <></>
-                  // <Popover
-                  //   trigger="click"
-                  //   content={
-                  //     <div>
-                  //       <div className="cursor-pointer hover:bg-gray-200 p-1">
-                  //         Sửa bài viết
-                  //       </div>
-                  //       <div className="cursor-pointer text-red-500 hover:bg-gray-200 p-1">
-                  //         Xóa bài viết
-                  //       </div>
-                  //     </div>
-                  //   }
-                  //   title={null}
-                  // >
-                  //   <BsThreeDots />
-                  // </Popover>
                 )}
               </div>
             </div>

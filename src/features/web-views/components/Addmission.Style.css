@@ -88,14 +88,14 @@
 }
 
 @media (max-width: 414px) {
-    .title {
-        font-size: 16px;
+      .ad-title {
+        font-size: 14px;
       }
       .content-block {
         padding: 10px;
       }
       .date {
-        font-size: 12px;
+        font-size: 10px;
       }
 
       .container {

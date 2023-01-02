@@ -98,6 +98,10 @@
         flex: 1
     }
 
+    .detail-post-content-container {
+        flex: 3;
+    }
+
     .other-post-section {
         display: flex;
         flex-direction: row;

@@ -53,9 +53,9 @@
   min-height: 250px;
 }
 
-.image-block {
+.doc-image-block {
   width: 100%;
-  height: 200px;
+  height: 250px;
 }
 
 @media (min-width: 1388px) {
@@ -93,6 +93,7 @@
   .documnet-container-content {
     padding: 0px;
   }
+
   .document-item-container {
     width: 100%;
     margin-bottom: 30px;
