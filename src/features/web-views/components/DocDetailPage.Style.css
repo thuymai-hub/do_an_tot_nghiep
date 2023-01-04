@@ -4,8 +4,8 @@
 }
 
 .doc-detail-container {
-    width: 100%;
     height: 400px;
+    flex: 3;
     display: flex;
     flex-direction: row;
     background-color:white;
